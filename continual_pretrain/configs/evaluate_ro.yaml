@@ -1,0 +1,33 @@
+model_path: google/gemma-3-1b-pt
+verbosity: INFO
+apply_chat_template: true
+eval_batch_size: 64
+num_fewshot: 5
+device : auto
+tasks_to_run: ["_ro_winogrande", "_ro_belebele", "ro_wiki", "_ro_arc_challenge", "arc_challenge", "winogrande"]
+output_dir: eval_results
+
+# List of all available tasks and their configs
+evaluation_tasks:
+  - name: _ro_winogrande
+    fewshot: 5
+    limit: 1
+  - name: _ro_belebele
+    fewshot: 0
+    limit: 1
+  - name: ro_wiki
+    fewshot: 0
+    limit: 1
+  - name: _ro_arc_challenge
+    fewshot: 5
+    limit: 1
+  - name: arc_challenge
+    fewshot: 5
+    limit: 1
+  - name: winogrande
+    fewshot: 5
+    limit: 1
+
+hydra:
+  run:
+    dir: .

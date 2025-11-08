@@ -1,1 +1,2 @@
 continual_pretrain/data/
+*.env

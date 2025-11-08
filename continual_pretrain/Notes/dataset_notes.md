@@ -31,3 +31,44 @@ A1: Consumatorii japonezi cumpără mii de CD-uri produse în Statele Unite.
 A2: Militarul SUA deschide o nouă bază într-o țară străină cu 1000 de personal militar american.
 A3: Un cântăreț pop american susține un concert cu casa închisă la Paris.
 A4: ...
+
+
+
+#### Decision making notes on Benchmarks
+
+ro_arc_challenge
+- count (1k train, 1k test)
+- type : MC
+- example:  "Cel mai mare corp din sistemul nostru solar este"
+ro_belebele:
+- type: MC
+- count: 900 words
+- example : **Passage** : " Medaliatul cu aur la Olimpiadă urma să înoate la Jocurile Commonwealth-ului, în probele de 100 m și 200 m liber, precum și în trei probe de ștafetă, însă condiția sa fizică a fost pusă sub semnul întrebării din cauza plângerilor sale. Nu a putut să ia medicamente...". **Question** : "De ce nu lua medaliatul cu aur la Olimpiadă medicamente pentru durere?" **Answers** : MC
+- ro_grammar:
+	- **type:** MC
+	- **count:** 1.15k rows
+	- **example:** " Un sinonim potrivit pentru termenul 'abuziv' este:"; MC: {'a': 'excesiv', 'b': 'abundent', 'c': 'violent', 'd': 'țipător'}
+- ro_gsm8k:
+	- **type:** FG
+	- **count:** (7.4k train, 1k test)
+	- **example:** "James decide să alerge 3 sprinturi de 3 ori pe săptămână. Aleargă 60 de metri pe sprint. Câți metri în total aleargă o săptămână?,"
+- ro_mmlu:
+	- **type**: multiple choice
+	- count (train 272, test 12k)
+	- example : " Care dintre următoarele nu este inclus în PIB-ul SUA?" 
+- ro_wiki:
+	- **type**: perplexity assesments
+	- count(train 120k, test 779)
+
+
+### **Selected Romanian Benchmarks and Rationale**
+
+| **Benchmark**     | **Type**                                          | **Purpose / Why Chosen**                                                                                                                                                                                                               |
+| ----------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **ro_belebele**   | Multiple-choice reading comprehension             | Uses **authentic, non-GPT-translated Romanian text**. Evaluates whether the model can **read, understand, and reason over full Romanian passages**, making it the most direct test of *true comprehension* in context.                 |
+| **ro_wiki**       | Cloze / language-modeling (perplexity)            | Provides a **low-level linguistic measure** of how well the model captures Romanian grammar and token distributions. **Perplexity** over real Wikipedia text reflects **basic fluency and statistical understanding** of the language. |
+| **ro_winogrande** | Cloze formulation (pronoun/coreference reasoning) | Tests **sentence-level linguistic reasoning**—whether the model can resolve meaning and referents correctly in Romanian. Serves as an **early signal of syntactic and semantic understanding**.                                        |
+| **ro_mmlu**       | Multiple-choice factual / academic reasoning      | Assesses whether the model can **apply factual and conceptual knowledge expressed in Romanian**, revealing how well its world knowledge transfers through the language.                                                                |
+
+**In short:**  
+These four benchmarks together span the spectrum from **surface-level fluency** (ro_wiki) to **deep comprehension and reasoning** (ro_belebele, ro_winogrande, ro_mmlu), giving a comprehensive view of Gemma-3-1B’s Romanian language understanding.
