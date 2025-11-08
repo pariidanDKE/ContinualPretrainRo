@@ -1,0 +1,48 @@
+group: ro_laroseda_generation
+task:
+  - group: laroseda_binary_generation
+    task:
+      - task: bigen_fs0
+        include: _laroseda_bc_gen.yaml
+        num_fewshot: 0
+        description: "Analizează următoarea recenzie și evalueaz-o ca fiind pozitivă sau negativă.\n\n"
+
+      - task: bigen_fs1
+        include: _laroseda_bc_gen.yaml
+        num_fewshot: 1
+        description: "Analizează următoarea recenzie și evalueaz-o ca fiind pozitivă sau negativă. În continuare vei observa câteva exemple.\n\n"
+
+      - task: bigen_fs3
+        include: _laroseda_bc_gen.yaml
+        num_fewshot: 3
+        description: "Analizează următoarea recenzie și evalueaz-o ca fiind pozitivă sau negativă. În continuare vei observa câteva exemple.\n\n"
+
+      - task: bigen_fs5
+        include: _laroseda_bc_gen.yaml
+        num_fewshot: 5
+        description: "Analizează următoarea recenzie și evalueaz-o ca fiind pozitivă sau negativă. În continuare vei observa câteva exemple.\n\n"
+
+
+  - group: laroseda_multiclass_generation
+    task:
+      - task: mcgen_fs0
+        include: _laroseda_mc_gen.yaml
+        num_fewshot: 0
+        description: "Analizează următoarea recenzie și caracterizează nota oferită produsului pe o scară de la 1 la 5, cu următoarele opțiuni: 1, 2, 4 sau 5.\n\n"
+
+      - task: mcgen_fs1
+        include: _laroseda_mc_gen.yaml
+        num_fewshot: 1
+        description: "Analizează următoarea recenzie și caracterizează nota oferită produsului pe o scară de la 1 la 5, cu următoarele opțiuni: 1, 2, 4 sau 5. În continuare vei observa câteva exemple.\n\n"
+
+      - task: mcgen_fs3
+        include: _laroseda_mc_gen.yaml
+        num_fewshot: 3
+        description: "Analizează următoarea recenzie și caracterizează nota oferită produsului pe o scară de la 1 la 5, cu următoarele opțiuni: 1, 2, 4 sau 5. În continuare vei observa câteva exemple.\n\n"
+        
+      - task: mcgen_fs5
+        include: _laroseda_mc_gen.yaml
+        num_fewshot: 5
+        description: "Analizează următoarea recenzie și caracterizează nota oferită produsului pe o scară de la 1 la 5, cu următoarele opțiuni: 1, 2, 4 sau 5. În continuare vei observa câteva exemple.\n\n"
+
+  

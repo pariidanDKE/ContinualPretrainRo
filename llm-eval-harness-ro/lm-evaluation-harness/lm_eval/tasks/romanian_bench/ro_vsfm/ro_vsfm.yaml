@@ -1,0 +1,19 @@
+group: ro_vsfm
+task:
+    - task: vsfm_fs0
+      include: _ro_vsfm.yaml
+      num_fewshot: 0
+
+    - task: vsfm_fs1
+      include: _ro_vsfm.yaml
+      num_fewshot: 1
+
+    - task: vsfm_fs3
+      include: _ro_vsfm.yaml
+      num_fewshot: 3
+
+    - task: vsfm_fs5
+      include: _ro_vsfm.yaml
+      num_fewshot: 5
+
+

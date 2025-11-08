@@ -1,0 +1,25 @@
+task: _ro_belebele
+dataset_path: facebook/belebele
+dataset_name: ron_Latn
+
+
+fewshot_config:
+  sampler: first_n
+fewshot_split: test
+test_split: test
+
+output_type: multiple_choice
+
+should_decontaminate: true
+doc_to_decontamination_query: "{{question}}"
+
+doc_to_text: "Context: {{flores_passage}}\nÎntrebare: {{question.strip()}}\nVariante: {{mc_answer1}}\nB: {{mc_answer2}}\nC: {{mc_answer3}}\nD: {{mc_answer4}}\nRăspuns:"
+doc_to_choice: ["A", "B", "C", "D"]
+doc_to_target: "{{['1', '2', '3', '4'].index(correct_answer_num)}}"
+
+metric_list:
+  - metric: acc_norm
+    aggregation: mean
+    higher_is_better: true
+metadata:
+  version: 0.0

@@ -1,0 +1,20 @@
+group: ro_belebele
+task:
+
+  - task: belebele_fs0
+    include: _ro_belebele.yaml
+    num_fewshot: 0
+
+  - task: belebele_fs1
+    include: _ro_belebele.yaml
+    num_fewshot: 1
+
+  - task: belebele_fs3
+    include: _ro_belebele.yaml
+    num_fewshot: 3
+
+  - task: belebele_fs5
+    include: _ro_belebele.yaml
+    num_fewshot: 5
+
+  

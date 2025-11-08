@@ -1,0 +1,17 @@
+group: ro_winogrande
+task:
+  - task: wino_fs0
+    include: _ro_winogrande.yaml
+    num_fewshot: 0
+
+  - task: wino_fs1
+    include: _ro_winogrande.yaml
+    num_fewshot: 1
+
+  - task: wino_fs3
+    include: _ro_winogrande.yaml
+    num_fewshot: 3
+
+  - task: wino_fs5
+    include: _ro_winogrande.yaml
+    num_fewshot: 5

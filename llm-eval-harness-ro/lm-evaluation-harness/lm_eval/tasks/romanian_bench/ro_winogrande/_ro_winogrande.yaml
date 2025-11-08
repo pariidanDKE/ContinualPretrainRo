@@ -1,0 +1,21 @@
+task: _ro_winogrande
+dataset_path: OpenLLM-Ro/ro_winogrande
+
+output_type: multiple_choice
+training_split: train
+validation_split: validation
+
+doc_to_text: !function process_winogrande.doc_to_text
+doc_to_target: !function process_winogrande.doc_to_target
+doc_to_choice: !function process_winogrande.doc_to_choice
+should_decontaminate: true
+doc_to_decontamination_query: sentence
+
+
+metric_list:
+  - metric: acc
+    aggregation: mean
+    higher_is_better: true
+
+metadata:
+  version: 1.0

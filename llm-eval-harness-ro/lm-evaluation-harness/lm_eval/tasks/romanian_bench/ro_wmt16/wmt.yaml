@@ -1,0 +1,37 @@
+group: ro_wmt
+task:
+  - group: wmt_ro_en
+    task:
+    - task: wmt_ro-en_fs0
+      include: wmt-ro-en.yaml
+      num_fewshot: 0
+  
+    - task: wmt_ro-en_fs1
+      include: wmt-ro-en.yaml
+      num_fewshot: 1
+
+    - task: wmt_ro-en_fs3
+      include: wmt-ro-en.yaml
+      num_fewshot: 3
+
+    - task: wmt_ro-en_fs5
+      include: wmt-ro-en.yaml
+      num_fewshot: 5
+
+  - group: wmt_en_ro
+    task:
+    - task: wmt_en-ro_fs0
+      include: wmt-en-ro.yaml
+      num_fewshot: 0
+  
+    - task: wmt_en-ro_fs1
+      include: wmt-en-ro.yaml
+      num_fewshot: 1
+
+    - task: wmt_en-ro_fs3
+      include: wmt-en-ro.yaml
+      num_fewshot: 3
+
+    - task: wmt_en-ro_fs5
+      include: wmt-en-ro.yaml
+      num_fewshot: 5

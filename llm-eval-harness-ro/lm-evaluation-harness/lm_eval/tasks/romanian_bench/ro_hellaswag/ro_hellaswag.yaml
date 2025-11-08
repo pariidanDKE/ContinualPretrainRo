@@ -1,0 +1,22 @@
+group: ro_hellaswag
+task:
+
+  - task: hs_fs0
+    include: _ro_hellaswag.yaml
+    num_fewshot: 0
+
+  - task: hs_fs1
+    include: _ro_hellaswag.yaml
+    num_fewshot: 1
+
+  - task: hs_fs3
+    include: _ro_hellaswag.yaml
+    num_fewshot: 3
+
+  - task: hs_fs5
+    include: _ro_hellaswag.yaml
+    num_fewshot: 5
+
+  - task: hs_fs10
+    include: _ro_hellaswag.yaml
+    num_fewshot: 10

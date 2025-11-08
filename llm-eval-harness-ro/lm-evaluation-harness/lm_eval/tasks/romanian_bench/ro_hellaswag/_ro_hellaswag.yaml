@@ -1,0 +1,22 @@
+task: _ro_hellaswag
+dataset_path: OpenLLM-Ro/ro_hellaswag
+
+
+output_type: multiple_choice
+
+training_split: null
+validation_split: validation
+test_split: null
+
+process_docs: !function process_hellaswag.process_docs
+doc_to_text: "{{query}}"
+doc_to_target: "{{label}}"
+doc_to_choice: "choices"
+
+metric_list:
+  - metric: acc_norm
+    aggregation: mean
+    higher_is_better: true
+
+metadata:
+  version: 1.0

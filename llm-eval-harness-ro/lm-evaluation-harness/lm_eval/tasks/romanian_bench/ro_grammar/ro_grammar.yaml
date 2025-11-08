@@ -1,0 +1,19 @@
+group: ro_grammar
+task:
+    - task: grammar_fs0
+      include: _ro_grammar.yaml
+      num_fewshot: 0
+
+    - task: grammar_fs1
+      include: _ro_grammar.yaml
+      num_fewshot: 1
+
+    - task: grammar_fs3
+      include: _ro_grammar.yaml
+      num_fewshot: 3
+
+    - task: grammar_fs5
+      include: _ro_grammar.yaml
+      num_fewshot: 5
+
+

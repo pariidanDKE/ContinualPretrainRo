@@ -1,0 +1,11 @@
+task: laroseda_bc_gen
+include: _laroseda_gen.yaml
+doc_to_text: "Recenzie: {{title.strip()}}. {{content.strip()}}\nEvaluare:"
+doc_to_target: !function utils.doc_to_target_bc_gen
+
+filter_list:
+  - name: "flexible-extract"
+    filter:
+      - function: "regex"
+        regex_pattern: "(^[PpNn][OoEe][ZzGg][IiAa][Tt][Ii][Vv][AaĂă]$)"
+      - function: "take_first"

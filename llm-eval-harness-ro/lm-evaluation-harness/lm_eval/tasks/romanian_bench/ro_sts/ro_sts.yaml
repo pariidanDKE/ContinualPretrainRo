@@ -1,0 +1,14 @@
+group: ro_sts
+task: 
+
+  - task: f_fs1
+    include: _ro_sts.yaml
+    num_fewshot: 1
+
+  - task: f_fs3
+    include: _ro_sts.yaml
+    num_fewshot: 3
+
+  - task: f_fs5
+    include: _ro_sts.yaml
+    num_fewshot: 5

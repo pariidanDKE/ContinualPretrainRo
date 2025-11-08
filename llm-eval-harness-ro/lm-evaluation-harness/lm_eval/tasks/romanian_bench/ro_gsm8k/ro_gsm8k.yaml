@@ -1,0 +1,15 @@
+group: ro_gsm8k
+task:
+
+  - task: gsm8k_fs1
+    include: _ro_gsm8k.yaml
+    num_fewshot: 1
+
+  - task: gsm8k_fs3
+    include: _ro_gsm8k.yaml
+    num_fewshot: 3
+
+  - task: gsm8k_fs5
+    include: _ro_gsm8k.yaml
+    num_fewshot: 5
+

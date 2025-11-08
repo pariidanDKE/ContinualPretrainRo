@@ -1,0 +1,20 @@
+task: ro_wiki
+dataset_path: OpenLLM-Ro/ro_wiki
+
+output_type: loglikelihood_rolling
+validation_split: validation
+test_split: test
+
+doc_to_text: ""
+doc_to_target: !function preprocess_wiki.wikitext_detokenizer
+process_results: !function preprocess_wiki.process_results
+should_decontaminate: true
+doc_to_decontamination_query: "{{page}}"
+
+metric_list:
+  - metric: word_perplexity
+  - metric: byte_perplexity
+  - metric: bits_per_byte
+
+metadata:
+  version: 1.0

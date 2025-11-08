@@ -1,0 +1,30 @@
+task: _ro_xquad
+dataset_path: google/xquad
+dataset_name: xquad.ro
+
+output_type: generate_until
+validation_split: validation
+
+doc_to_text: "{{context}}\nÎntrebare: {{question}}\nRăspuns:"
+doc_to_target: !function process_xquad.doc_to_target
+should_decontaminate: true
+doc_to_decontamination_query: "{{context}}"
+
+generation_kwargs:
+  until:
+    - "\n"
+  do_sample: false
+  temperature: 0.0
+
+process_results: !function process_xquad.process_results
+metric_list:
+  - metric: squad_em
+    aggregation: squad_em
+    higher_is_better: true
+
+  - metric: squad_f1
+    aggregation: squad_f1
+    higher_is_better: true
+
+metadata:
+  version: 1.0

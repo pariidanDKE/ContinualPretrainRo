@@ -1,0 +1,3 @@
+task: _laroseda_mc_zs
+include: _laroseda_mc.yaml
+description: "Analizează următoarea recenzie și caracterizează nota oferită produsului pe o scară de la 1 la 5, cu următoarele opțiuni: 1, 2, 4 sau 5.\n\n"

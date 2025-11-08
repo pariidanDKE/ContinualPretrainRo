@@ -1,0 +1,5 @@
+group: ro_truthfulqa
+task:
+  - task: tqa_fs0
+    include: _ro_truthfulqa.yaml
+    num_fewshot: 0

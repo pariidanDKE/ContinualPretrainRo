@@ -1,0 +1,3 @@
+task: _laroseda_bc_fs
+include: _laroseda_bc.yaml
+description: "Analizează următoarea recenzie și evalueaz-o ca fiind pozitivă sau negativă. În continuare vei observa câteva exemple.\n\n"

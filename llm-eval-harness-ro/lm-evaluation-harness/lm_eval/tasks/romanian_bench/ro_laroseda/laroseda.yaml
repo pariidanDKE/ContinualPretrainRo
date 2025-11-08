@@ -1,0 +1,40 @@
+group: ro_laroseda
+task:
+  - group: laroseda_binary
+    task:
+      - task: bi_fs0
+        include: _laroseda_bc_zs.yaml
+        num_fewshot: 0
+
+      - task: bi_fs1
+        include: _laroseda_bc_fs.yaml
+        num_fewshot: 1
+
+      - task: bi_fs3
+        include: _laroseda_bc_fs.yaml
+        num_fewshot: 3
+
+      - task: bi_fs5
+        include: _laroseda_bc_fs.yaml
+        num_fewshot: 5
+
+
+  - group: laroseda_multiclass
+    task:
+      - task: mc_fs0
+        include: _laroseda_mc_zs.yaml
+        num_fewshot: 0
+
+      - task: mc_fs1
+        include: _laroseda_mc_fs.yaml
+        num_fewshot: 1
+
+      - task: mc_fs3
+        include: _laroseda_mc_fs.yaml
+        num_fewshot: 3
+        
+      - task: mc_fs5
+        include: _laroseda_mc_fs.yaml
+        num_fewshot: 5
+
+  

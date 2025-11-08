@@ -1,0 +1,22 @@
+task: wmt-ro-en
+dataset_path: wmt16
+dataset_name: ro-en
+
+training_split: train
+validation_split: test
+fewshot_split: train
+
+output_type: generate_until
+doc_to_text: "Tradu următorul text din română în engleză: {{translation.ro}}\n\n"
+doc_to_target: "{{translation.en}}"
+
+metric_list:
+  - metric: !function metrics.wer
+    aggregation: !function metrics.agg_wer
+    higher_is_better: false
+  - metric: !function metrics.bleu
+    aggregation: !function metrics.agg_bleu
+    higher_is_better: true
+
+metadata:
+  version: 1.0

@@ -1,0 +1,33 @@
+task: base_laroseda_gen
+dataset_path: laroseda
+dataset_name: null
+dataset_kwargs: null
+
+training_split: train
+test_split: test
+fewshot_split: train
+
+output_type: generate_until
+process_docs: !function utils.process_docs
+
+metric_list:
+  - metric: macro_f1
+    aggregation: macro_f1_gen
+    higher_is_better: true
+    
+  # - metric: weighted_f1
+  #   aggregation: weighted_f1_gen
+  #   higher_is_better: true
+
+generation_kwargs:
+  until:
+    - "Recenzie:"
+    - "</s>"
+    - "<|im_end|>"
+    - "\n\n"
+  do_sample: false
+  temperature: 0.0
+repeats: 1
+
+metadata:
+  version: 1.0

@@ -1,0 +1,18 @@
+group: ro_mmlu
+task:
+
+  - task: mmlu_fs0
+    include: _ro_mmlu.yaml
+    num_fewshot: 0
+
+  - task: mmlu_fs1
+    include: _ro_mmlu.yaml
+    num_fewshot: 1
+
+  - task: mmlu_fs3
+    include: _ro_mmlu.yaml
+    num_fewshot: 3
+
+  - task: mmlu_fs5
+    include: _ro_mmlu.yaml
+    num_fewshot: 5

@@ -1,0 +1,26 @@
+group: ro_arc_challenge
+task:
+    - task: arc_fs0
+      include: _ro_arc_challenge.yaml
+      num_fewshot: 0
+
+    - task: arc_fs1
+      include: _ro_arc_challenge.yaml
+      num_fewshot: 1
+
+    - task: arc_fs3
+      include: _ro_arc_challenge.yaml
+      num_fewshot: 3
+
+    - task: arc_fs5
+      include: _ro_arc_challenge.yaml
+      num_fewshot: 5
+
+    - task: arc_fs10
+      include: _ro_arc_challenge.yaml
+      num_fewshot: 10
+
+    - task: arc_fs25
+      include: _ro_arc_challenge.yaml
+      num_fewshot: 25
+

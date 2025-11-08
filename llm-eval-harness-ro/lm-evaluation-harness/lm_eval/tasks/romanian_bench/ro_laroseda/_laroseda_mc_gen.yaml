@@ -1,0 +1,12 @@
+task: laroseda_mc_gen
+include: _laroseda_gen.yaml
+doc_to_text: "Recenzie: {{title.strip()}}. {{content.strip()}}\nNotă: "
+doc_to_target: !function utils.doc_to_target_mc_gen
+
+filter_list:
+  - name: "flexible-extract"
+    filter:
+      - function: "regex"
+        group_select: 0
+        regex_pattern: "(^[0-9]+$)"
+      - function: "take_first"
