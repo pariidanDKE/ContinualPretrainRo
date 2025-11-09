@@ -1,16 +1,11 @@
 model_path: google/gemma-3-1b-pt
 verbosity: INFO
 apply_chat_template: false
-eval_batch_size: 16
+eval_batch_size: 4
 num_fewshot: 5
 device: auto
 tasks_to_run:
-- _ro_winogrande
-- _ro_belebele
 - ro_wiki
-- _ro_arc_challenge
-- arc_challenge
-- winogrande
 output_dir: eval_results
 use_mps: true
 evaluation_tasks:

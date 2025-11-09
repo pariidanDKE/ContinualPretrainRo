@@ -2,8 +2,11 @@
 # This script runs tests on preliminary language understanding,
 # providing an early signal of which model understands Romanian better.
 
-export eval_batch_size=16
+export eval_batch_size=4
 export use_mps=True
+tasks_to_run=("ro_wiki")
+# Convert bash array to Hydra list format: [task1,task2,task3]
+tasks_list="[$(IFS=,; echo "${tasks_to_run[*]}")]"
 
 # Define the models to test
 model_paths=("google/gemma-3-1b-it" "google/gemma-3-1b-pt")
@@ -24,7 +27,8 @@ for model_path in "${model_paths[@]}"; do
         eval_batch_size=${eval_batch_size} \
         model_path=${model_path} \
         use_mps=${use_mps} \
-        apply_chat_template=${apply_chat_template}
+        apply_chat_template=${apply_chat_template} \
+        tasks_to_run=${tasks_list}
 
     echo "✅ Finished Evaluation for ${model_path}"
     echo

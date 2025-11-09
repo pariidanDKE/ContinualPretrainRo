@@ -1,4 +1,5 @@
-- eval_batch_size=16
+- eval_batch_size=4
 - model_path=google/gemma-3-1b-pt
 - use_mps=True
 - apply_chat_template=false
+- tasks_to_run=[ro_wiki]
