@@ -1,3 +1,4 @@
 - eval_batch_size=16
-- tasks_to_run=[]
-- model_path=google/gemma-3-1b-it
+- model_path=google/gemma-3-1b-pt
+- use_mps=True
+- apply_chat_template=false

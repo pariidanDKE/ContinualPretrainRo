@@ -113,12 +113,13 @@ hydra:
     - hydra.mode=RUN
     task:
     - eval_batch_size=16
-    - tasks_to_run=[]
-    - model_path=google/gemma-3-1b-it
+    - model_path=google/gemma-3-1b-pt
+    - use_mps=True
+    - apply_chat_template=false
   job:
     name: evaluate
     chdir: null
-    override_dirname: eval_batch_size=16,model_path=google/gemma-3-1b-it,tasks_to_run=[]
+    override_dirname: apply_chat_template=false,eval_batch_size=16,model_path=google/gemma-3-1b-pt,use_mps=True
     id: ???
     num: ???
     config_name: evaluate_ro.yaml
