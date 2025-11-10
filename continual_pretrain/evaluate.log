@@ -8271,3 +8271,401 @@ If the dataset is based on a loading script, please ask the dataset author to re
 [2025-11-09 14:36:57,158][__name__][INFO] - 📁 Combined results saved to: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-11-09_14-33-43/eval_results.json
 [2025-11-09 14:36:57,158][__name__][INFO] - 📊 Summary:
 [2025-11-09 14:36:57,158][__name__][INFO] -   - ro_wiki: No metrics found
+[2025-11-09 18:25:38,545][__name__][INFO] - Starting Romanian evaluation run
+[2025-11-09 18:25:38,546][__name__][INFO] - Using MPS as specified in the config.
+[2025-11-09 18:25:38,546][__name__][INFO] - 📁 Results will be saved in: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/Qwen_Qwen3-1.7B/2025-11-09_18-25-38
+[2025-11-09 18:25:38,546][__name__][INFO] - Skipping _ro_winogrande (not in tasks_to_run)
+[2025-11-09 18:25:38,546][__name__][INFO] - Skipping _ro_belebele (not in tasks_to_run)
+[2025-11-09 18:25:38,546][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2025-11-09 18:25:38,546][__name__][INFO] - Running Qwen/Qwen3-1.7B with apply_chat_template False
+[2025-11-09 18:25:38,549][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-09 18:25:38,549][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'Qwen/Qwen3-1.7B'}
+[2025-11-09 18:25:38,560][lm-eval][INFO] - Using device 'mps'
+[2025-11-09 18:25:38,785][__name__][ERROR] - ❌ Error running ro_wiki: Qwen/Qwen3-1.7B is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `hf auth login` or by passing `token=<your_token>`
+[2025-11-09 18:25:38,785][__name__][INFO] - Skipping _ro_arc_challenge (not in tasks_to_run)
+[2025-11-09 18:25:38,785][__name__][INFO] - Skipping arc_challenge (not in tasks_to_run)
+[2025-11-09 18:25:38,785][__name__][INFO] - Skipping winogrande (not in tasks_to_run)
+[2025-11-09 18:25:38,786][__name__][INFO] - 📁 Combined results saved to: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/Qwen_Qwen3-1.7B/2025-11-09_18-25-38/eval_results.json
+[2025-11-09 18:25:38,786][__name__][INFO] - 📊 Summary:
+[2025-11-09 18:25:38,786][__name__][INFO] -   - ro_wiki: No metrics found
+[2025-11-09 18:26:28,636][__name__][INFO] - Starting Romanian evaluation run
+[2025-11-09 18:26:28,636][__name__][INFO] - Using MPS as specified in the config.
+[2025-11-09 18:26:28,636][__name__][INFO] - 📁 Results will be saved in: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-it/2025-11-09_18-26-28
+[2025-11-09 18:26:28,636][__name__][INFO] - Skipping _ro_winogrande (not in tasks_to_run)
+[2025-11-09 18:26:28,636][__name__][INFO] - Skipping _ro_belebele (not in tasks_to_run)
+[2025-11-09 18:26:28,636][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2025-11-09 18:26:28,636][__name__][INFO] - Running google/gemma-3-1b-it with apply_chat_template True
+[2025-11-09 18:26:28,637][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-09 18:26:28,637][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-it'}
+[2025-11-09 18:26:28,646][lm-eval][INFO] - Using device 'mps'
+[2025-11-09 18:26:29,324][__name__][ERROR] - ❌ Error running ro_wiki: 401 Client Error. (Request ID: Root=1-6910cec5-0f363bac33b8393177959cec;45c9aa36-4639-46df-87c9-746343067966)
+
+Repository Not Found for url: https://huggingface.co/api/models/google/gemma-3-1b-it/tree/main/additional_chat_templates?recursive=False&expand=False.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated. For more details, see https://huggingface.co/docs/huggingface_hub/authentication
+User Access Token "cpt_ro" is expired
+[2025-11-09 18:26:29,326][__name__][INFO] - Skipping _ro_arc_challenge (not in tasks_to_run)
+[2025-11-09 18:26:29,326][__name__][INFO] - Skipping arc_challenge (not in tasks_to_run)
+[2025-11-09 18:26:29,326][__name__][INFO] - Skipping winogrande (not in tasks_to_run)
+[2025-11-09 18:26:29,327][__name__][INFO] - 📁 Combined results saved to: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-it/2025-11-09_18-26-28/eval_results.json
+[2025-11-09 18:26:29,327][__name__][INFO] - 📊 Summary:
+[2025-11-09 18:26:29,327][__name__][INFO] -   - ro_wiki: No metrics found
+[2025-11-09 18:26:31,963][__name__][INFO] - Starting Romanian evaluation run
+[2025-11-09 18:26:31,963][__name__][INFO] - Using MPS as specified in the config.
+[2025-11-09 18:26:31,964][__name__][INFO] - 📁 Results will be saved in: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-11-09_18-26-31
+[2025-11-09 18:26:31,964][__name__][INFO] - Skipping _ro_winogrande (not in tasks_to_run)
+[2025-11-09 18:26:31,964][__name__][INFO] - Skipping _ro_belebele (not in tasks_to_run)
+[2025-11-09 18:26:31,964][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2025-11-09 18:26:31,964][__name__][INFO] - Running google/gemma-3-1b-pt with apply_chat_template False
+[2025-11-09 18:26:31,965][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-09 18:26:31,965][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-pt'}
+[2025-11-09 18:26:31,973][lm-eval][INFO] - Using device 'mps'
+[2025-11-09 18:26:32,572][__name__][ERROR] - ❌ Error running ro_wiki: 401 Client Error. (Request ID: Root=1-6910cec8-744c9cf928a326b0750f2094;00c72726-630d-4c32-b72c-3f1a21e8b6b9)
+
+Repository Not Found for url: https://huggingface.co/api/models/google/gemma-3-1b-pt/tree/main/additional_chat_templates?recursive=False&expand=False.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated. For more details, see https://huggingface.co/docs/huggingface_hub/authentication
+User Access Token "cpt_ro" is expired
+[2025-11-09 18:26:32,573][__name__][INFO] - Skipping _ro_arc_challenge (not in tasks_to_run)
+[2025-11-09 18:26:32,573][__name__][INFO] - Skipping arc_challenge (not in tasks_to_run)
+[2025-11-09 18:26:32,573][__name__][INFO] - Skipping winogrande (not in tasks_to_run)
+[2025-11-09 18:26:32,574][__name__][INFO] - 📁 Combined results saved to: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-11-09_18-26-31/eval_results.json
+[2025-11-09 18:26:32,574][__name__][INFO] - 📊 Summary:
+[2025-11-09 18:26:32,574][__name__][INFO] -   - ro_wiki: No metrics found
+[2025-11-09 18:27:12,432][__name__][INFO] - Starting Romanian evaluation run
+[2025-11-09 18:27:12,433][__name__][INFO] - Using MPS as specified in the config.
+[2025-11-09 18:27:12,433][__name__][INFO] - 📁 Results will be saved in: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-it/2025-11-09_18-27-12
+[2025-11-09 18:27:12,433][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2025-11-09 18:27:12,433][__name__][INFO] - Running google/gemma-3-1b-it with apply_chat_template True
+[2025-11-09 18:27:12,434][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-09 18:27:12,434][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-it'}
+[2025-11-09 18:27:12,442][lm-eval][INFO] - Using device 'mps'
+[2025-11-09 18:27:12,971][__name__][ERROR] - ❌ Error running _ro_winogrande: 401 Client Error. (Request ID: Root=1-6910cef0-571f150f6614a2cb649f7b63;1c61f5b5-1518-4e76-b71c-e96a7d7742ac)
+
+Repository Not Found for url: https://huggingface.co/api/models/google/gemma-3-1b-it/tree/main/additional_chat_templates?recursive=False&expand=False.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated. For more details, see https://huggingface.co/docs/huggingface_hub/authentication
+User Access Token "cpt_ro" is expired
+[2025-11-09 18:27:12,974][__name__][INFO] - 🚀 Running evaluation for _ro_belebele | fewshot=0 | limit=1000
+[2025-11-09 18:27:12,974][__name__][INFO] - Running google/gemma-3-1b-it with apply_chat_template True
+[2025-11-09 18:27:12,975][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-09 18:27:12,975][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-it'}
+[2025-11-09 18:27:12,976][lm-eval][INFO] - Using device 'mps'
+[2025-11-09 18:27:13,373][__name__][ERROR] - ❌ Error running _ro_belebele: 401 Client Error. (Request ID: Root=1-6910cef1-68f94af50490e53228f8d590;a7f065b7-6414-49fe-ab9b-92465fe6f156)
+
+Repository Not Found for url: https://huggingface.co/api/models/google/gemma-3-1b-it/tree/main/additional_chat_templates?recursive=False&expand=False.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated. For more details, see https://huggingface.co/docs/huggingface_hub/authentication
+User Access Token "cpt_ro" is expired
+[2025-11-09 18:27:13,376][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2025-11-09 18:27:13,376][__name__][INFO] - Running google/gemma-3-1b-it with apply_chat_template True
+[2025-11-09 18:27:13,378][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-09 18:27:13,378][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-it'}
+[2025-11-09 18:27:13,379][lm-eval][INFO] - Using device 'mps'
+[2025-11-09 18:27:13,787][__name__][ERROR] - ❌ Error running ro_wiki: 401 Client Error. (Request ID: Root=1-6910cef1-2c966149440503bd19aee74b;5c539851-aa8c-4fa7-9b9e-bf2359ae60bb)
+
+Repository Not Found for url: https://huggingface.co/api/models/google/gemma-3-1b-it/tree/main/additional_chat_templates?recursive=False&expand=False.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated. For more details, see https://huggingface.co/docs/huggingface_hub/authentication
+User Access Token "cpt_ro" is expired
+[2025-11-09 18:27:13,790][__name__][INFO] - 🚀 Running evaluation for _ro_arc_challenge | fewshot=5 | limit=1000
+[2025-11-09 18:27:13,791][__name__][INFO] - Running google/gemma-3-1b-it with apply_chat_template True
+[2025-11-09 18:27:13,792][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-09 18:27:13,792][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-it'}
+[2025-11-09 18:27:13,793][lm-eval][INFO] - Using device 'mps'
+[2025-11-09 18:27:14,223][__name__][ERROR] - ❌ Error running _ro_arc_challenge: 401 Client Error. (Request ID: Root=1-6910cef2-078b6e4a3bd707d84c6c800b;016c3e15-a924-4b30-9336-a04e68787067)
+
+Repository Not Found for url: https://huggingface.co/api/models/google/gemma-3-1b-it/tree/main/additional_chat_templates?recursive=False&expand=False.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated. For more details, see https://huggingface.co/docs/huggingface_hub/authentication
+User Access Token "cpt_ro" is expired
+[2025-11-09 18:27:14,226][__name__][INFO] - 🚀 Running evaluation for arc_challenge | fewshot=5 | limit=1000
+[2025-11-09 18:27:14,226][__name__][INFO] - Running google/gemma-3-1b-it with apply_chat_template True
+[2025-11-09 18:27:14,228][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-09 18:27:14,228][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-it'}
+[2025-11-09 18:27:14,229][lm-eval][INFO] - Using device 'mps'
+[2025-11-09 18:27:14,618][__name__][ERROR] - ❌ Error running arc_challenge: 401 Client Error. (Request ID: Root=1-6910cef2-50cb1d0c6f55d92f65a5cb45;aa991419-d8e9-44a6-88c4-1129f81b87b5)
+
+Repository Not Found for url: https://huggingface.co/api/models/google/gemma-3-1b-it/tree/main/additional_chat_templates?recursive=False&expand=False.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated. For more details, see https://huggingface.co/docs/huggingface_hub/authentication
+User Access Token "cpt_ro" is expired
+[2025-11-09 18:27:14,621][__name__][INFO] - 🚀 Running evaluation for winogrande | fewshot=5 | limit=1000
+[2025-11-09 18:27:14,621][__name__][INFO] - Running google/gemma-3-1b-it with apply_chat_template True
+[2025-11-09 18:27:14,622][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-09 18:27:14,622][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-it'}
+[2025-11-09 18:27:14,623][lm-eval][INFO] - Using device 'mps'
+[2025-11-09 18:27:15,018][__name__][ERROR] - ❌ Error running winogrande: 401 Client Error. (Request ID: Root=1-6910cef2-30a5bfbe07ffb61a46a4c462;458fc846-cdff-4d6b-a652-0a55699e76f2)
+
+Repository Not Found for url: https://huggingface.co/api/models/google/gemma-3-1b-it/tree/main/additional_chat_templates?recursive=False&expand=False.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated. For more details, see https://huggingface.co/docs/huggingface_hub/authentication
+User Access Token "cpt_ro" is expired
+[2025-11-09 18:27:15,020][__name__][INFO] - 📁 Combined results saved to: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-it/2025-11-09_18-27-12/eval_results.json
+[2025-11-09 18:27:15,020][__name__][INFO] - 📊 Summary:
+[2025-11-09 18:27:15,020][__name__][INFO] -   - _ro_winogrande: No metrics found
+[2025-11-09 18:27:15,020][__name__][INFO] -   - _ro_belebele: No metrics found
+[2025-11-09 18:27:15,020][__name__][INFO] -   - ro_wiki: No metrics found
+[2025-11-09 18:27:15,020][__name__][INFO] -   - _ro_arc_challenge: No metrics found
+[2025-11-09 18:27:15,020][__name__][INFO] -   - arc_challenge: No metrics found
+[2025-11-09 18:27:15,020][__name__][INFO] -   - winogrande: No metrics found
+[2025-11-09 18:27:17,638][__name__][INFO] - Starting Romanian evaluation run
+[2025-11-09 18:27:17,638][__name__][INFO] - Using MPS as specified in the config.
+[2025-11-09 18:27:17,638][__name__][INFO] - 📁 Results will be saved in: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-11-09_18-27-17
+[2025-11-09 18:27:17,638][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2025-11-09 18:27:17,638][__name__][INFO] - Running google/gemma-3-1b-pt with apply_chat_template False
+[2025-11-09 18:27:17,639][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-09 18:27:17,639][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-pt'}
+[2025-11-09 18:27:17,648][lm-eval][INFO] - Using device 'mps'
+[2025-11-09 22:30:38,514][__name__][INFO] - Starting Romanian evaluation run
+[2025-11-09 22:30:38,515][__name__][INFO] - Using MPS as specified in the config.
+[2025-11-09 22:30:38,515][__name__][INFO] - 📁 Results will be saved in: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-it/2025-11-09_22-30-38
+[2025-11-09 22:30:38,515][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2025-11-09 22:30:38,515][__name__][INFO] - Running google/gemma-3-1b-it with apply_chat_template True
+[2025-11-09 22:30:38,516][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-09 22:30:38,516][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-it'}
+[2025-11-09 22:30:38,527][lm-eval][INFO] - Using device 'mps'
+[2025-11-09 22:30:42,037][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-11-09 22:30:46,829][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_winogrande from None to 5
+[2025-11-09 22:30:46,829][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-11-09 22:30:46,830][lm-eval][INFO] - Building contexts for _ro_winogrande on rank 0...
+[2025-11-09 22:30:46,888][lm-eval][INFO] - Running loglikelihood requests
+[2025-11-09 22:31:33,801][__name__][INFO] - Starting Romanian evaluation run
+[2025-11-09 22:31:33,801][__name__][INFO] - Using MPS as specified in the config.
+[2025-11-09 22:31:33,801][__name__][INFO] - 📁 Results will be saved in: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-it/2025-11-09_22-31-33
+[2025-11-09 22:31:33,801][__name__][INFO] - Skipping _ro_winogrande (not in tasks_to_run)
+[2025-11-09 22:31:33,801][__name__][INFO] - Skipping _ro_belebele (not in tasks_to_run)
+[2025-11-09 22:31:33,801][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2025-11-09 22:31:33,801][__name__][INFO] - Running google/gemma-3-1b-it with apply_chat_template True
+[2025-11-09 22:31:33,802][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-09 22:31:33,802][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-it'}
+[2025-11-09 22:31:33,816][lm-eval][INFO] - Using device 'mps'
+[2025-11-09 22:31:35,967][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-11-09 22:31:37,975][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2025-11-09 22:31:37,975][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-11-09 22:31:37,975][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2025-11-09 22:31:37,975][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-11-09 22:31:37,975][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2025-11-09 22:31:37,975][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-11-09 22:31:40,499][lm-eval][WARNING] - Overwriting default num_fewshot of ro_wiki from None to 0
+[2025-11-09 22:31:40,500][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-11-09 22:31:40,501][lm-eval][INFO] - Building contexts for ro_wiki on rank 0...
+[2025-11-09 22:31:40,630][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2025-11-09 22:36:30,080][__name__][ERROR] - ❌ Error running ro_wiki: MPS backend out of memory (MPS allocated: 9.87 GiB, other allocations: 10.37 GiB, max allowed: 27.20 GiB). Tried to allocate 8.00 GiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+[2025-11-09 22:36:30,602][__name__][INFO] - Skipping _ro_arc_challenge (not in tasks_to_run)
+[2025-11-09 22:36:30,602][__name__][INFO] - Skipping arc_challenge (not in tasks_to_run)
+[2025-11-09 22:36:30,602][__name__][INFO] - Skipping winogrande (not in tasks_to_run)
+[2025-11-09 22:36:30,611][__name__][INFO] - 📁 Combined results saved to: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-it/2025-11-09_22-31-33/eval_results.json
+[2025-11-09 22:36:30,611][__name__][INFO] - 📊 Summary:
+[2025-11-09 22:36:30,611][__name__][INFO] -   - ro_wiki: No metrics found
+[2025-11-09 22:36:37,028][__name__][INFO] - Starting Romanian evaluation run
+[2025-11-09 22:36:37,028][__name__][INFO] - Using MPS as specified in the config.
+[2025-11-09 22:36:37,029][__name__][INFO] - 📁 Results will be saved in: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-11-09_22-36-37
+[2025-11-09 22:36:37,029][__name__][INFO] - Skipping _ro_winogrande (not in tasks_to_run)
+[2025-11-09 22:36:37,029][__name__][INFO] - Skipping _ro_belebele (not in tasks_to_run)
+[2025-11-09 22:36:37,029][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2025-11-09 22:36:37,029][__name__][INFO] - Running google/gemma-3-1b-pt with apply_chat_template False
+[2025-11-09 22:36:37,032][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-09 22:36:37,032][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-pt'}
+[2025-11-09 22:36:37,058][lm-eval][INFO] - Using device 'mps'
+[2025-11-09 22:36:40,561][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-11-09 22:36:42,728][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2025-11-09 22:36:42,728][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-11-09 22:36:42,728][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2025-11-09 22:36:42,728][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-11-09 22:36:42,728][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2025-11-09 22:36:42,728][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-11-09 22:36:45,206][lm-eval][WARNING] - Overwriting default num_fewshot of ro_wiki from None to 0
+[2025-11-09 22:36:45,206][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-11-09 22:36:45,207][lm-eval][INFO] - Building contexts for ro_wiki on rank 0...
+[2025-11-09 22:36:45,313][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2025-11-09 22:40:49,429][__name__][ERROR] - ❌ Error running ro_wiki: MPS backend out of memory (MPS allocated: 9.87 GiB, other allocations: 10.37 GiB, max allowed: 27.20 GiB). Tried to allocate 8.00 GiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+[2025-11-09 22:40:49,879][__name__][INFO] - Skipping _ro_arc_challenge (not in tasks_to_run)
+[2025-11-09 22:40:49,879][__name__][INFO] - Skipping arc_challenge (not in tasks_to_run)
+[2025-11-09 22:40:49,879][__name__][INFO] - Skipping winogrande (not in tasks_to_run)
+[2025-11-09 22:40:49,887][__name__][INFO] - 📁 Combined results saved to: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-11-09_22-36-37/eval_results.json
+[2025-11-09 22:40:49,887][__name__][INFO] - 📊 Summary:
+[2025-11-09 22:40:49,887][__name__][INFO] -   - ro_wiki: No metrics found
+[2025-11-09 22:49:35,503][__name__][INFO] - Starting Romanian evaluation run
+[2025-11-09 22:49:35,503][__name__][INFO] - Using MPS as specified in the config.
+[2025-11-09 22:49:35,504][__name__][INFO] - 📁 Results will be saved in: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2025-11-09_22-49-35
+[2025-11-09 22:49:35,504][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2025-11-09 22:49:35,504][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template False
+[2025-11-09 22:49:35,506][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-09 22:49:35,506][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B'}
+[2025-11-09 22:49:35,517][lm-eval][INFO] - Using device 'mps'
+[2025-11-09 22:52:32,843][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-11-09 22:52:37,414][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_winogrande from None to 5
+[2025-11-09 22:52:37,414][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-11-09 22:52:37,415][lm-eval][INFO] - Building contexts for _ro_winogrande on rank 0...
+[2025-11-09 22:52:37,440][lm-eval][INFO] - Running loglikelihood requests
+[2025-11-09 23:01:11,407][__name__][INFO] - ✅ Finished _ro_winogrande
+[2025-11-09 23:01:11,467][__name__][INFO] - 💾 Saved partial results: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2025-11-09_22-49-35/_ro_winogrande.json
+[2025-11-09 23:01:11,467][__name__][INFO] - 🚀 Running evaluation for _ro_belebele | fewshot=0 | limit=1000
+[2025-11-09 23:01:11,467][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template False
+[2025-11-09 23:01:11,468][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-09 23:01:11,468][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B'}
+[2025-11-09 23:01:11,468][lm-eval][INFO] - Using device 'mps'
+[2025-11-09 23:01:12,990][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-11-09 23:01:17,817][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_belebele from None to 0
+[2025-11-09 23:01:17,817][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-11-09 23:01:17,817][lm-eval][INFO] - Building contexts for _ro_belebele on rank 0...
+[2025-11-09 23:01:18,225][lm-eval][INFO] - Running loglikelihood requests
+[2025-11-09 23:21:08,177][__name__][INFO] - ✅ Finished _ro_belebele
+[2025-11-09 23:21:08,241][__name__][INFO] - 💾 Saved partial results: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2025-11-09_22-49-35/_ro_belebele.json
+[2025-11-09 23:21:08,241][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2025-11-09 23:21:08,241][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template False
+[2025-11-09 23:21:08,242][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-09 23:21:08,242][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B'}
+[2025-11-09 23:21:08,242][lm-eval][INFO] - Using device 'mps'
+[2025-11-09 23:21:11,171][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-11-09 23:21:13,348][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2025-11-09 23:21:13,348][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-11-09 23:21:13,348][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2025-11-09 23:21:13,348][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-11-09 23:21:13,348][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2025-11-09 23:21:13,348][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-11-09 23:21:16,094][lm-eval][WARNING] - Overwriting default num_fewshot of ro_wiki from None to 0
+[2025-11-09 23:21:16,094][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-11-09 23:21:16,095][lm-eval][INFO] - Building contexts for ro_wiki on rank 0...
+[2025-11-09 23:21:16,200][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2025-11-09 23:26:36,369][__name__][ERROR] - ❌ Error running ro_wiki: Invalid buffer size: 549.03 GiB
+[2025-11-09 23:26:36,461][__name__][INFO] - 🚀 Running evaluation for _ro_arc_challenge | fewshot=5 | limit=1000
+[2025-11-09 23:26:36,461][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template False
+[2025-11-09 23:26:36,512][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-09 23:26:36,513][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B'}
+[2025-11-09 23:26:36,522][lm-eval][INFO] - Using device 'mps'
+[2025-11-09 23:26:40,237][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-11-09 23:26:45,760][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_arc_challenge from None to 5
+[2025-11-09 23:26:45,760][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-11-09 23:26:45,761][lm-eval][INFO] - Building contexts for _ro_arc_challenge on rank 0...
+[2025-11-09 23:26:46,544][lm-eval][INFO] - Running loglikelihood requests
+[2025-11-10 00:00:59,470][__name__][INFO] - ✅ Finished _ro_arc_challenge
+[2025-11-10 00:00:59,596][__name__][INFO] - 💾 Saved partial results: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2025-11-09_22-49-35/_ro_arc_challenge.json
+[2025-11-10 00:00:59,596][__name__][INFO] - 🚀 Running evaluation for arc_challenge | fewshot=5 | limit=1000
+[2025-11-10 00:00:59,597][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template False
+[2025-11-10 00:00:59,604][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-10 00:00:59,604][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B'}
+[2025-11-10 00:00:59,605][lm-eval][INFO] - Using device 'mps'
+[2025-11-10 00:01:04,412][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-11-10 00:01:09,195][lm-eval][WARNING] - Overwriting default num_fewshot of arc_challenge from None to 5
+[2025-11-10 00:01:09,195][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-11-10 00:01:09,195][lm-eval][INFO] - Building contexts for arc_challenge on rank 0...
+[2025-11-10 00:01:11,785][lm-eval][INFO] - Running loglikelihood requests
+[2025-11-10 00:18:42,982][__name__][INFO] - ✅ Finished arc_challenge
+[2025-11-10 00:18:43,097][__name__][INFO] - 💾 Saved partial results: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2025-11-09_22-49-35/arc_challenge.json
+[2025-11-10 00:18:43,097][__name__][INFO] - 🚀 Running evaluation for winogrande | fewshot=5 | limit=1000
+[2025-11-10 00:18:43,097][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template False
+[2025-11-10 00:18:43,098][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-10 00:18:43,098][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B'}
+[2025-11-10 00:18:43,098][lm-eval][INFO] - Using device 'mps'
+[2025-11-10 00:18:48,188][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-11-10 00:18:50,386][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'winogrande' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2025-11-10 00:18:55,240][lm-eval][WARNING] - Overwriting default num_fewshot of winogrande from None to 5
+[2025-11-10 00:18:55,240][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-11-10 00:18:55,240][lm-eval][INFO] - Building contexts for winogrande on rank 0...
+[2025-11-10 00:18:55,264][lm-eval][INFO] - Running loglikelihood requests
+[2025-11-10 00:24:04,760][__name__][INFO] - ✅ Finished winogrande
+[2025-11-10 00:24:04,814][__name__][INFO] - 💾 Saved partial results: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2025-11-09_22-49-35/winogrande.json
+[2025-11-10 00:24:05,166][__name__][INFO] - 📁 Combined results saved to: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2025-11-09_22-49-35/eval_results.json
+[2025-11-10 00:24:05,166][__name__][INFO] - 📊 Summary:
+[2025-11-10 00:24:05,166][__name__][INFO] -   - _ro_winogrande: {'acc,none': 0.522, 'acc_stderr,none': 0.01580397942816194}
+[2025-11-10 00:24:05,166][__name__][INFO] -   - _ro_belebele: {'acc_norm,none': 0.25, 'acc_norm_stderr,none': 0.014441782171967503}
+[2025-11-10 00:24:05,166][__name__][INFO] -   - ro_wiki: No metrics found
+[2025-11-10 00:24:05,166][__name__][INFO] -   - _ro_arc_challenge: {'acc_norm,none': 0.31, 'acc_norm_stderr,none': 0.014632638658632765}
+[2025-11-10 00:24:05,166][__name__][INFO] -   - arc_challenge: {'acc,none': 0.359, 'acc_stderr,none': 0.01517726422479853, 'acc_norm,none': 0.342, 'acc_norm_stderr,none': 0.015008706182121804}
+[2025-11-10 00:24:05,166][__name__][INFO] -   - winogrande: {'acc,none': 0.619, 'acc_stderr,none': 0.015364734787007391}
+[2025-11-10 00:24:11,960][__name__][INFO] - Starting Romanian evaluation run
+[2025-11-10 00:24:11,960][__name__][INFO] - Using MPS as specified in the config.
+[2025-11-10 00:24:11,960][__name__][INFO] - 📁 Results will be saved in: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2025-11-10_00-24-11
+[2025-11-10 00:24:11,960][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2025-11-10 00:24:11,961][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2025-11-10 00:24:11,963][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-10 00:24:11,963][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct'}
+[2025-11-10 00:24:11,976][lm-eval][INFO] - Using device 'mps'
+[2025-11-10 00:27:06,041][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-11-10 00:27:11,393][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_winogrande from None to 5
+[2025-11-10 00:27:11,393][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-11-10 00:27:11,395][lm-eval][INFO] - Building contexts for _ro_winogrande on rank 0...
+[2025-11-10 00:27:11,453][lm-eval][INFO] - Running loglikelihood requests
+[2025-11-10 00:37:51,894][__name__][INFO] - ✅ Finished _ro_winogrande
+[2025-11-10 00:37:51,955][__name__][INFO] - 💾 Saved partial results: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2025-11-10_00-24-11/_ro_winogrande.json
+[2025-11-10 00:37:51,955][__name__][INFO] - 🚀 Running evaluation for _ro_belebele | fewshot=0 | limit=1000
+[2025-11-10 00:37:51,955][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2025-11-10 00:37:51,956][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-10 00:37:51,956][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct'}
+[2025-11-10 00:37:51,957][lm-eval][INFO] - Using device 'mps'
+[2025-11-10 00:37:53,462][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-11-10 00:37:58,034][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_belebele from None to 0
+[2025-11-10 00:37:58,034][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-11-10 00:37:58,034][lm-eval][INFO] - Building contexts for _ro_belebele on rank 0...
+[2025-11-10 00:37:58,402][lm-eval][INFO] - Running loglikelihood requests
+[2025-11-10 01:00:48,000][__name__][INFO] - ✅ Finished _ro_belebele
+[2025-11-10 01:00:48,066][__name__][INFO] - 💾 Saved partial results: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2025-11-10_00-24-11/_ro_belebele.json
+[2025-11-10 01:00:48,066][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2025-11-10 01:00:48,066][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2025-11-10 01:00:48,067][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-10 01:00:48,067][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct'}
+[2025-11-10 01:00:48,067][lm-eval][INFO] - Using device 'mps'
+[2025-11-10 01:00:49,582][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-11-10 01:00:51,724][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2025-11-10 01:00:51,724][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-11-10 01:00:51,724][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2025-11-10 01:00:51,724][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-11-10 01:00:51,724][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2025-11-10 01:00:51,724][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-11-10 01:00:54,276][lm-eval][WARNING] - Overwriting default num_fewshot of ro_wiki from None to 0
+[2025-11-10 01:00:54,276][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-11-10 01:00:54,277][lm-eval][INFO] - Building contexts for ro_wiki on rank 0...
+[2025-11-10 01:00:54,407][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2025-11-10 01:04:41,421][__name__][ERROR] - ❌ Error running ro_wiki: Invalid buffer size: 549.03 GiB
+[2025-11-10 01:04:41,514][__name__][INFO] - 🚀 Running evaluation for _ro_arc_challenge | fewshot=5 | limit=1000
+[2025-11-10 01:04:41,514][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2025-11-10 01:04:41,565][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-10 01:04:41,566][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct'}
+[2025-11-10 01:04:41,573][lm-eval][INFO] - Using device 'mps'
+[2025-11-10 01:04:44,701][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-11-10 01:04:50,680][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_arc_challenge from None to 5
+[2025-11-10 01:04:50,680][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-11-10 01:04:50,681][lm-eval][INFO] - Building contexts for _ro_arc_challenge on rank 0...
+[2025-11-10 01:04:51,509][lm-eval][INFO] - Running loglikelihood requests
+[2025-11-10 01:43:06,925][__name__][INFO] - ✅ Finished _ro_arc_challenge
+[2025-11-10 01:43:07,098][__name__][INFO] - 💾 Saved partial results: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2025-11-10_00-24-11/_ro_arc_challenge.json
+[2025-11-10 01:43:07,098][__name__][INFO] - 🚀 Running evaluation for arc_challenge | fewshot=5 | limit=1000
+[2025-11-10 01:43:07,098][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2025-11-10 01:43:07,104][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-10 01:43:07,104][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct'}
+[2025-11-10 01:43:07,105][lm-eval][INFO] - Using device 'mps'
+[2025-11-10 01:43:11,422][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-11-10 01:43:16,254][lm-eval][WARNING] - Overwriting default num_fewshot of arc_challenge from None to 5
+[2025-11-10 01:43:16,254][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-11-10 01:43:16,255][lm-eval][INFO] - Building contexts for arc_challenge on rank 0...
+[2025-11-10 01:43:18,878][lm-eval][INFO] - Running loglikelihood requests
+[2025-11-10 02:04:34,385][__name__][INFO] - ✅ Finished arc_challenge
+[2025-11-10 02:04:34,506][__name__][INFO] - 💾 Saved partial results: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2025-11-10_00-24-11/arc_challenge.json
+[2025-11-10 02:04:34,507][__name__][INFO] - 🚀 Running evaluation for winogrande | fewshot=5 | limit=1000
+[2025-11-10 02:04:34,507][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2025-11-10 02:04:34,512][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-11-10 02:04:34,512][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct'}
+[2025-11-10 02:04:34,512][lm-eval][INFO] - Using device 'mps'
+[2025-11-10 02:04:39,914][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-11-10 02:04:42,180][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'winogrande' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2025-11-10 02:04:46,846][lm-eval][WARNING] - Overwriting default num_fewshot of winogrande from None to 5
+[2025-11-10 02:04:46,847][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-11-10 02:04:46,847][lm-eval][INFO] - Building contexts for winogrande on rank 0...
+[2025-11-10 02:04:46,900][lm-eval][INFO] - Running loglikelihood requests
+[2025-11-10 02:11:30,516][__name__][INFO] - ✅ Finished winogrande
+[2025-11-10 02:11:30,574][__name__][INFO] - 💾 Saved partial results: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2025-11-10_00-24-11/winogrande.json
+[2025-11-10 02:11:30,979][__name__][INFO] - 📁 Combined results saved to: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2025-11-10_00-24-11/eval_results.json
+[2025-11-10 02:11:30,979][__name__][INFO] - 📊 Summary:
+[2025-11-10 02:11:30,979][__name__][INFO] -   - _ro_winogrande: {'acc,none': 0.498, 'acc_stderr,none': 0.01581917337430266}
+[2025-11-10 02:11:30,979][__name__][INFO] -   - _ro_belebele: {'acc_norm,none': 0.27666666666666667, 'acc_norm_stderr,none': 0.01491996528094735}
+[2025-11-10 02:11:30,979][__name__][INFO] -   - ro_wiki: No metrics found
+[2025-11-10 02:11:30,979][__name__][INFO] -   - _ro_arc_challenge: {'acc_norm,none': 0.261, 'acc_norm_stderr,none': 0.013895037677965183}
+[2025-11-10 02:11:30,979][__name__][INFO] -   - arc_challenge: {'acc,none': 0.288, 'acc_stderr,none': 0.014326941797231579, 'acc_norm,none': 0.314, 'acc_norm_stderr,none': 0.014683991951088084}
+[2025-11-10 02:11:30,979][__name__][INFO] -   - winogrande: {'acc,none': 0.601, 'acc_stderr,none': 0.015493193313163012}

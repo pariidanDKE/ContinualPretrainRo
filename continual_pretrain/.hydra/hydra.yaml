@@ -112,15 +112,15 @@ hydra:
     hydra:
     - hydra.mode=RUN
     task:
-    - eval_batch_size=4
-    - model_path=google/gemma-3-1b-pt
+    - eval_batch_size=8
+    - model_path=meta-llama/Llama-3.2-1B-Instruct
     - use_mps=True
-    - apply_chat_template=false
-    - tasks_to_run=[ro_wiki]
+    - apply_chat_template=true
+    - tasks_to_run=[]
   job:
     name: evaluate
     chdir: null
-    override_dirname: apply_chat_template=false,eval_batch_size=4,model_path=google/gemma-3-1b-pt,tasks_to_run=[ro_wiki],use_mps=True
+    override_dirname: apply_chat_template=true,eval_batch_size=8,model_path=meta-llama/Llama-3.2-1B-Instruct,tasks_to_run=[],use_mps=True
     id: ???
     num: ???
     config_name: evaluate_ro.yaml
