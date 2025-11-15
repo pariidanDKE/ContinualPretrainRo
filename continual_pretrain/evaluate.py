@@ -19,7 +19,6 @@ class IgnoreTagWarning(logging.Filter):
 
 logging.getLogger("lm-eval").addFilter(IgnoreTagWarning())
 
-
 @hydra.main(config_path="configs", config_name="evaluate_ro.yaml")
 def main(cfg: DictConfig):
     logger.info("Starting Romanian evaluation run")
@@ -38,7 +37,9 @@ def main(cfg: DictConfig):
     else:
         device = "cpu"
         logger.info("💻 CUDA not available. Using CPU")
-    
+
+    max_length = cfg.get("max_length", 4096)  # Default to 2048, configurable
+    model_args_str = f"pretrained={cfg.model_path},max_length={max_length}"
   
     # ---- Create results folder with timestamp ----
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -74,7 +75,7 @@ def main(cfg: DictConfig):
             res = evaluator.simple_evaluate(
                 batch_size=cfg.eval_batch_size,
                 model="hf",
-                model_args=f"pretrained={cfg.model_path}",
+                model_args=model_args_str,
                 apply_chat_template=cfg.apply_chat_template,
                 tasks=[task_name],
                 limit=limit,

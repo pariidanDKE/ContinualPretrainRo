@@ -4,7 +4,7 @@ apply_chat_template: true
 eval_batch_size: 32
 num_fewshot: 5
 device : auto
-tasks_to_run: ["_ro_winogrande", "_ro_belebele",  "_ro_arc_challenge", "arc_challenge", "winogrande", "ro_wiki"]
+tasks_to_run: ["_ro_winogrande", "_ro_belebele",  "_ro_arc_challenge", "arc_challenge", "winogrande"] #  "ro_wiki" 
 output_dir: eval_results
 
 use_mps: false

@@ -1,0 +1,41 @@
+# Configuration for dataset formatting pipeline
+# Used by continual_pretrain/data_processing/dataset_formatting.py
+
+# List of datasets to process
+datasets:
+  - name: "OpenLLM-Ro/ro_sft_norobots"
+    split: "train"
+    output_path: "./data/formatted_data/norobots"
+    push_to_hub: false
+    hub_repo_id: null  # Set this if push_to_hub is true
+  
+  - name: "OpenLLM-Ro/ro_sft_dolly"
+    split: "train"
+    output_path: "./data/formatted_data/dolly"
+    push_to_hub: false
+    hub_repo_id: null  # Set this if push_to_hub is true
+
+# Special tokens for formatting
+special_tokens:
+  user: "<utilizator>"
+  assistant: "<asistent>"
+  system: "<sistem>"
+  bos: "<s>"  # Beginning of sequence
+  eos: "</s>"  # End of sequence
+
+# Processing parameters
+num_proc: 4  # Number of parallel processes for dataset mapping
+batch_size: 1000  # Batch size for dataset processing
+
+# Optional: Tokenizer configuration
+tokenizer:
+  name: null  # Set to a tokenizer name if needed (e.g., "meta-llama/Llama-3.2-1B")
+  use_fast: true
+
+# Output options
+save_format: "parquet"  # Options: "parquet", "arrow", "json"
+overwrite_output: false  # Whether to overwrite existing output files
+
+# Logging
+verbose: true
+log_examples: 3  # Number of formatted examples to log for verification
