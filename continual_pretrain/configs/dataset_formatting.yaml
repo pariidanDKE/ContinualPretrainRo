@@ -3,15 +3,40 @@
 
 # List of datasets to process
 datasets:
-  - name: "OpenLLM-Ro/ro_sft_norobots"
-    split: "train"
-    output_path: "./data/formatted_data/norobots"
-    push_to_hub: false
-    hub_repo_id: null  # Set this if push_to_hub is true
+  # - name: "OpenLLM-Ro/ro_sft_norobots"
+  #   split: "train"
+  #   output_path: "./data/formatted_data/norobots"
+  #   push_to_hub: false
+  #   hub_repo_id: null  # Set this if push_to_hub is true
   
-  - name: "OpenLLM-Ro/ro_sft_dolly"
+  # - name: "OpenLLM-Ro/ro_sft_dolly"
+  #   split: "train"
+  #   output_path: "./data/formatted_data/dolly"
+  #   push_to_hub: false
+  #   hub_repo_id: null  # Set this if push_to_hub is true
+
+
+  # - name: "OpenLLM-Ro/ro_sft_camel"
+  #   split: "train"
+  #   output_path: "./data/formatted_data/camel"
+  #   push_to_hub: false
+  #   hub_repo_id: null  # Set this if push_to_hub is true
+
+  # - name: "OpenLLM-Ro/ro_sft_orca"
+  #   split: "train"
+  #   output_path: "./data/formatted_data/orca"
+  #   push_to_hub: false
+  #   hub_repo_id: null  # Set this if push_to_hub is true
+
+  # - name: "OpenLLM-Ro/ro_sft_oasst"
+  #   split: "train"
+  #   output_path: "./data/formatted_data/oasst"
+  #   push_to_hub: false
+  #   hub_repo_id: null  # Set this if push_to_hub is true
+
+  - name: "OpenLLM-Ro/ro_sft_magpie_mt"
     split: "train"
-    output_path: "./data/formatted_data/dolly"
+    output_path: "./data/formatted_data/maggie"
     push_to_hub: false
     hub_repo_id: null  # Set this if push_to_hub is true
 
@@ -20,11 +45,10 @@ special_tokens:
   user: "<utilizator>"
   assistant: "<asistent>"
   system: "<sistem>"
-  bos: "<s>"  # Beginning of sequence
-  eos: "</s>"  # End of sequence
+
 
 # Processing parameters
-num_proc: 4  # Number of parallel processes for dataset mapping
+num_proc: 1 # Number of parallel processes for dataset mapping
 batch_size: 1000  # Batch size for dataset processing
 
 # Optional: Tokenizer configuration

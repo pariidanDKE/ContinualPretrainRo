@@ -19,7 +19,7 @@ NoRobots: SELECTED
 
 - OpenAssistant Conversations: (maybe) SELECTED
     - human conversation corpus
-    - 360k rows
+    - 8k rows
     - assistant-style behaviour with real humans users
     - helps in aliging human conversational norms, politeness etc
 

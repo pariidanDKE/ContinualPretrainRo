@@ -1,6 +1,5 @@
 absl-py==2.3.1
 accelerate==1.10.1
-aclpubcheck @ git+https://github.com/acl-org/aclpubcheck@4c7b8d3a2f0665945f38bb9df1ccdfcb1810dcfb
 aiohappyeyeballs==2.6.1
 aiohttp==3.12.15
 aiosignal==1.4.0

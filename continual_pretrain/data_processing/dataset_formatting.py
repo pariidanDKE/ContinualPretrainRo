@@ -5,19 +5,23 @@ from datasets import load_dataset
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-
+from datasets import load_dataset, disable_caching
 from dataset_registry import DatasetFormatterRegistry
+
 from formatters import (
     format_messages_standard,
     format_dolly_context_instruction,
+    format_camel_instructs,
+    format_orca_messages,
+    format_oasst_messages,
+    format_magpie_conversations
 )
-
+disable_caching()
 logger = logging.getLogger(__name__)
 logging.basicConfig(
     level=logging.INFO, 
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
-
 
 # Initialize global registry
 formatter_registry = DatasetFormatterRegistry()
@@ -35,7 +39,30 @@ formatter_registry.register(
     columns=["context", "instruction", "response"]
 )
 
+formatter_registry.register(
+    "OpenLLM-Ro/ro_sft_camel",
+    format_camel_instructs,
+    columns=["message_1", "message_2"]
+)
 
+
+formatter_registry.register(
+    "OpenLLM-Ro/ro_sft_orca",  # Replace with actual dataset name
+    format_orca_messages,
+    columns="messages"
+)
+
+formatter_registry.register(
+    "OpenLLM-Ro/ro_sft_oasst",  # Replace with actual dataset name
+    format_oasst_messages,
+    columns="messages"
+)
+
+formatter_registry.register(
+    "OpenLLM-Ro/ro_sft_magpie_mt",
+    format_magpie_conversations,
+    columns="conversations"
+)
 
 @hydra.main(config_path="../configs", config_name="dataset_formatting.yaml", version_base=None)
 def main(cfg: DictConfig):
@@ -54,8 +81,6 @@ def main(cfg: DictConfig):
             push_to_hub: false
         
         special_tokens:
-          bos: "<s>"
-          eos: "</s>"
           user: "<utilizator>"
           assistant: "<asistent>"
           system: "<sistem>"
@@ -114,7 +139,8 @@ def main(cfg: DictConfig):
                 user_token=user_token,
                 assistant_token=assistant_token,
                 system_token=system_token,
-                num_proc=num_proc
+                num_proc=num_proc,
+                logger = logger
             )
             logger.info(f"  ✅ Formatted {len(formatted_dataset)} examples")
             

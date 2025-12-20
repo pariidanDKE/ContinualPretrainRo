@@ -5,7 +5,7 @@ Each formatter takes the data from specified columns and formats it with special
 
 
 def format_messages_standard(messages, tokenizer=None, user_token="<utilizator>", 
-                             assistant_token="<asistent>", system_token="<sistem>"):
+                             assistant_token="<asistent>", system_token="<sistem>", logger=None):
     """
     Standard formatting for datasets with 'messages' column.
     Used for: OpenLLM-Ro/ro_sft_norobots
@@ -28,41 +28,25 @@ def format_messages_standard(messages, tokenizer=None, user_token="<utilizator>"
         eos_token = ""
     
     role_token_map = {
-        'system': system_token,
-        'user': user_token,
-        'assistant': assistant_token
+        'system': (system_token, '</sistem>'),
+        'user': (user_token, '</utilizator>'),
+        'assistant': (assistant_token, '</asistent>')
     }
     
-    formatted_text = bos_token + "\n"
+    formatted_text = ""
     
     for message in messages:
         role = message['role']
         content = message['content'].strip()
         
-        role_token = role_token_map.get(role, f"<{role}>")
-        formatted_text += f"{role_token}\n{content}\n"
-    
-    formatted_text += eos_token
+        open_tag, close_tag = role_token_map.get(role, (f"<{role}>", f"</{role}>"))
+        formatted_text += f"{open_tag}\n{content}\n{close_tag}\n"
     
     return formatted_text
 
 
 def format_dolly_context_instruction(data_dict, tokenizer=None, user_token="<utilizator>", 
-                                     assistant_token="<asistent>", system_token="<sistem>"):
-    """
-    Formatting for OpenLLM-Ro/ro_sft_dolly dataset.
-    Combines 'context' and 'instruction' into user message, 'response' as assistant message.
-    
-    Args:
-        data_dict: Dict with 'context', 'instruction', and 'response' keys
-        tokenizer: Optional HuggingFace tokenizer
-        user_token: Token for user messages
-        assistant_token: Token for assistant messages
-        system_token: Token for system messages (unused)
-    
-    Returns:
-        Formatted string with special tokens
-    """
+                                     assistant_token="<asistent>", system_token="<sistem>", logger = None):
     if tokenizer is not None:
         bos_token = tokenizer.bos_token or "<s>"
         eos_token = tokenizer.eos_token or "</s>"
@@ -70,11 +54,9 @@ def format_dolly_context_instruction(data_dict, tokenizer=None, user_token="<uti
         bos_token = ""
         eos_token = ""
     
-    formatted_text = "\n"
+    formatted_text = ""
     
-    # Build user message
     user_message = ""
-    
     context = data_dict.get('context', '').strip()
     instruction = data_dict.get('instruction', '').strip()
     response = data_dict.get('response', '').strip()
@@ -91,11 +73,128 @@ def format_dolly_context_instruction(data_dict, tokenizer=None, user_token="<uti
     
     # Add user message
     if user_message:
-        formatted_text += f"{user_token}\n{user_message}\n"
+        formatted_text += f"{user_token}\n{user_message}\n</utilizator>\n"
     
     # Add assistant response
     if response:
-        formatted_text += f"{assistant_token}\n{response}\n"
+        formatted_text += f"{assistant_token}\n{response}\n</asistent>\n"
     
-    #formatted_text += eos_token
+    return formatted_text
+
+
+def format_camel_instructs(data_dict, tokenizer=None, user_token="<utilizator>", 
+                           assistant_token="<asistent>", system_token="<sistem>", logger=None):
+    if tokenizer is not None:
+        bos_token = tokenizer.bos_token or ""
+        eos_token = tokenizer.eos_token or ""
+    else:
+        bos_token = ""
+        eos_token = ""
+    
+    formatted_text = ""
+    
+    # Get messages
+    message_1 = data_dict.get('message_1', '').strip()
+    message_2 = data_dict.get('message_2', '').strip()
+    
+    # Add user message (message_1)
+    if message_1:
+        formatted_text += f"{user_token}\n{message_1}\n</utilizator>\n"
+    
+    # Add assistant message (message_2)
+    if message_2:
+        formatted_text += f"{assistant_token}\n{message_2}\n</asistent>\n"
+    
+    return formatted_text
+
+    
+def format_orca_messages(messages, tokenizer=None, user_token="<utilizator>", 
+                        assistant_token="<asistent>", system_token="<sistem>", logger=None):
+    if tokenizer is not None:
+        bos_token = tokenizer.bos_token or ""
+        eos_token = tokenizer.eos_token or ""
+    else:
+        bos_token = ""
+        eos_token = ""
+    
+    # Map "from" values to role tokens with closing tags
+    role_token_map = {
+        'system': (system_token, '</sistem>'),
+        'human': (user_token, '</utilizator>'),
+        'gpt': (assistant_token, '</asistent>')
+    }
+    
+    formatted_text = ""
+    
+    for message in messages:
+        from_role = message.get('from', '').strip()
+        content = message.get('value', '').strip()
+        
+        # Get the appropriate role tokens
+        open_tag, close_tag = role_token_map.get(from_role, (f"<{from_role}>", f"</{from_role}>"))
+        
+        if content:
+            formatted_text += f"{open_tag}\n{content}\n{close_tag}\n"
+    
+    return formatted_text
+
+def format_oasst_messages(messages, tokenizer=None, user_token="<utilizator>", 
+                         assistant_token="<asistent>", system_token="<sistem>", logger=None):
+
+    if tokenizer is not None:
+        bos_token = tokenizer.bos_token or ""
+        eos_token = tokenizer.eos_token or ""
+    else:
+        bos_token = ""
+        eos_token = ""
+    
+    # Map OASST role names to our tokens with closing tags
+    role_token_map = {
+        'prompter': (user_token, '</utilizator>'),
+        'assistant': (assistant_token, '</asistent>'),
+        'system': (system_token, '</sistem>')
+    }
+    
+    formatted_text = ""
+    
+    for message in messages:
+        role = message.get('role', '').strip()
+        content = message.get('content', '').strip()
+        
+        # Get the appropriate role tokens
+        open_tag, close_tag = role_token_map.get(role, (f"<{role}>", f"</{role}>"))
+        
+        if content:
+            formatted_text += f"{open_tag}\n{content}\n{close_tag}\n"
+    
+    return formatted_text
+
+def format_magpie_conversations(conversations, tokenizer=None, user_token="<utilizator>", 
+                                assistant_token="<asistent>", system_token="<sistem>", logger=None):
+    if tokenizer is not None:
+        bos_token = tokenizer.bos_token or ""
+        eos_token = tokenizer.eos_token or ""
+    else:
+        bos_token = ""
+        eos_token = ""
+    
+    # Map "from" values to role tokens with closing tags
+    role_token_map = {
+        'system': (system_token, '</sistem>'),
+        'human': (user_token, '</utilizator>'),
+        'gpt': (assistant_token, '</asistent>')
+    }
+    
+    formatted_text = ""
+    
+    for message in conversations:
+        from_role = message.get('from', '').strip()
+        content = message.get('value', '').strip()
+        
+        # Get the appropriate role tokens
+        open_tag, close_tag = role_token_map.get(from_role, (f"<{from_role}>", f"</{from_role}>"))
+        
+        if content:
+            formatted_text += f"{open_tag}\n{content}\n{close_tag}\n"
+    
     return formatted_text

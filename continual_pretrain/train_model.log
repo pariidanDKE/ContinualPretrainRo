@@ -1,0 +1,33 @@
+[2025-12-06 20:36:42,585][__main__][INFO] - Starting training run
+[2025-12-06 20:36:44,468][model][INFO] - Trainable parameters: 15,441,920 / 1,251,256,320 (1.23%)
+[2025-12-06 20:36:44,468][model][INFO] - Tokenizer lacked a pad token, defaulting pad_token to eos_token.
+[2025-12-06 20:43:37,064][__main__][INFO] - Starting training run
+[2025-12-06 20:43:40,119][model][INFO] - Trainable parameters: 15,441,920 / 1,251,256,320 (1.23%)
+[2025-12-06 20:43:40,119][model][INFO] - Tokenizer lacked a pad token, defaulting pad_token to eos_token.
+[2025-12-06 21:06:56,835][__main__][INFO] - Starting training run
+[2025-12-06 21:07:00,039][model][INFO] - Trainable parameters: 15,441,920 / 1,251,256,320 (1.23%)
+[2025-12-06 21:07:00,039][model][INFO] - Tokenizer lacked a pad token, defaulting pad_token to eos_token.
+[2025-12-06 21:09:27,277][__main__][INFO] - Starting training run
+[2025-12-06 21:09:29,966][model][INFO] - Trainable parameters: 15,441,920 / 1,251,256,320 (1.23%)
+[2025-12-06 21:09:29,966][model][INFO] - Tokenizer lacked a pad token, defaulting pad_token to eos_token.
+[2025-12-06 21:16:45,764][__main__][INFO] - Starting training run
+[2025-12-06 21:16:49,020][model][INFO] - Trainable parameters: 15,441,920 / 1,251,256,320 (1.23%)
+[2025-12-06 21:16:49,020][model][INFO] - Tokenizer lacked a pad token, defaulting pad_token to eos_token.
+[2025-12-06 23:29:26,503][__main__][INFO] - Starting training run
+[2025-12-06 23:29:30,586][model][INFO] - Trainable parameters: 15,441,920 / 1,251,256,320 (1.23%)
+[2025-12-06 23:29:30,586][model][INFO] - Tokenizer lacked a pad token, defaulting pad_token to eos_token.
+[2025-12-07 00:13:16,155][__main__][INFO] - Starting training run
+[2025-12-07 00:13:19,157][model][INFO] - Trainable parameters: 11,272,192 / 1,247,086,592 (0.90%)
+[2025-12-07 00:13:19,157][model][INFO] - Tokenizer lacked a pad token, defaulting pad_token to eos_token.
+[2025-12-10 18:39:16,331][__main__][INFO] - Starting training run
+[2025-12-10 18:39:20,004][model][INFO] - Trainable parameters: 11,272,192 / 1,247,086,592 (0.90%)
+[2025-12-10 18:39:20,004][model][INFO] - Tokenizer lacked a pad token, defaulting pad_token to eos_token.
+[2025-12-10 18:40:03,624][__main__][INFO] - Starting training run
+[2025-12-10 18:40:06,584][model][INFO] - Trainable parameters: 11,272,192 / 1,247,086,592 (0.90%)
+[2025-12-10 18:40:06,585][model][INFO] - Tokenizer lacked a pad token, defaulting pad_token to eos_token.
+[2025-12-10 22:37:29,547][asyncio][WARNING] - socket.send() raised exception.
+[2025-12-10 22:37:40,420][asyncio][WARNING] - socket.send() raised exception.
+[2025-12-10 22:38:11,083][__main__][INFO] - Starting training run
+[2025-12-10 22:38:14,298][model][INFO] - Trainable parameters: 11,272,192 / 1,247,086,592 (0.90%)
+[2025-12-10 22:38:14,298][model][INFO] - Tokenizer lacked a pad token, defaulting pad_token to eos_token.
+[2025-12-11 14:32:09,943][__main__][INFO] - Training complete. Artifacts stored in outputs/train_meta-llama_Llama-3.2-1B_bs4_s5000

@@ -38,7 +38,7 @@ class DatasetFormatterRegistry:
     def format_dataset(self, dataset, dataset_name: str, 
                       tokenizer=None, user_token="<utilizator>", 
                       assistant_token="<asistent>", system_token="<sistem>", 
-                      num_proc=1):
+                      num_proc=1, logger = None):
         """Format a dataset using the registered formatter."""
         formatter_info = self.get_formatter(dataset_name)
         
@@ -78,7 +78,8 @@ class DatasetFormatterRegistry:
                     tokenizer=tokenizer,
                     user_token=user_token,
                     assistant_token=assistant_token,
-                    system_token=system_token
+                    system_token=system_token,
+                    logger = logger
                 )
             except Exception as e:
                 print(f"⚠️  Error formatting example: {e}")
