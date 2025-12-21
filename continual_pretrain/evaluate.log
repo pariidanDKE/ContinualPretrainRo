@@ -9257,3 +9257,200 @@ If the dataset is based on a loading script, please ask the dataset author to re
 [2025-11-15 16:43:00,571][__name__][INFO] - 📁 Combined results saved to: /Users/pariidan/Documents/python_projects/ContinualPretrainRo/continual_pretrain/eval_results/Qwen_Qwen2.5-1.5B-Instruct/2025-11-15_16-06-12/eval_results.json
 [2025-11-15 16:43:00,571][__name__][INFO] - 📊 Summary:
 [2025-11-15 16:43:00,571][__name__][INFO] -   - ro_wiki: {'word_perplexity,none': 416.1882981171696, 'byte_perplexity,none': 2.436149336300355, 'bits_per_byte,none': 1.2846025733659014}
+[2025-12-21 18:42:35,029][__name__][INFO] - Starting Romanian evaluation run
+[2025-12-21 18:42:35,225][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2025-12-21 18:42:35,226][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-12-21_18-42-35
+[2025-12-21 18:42:35,226][__name__][INFO] - Skipping _ro_winogrande (not in tasks_to_run)
+[2025-12-21 18:42:35,226][__name__][INFO] - Skipping _ro_belebele (not in tasks_to_run)
+[2025-12-21 18:42:35,226][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2025-12-21 18:42:35,226][__name__][INFO] - Running google/gemma-3-1b-pt with apply_chat_template False
+[2025-12-21 18:42:35,227][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-12-21 18:42:35,227][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-pt', 'max_length': 2048, 'dtype': 'bfloat16'}
+[2025-12-21 18:42:35,280][lm-eval][INFO] - Using device 'cuda'
+[2025-12-21 18:42:35,553][__name__][ERROR] - ❌ Error running ro_wiki: You are trying to access a gated repo.
+Make sure to have access to it at https://huggingface.co/google/gemma-3-1b-pt.
+401 Client Error. (Request ID: Root=1-6948318b-641c085609f0861c0d10dfac;6556ba2c-db3d-4bd3-b3f0-978aeb20e6b7)
+
+Cannot access gated repo for url https://huggingface.co/google/gemma-3-1b-pt/resolve/main/config.json.
+Access to model google/gemma-3-1b-pt is restricted. You must have access to it and be authenticated to access it. Please log in.
+[2025-12-21 18:42:35,553][__name__][INFO] - Skipping _ro_arc_challenge (not in tasks_to_run)
+[2025-12-21 18:42:35,553][__name__][INFO] - Skipping arc_challenge (not in tasks_to_run)
+[2025-12-21 18:42:35,553][__name__][INFO] - Skipping winogrande (not in tasks_to_run)
+[2025-12-21 18:42:35,553][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-12-21_18-42-35/eval_results.json
+[2025-12-21 18:42:35,554][__name__][INFO] - 📊 Summary:
+[2025-12-21 18:42:35,554][__name__][INFO] -   - ro_wiki: No metrics found
+[2025-12-21 18:46:43,560][__name__][INFO] - Starting Romanian evaluation run
+[2025-12-21 18:46:43,728][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2025-12-21 18:46:43,728][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-12-21_18-46-43
+[2025-12-21 18:46:43,728][__name__][INFO] - Skipping _ro_winogrande (not in tasks_to_run)
+[2025-12-21 18:46:43,728][__name__][INFO] - Skipping _ro_belebele (not in tasks_to_run)
+[2025-12-21 18:46:43,728][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2025-12-21 18:46:43,728][__name__][INFO] - Running google/gemma-3-1b-pt with apply_chat_template False
+[2025-12-21 18:46:43,729][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-12-21 18:46:43,729][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-pt', 'max_length': 2048, 'dtype': 'bfloat16'}
+[2025-12-21 18:46:43,774][lm-eval][INFO] - Using device 'cuda'
+[2025-12-21 18:48:24,073][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-12-21 18:48:26,987][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2025-12-21 18:48:26,987][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-12-21 18:48:26,987][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2025-12-21 18:48:26,987][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-12-21 18:48:26,987][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2025-12-21 18:48:26,987][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-12-21 18:48:47,969][lm-eval][WARNING] - Overwriting default num_fewshot of ro_wiki from None to 0
+[2025-12-21 18:48:47,970][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-12-21 18:48:47,970][lm-eval][INFO] - Building contexts for ro_wiki on rank 0...
+[2025-12-21 18:48:48,109][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2025-12-21 18:48:56,538][__name__][ERROR] - ❌ Error running ro_wiki: CUDA out of memory. Tried to allocate 16.00 GiB. GPU 0 has a total capacity of 23.55 GiB of which 14.66 GiB is free. Including non-PyTorch memory, this process has 8.37 GiB memory in use. Of the allocated memory 2.75 GiB is allocated by PyTorch, and 5.31 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[2025-12-21 18:48:56,570][__name__][INFO] - Skipping _ro_arc_challenge (not in tasks_to_run)
+[2025-12-21 18:48:56,571][__name__][INFO] - Skipping arc_challenge (not in tasks_to_run)
+[2025-12-21 18:48:56,572][__name__][INFO] - Skipping winogrande (not in tasks_to_run)
+[2025-12-21 18:48:56,573][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-12-21_18-46-43/eval_results.json
+[2025-12-21 18:48:56,573][__name__][INFO] - 📊 Summary:
+[2025-12-21 18:48:56,573][__name__][INFO] -   - ro_wiki: No metrics found
+[2025-12-21 18:54:32,383][__name__][INFO] - Starting Romanian evaluation run
+[2025-12-21 18:54:32,556][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2025-12-21 18:54:32,556][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-12-21_18-54-32
+[2025-12-21 18:54:32,557][__name__][INFO] - Skipping _ro_winogrande (not in tasks_to_run)
+[2025-12-21 18:54:32,557][__name__][INFO] - Skipping _ro_belebele (not in tasks_to_run)
+[2025-12-21 18:54:32,557][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2025-12-21 18:54:32,557][__name__][INFO] - Running google/gemma-3-1b-pt with apply_chat_template False
+[2025-12-21 18:54:32,558][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-12-21 18:54:32,558][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-pt', 'max_length': 1024, 'dtype': 'bfloat16'}
+[2025-12-21 18:54:32,604][lm-eval][INFO] - Using device 'cuda'
+[2025-12-21 18:54:34,974][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-12-21 18:54:37,904][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2025-12-21 18:54:37,904][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-12-21 18:54:37,904][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2025-12-21 18:54:37,904][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-12-21 18:54:37,904][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2025-12-21 18:54:37,904][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-12-21 18:54:40,052][lm-eval][WARNING] - Overwriting default num_fewshot of ro_wiki from None to 0
+[2025-12-21 18:54:40,052][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-12-21 18:54:40,053][lm-eval][INFO] - Building contexts for ro_wiki on rank 0...
+[2025-12-21 18:54:40,209][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2025-12-21 18:54:48,945][__name__][ERROR] - ❌ Error running ro_wiki: CUDA out of memory. Tried to allocate 8.00 GiB. GPU 0 has a total capacity of 23.55 GiB of which 4.76 GiB is free. Including non-PyTorch memory, this process has 18.21 GiB memory in use. Of the allocated memory 10.31 GiB is allocated by PyTorch, and 7.59 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[2025-12-21 18:54:48,982][__name__][INFO] - Skipping _ro_arc_challenge (not in tasks_to_run)
+[2025-12-21 18:54:48,983][__name__][INFO] - Skipping arc_challenge (not in tasks_to_run)
+[2025-12-21 18:54:48,983][__name__][INFO] - Skipping winogrande (not in tasks_to_run)
+[2025-12-21 18:54:48,984][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-12-21_18-54-32/eval_results.json
+[2025-12-21 18:54:48,984][__name__][INFO] - 📊 Summary:
+[2025-12-21 18:54:48,984][__name__][INFO] -   - ro_wiki: No metrics found
+[2025-12-21 19:00:33,764][__name__][INFO] - Starting Romanian evaluation run
+[2025-12-21 19:00:34,012][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2025-12-21 19:00:34,012][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-12-21_19-00-34
+[2025-12-21 19:00:34,013][__name__][INFO] - Skipping _ro_winogrande (not in tasks_to_run)
+[2025-12-21 19:00:34,013][__name__][INFO] - Skipping _ro_belebele (not in tasks_to_run)
+[2025-12-21 19:00:34,013][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2025-12-21 19:00:34,013][__name__][INFO] - Running google/gemma-3-1b-pt with apply_chat_template False
+[2025-12-21 19:00:34,014][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-12-21 19:00:34,014][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-pt', 'max_length': 2048, 'truncation': True}
+[2025-12-21 19:00:34,061][lm-eval][INFO] - Using device 'cuda'
+[2025-12-21 19:00:36,777][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-12-21 19:00:39,796][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2025-12-21 19:00:39,796][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-12-21 19:00:39,796][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2025-12-21 19:00:39,796][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-12-21 19:00:39,796][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2025-12-21 19:00:39,796][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2025-12-21 19:00:42,373][lm-eval][WARNING] - Overwriting default num_fewshot of ro_wiki from None to 0
+[2025-12-21 19:00:42,374][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-12-21 19:00:42,374][lm-eval][INFO] - Building contexts for ro_wiki on rank 0...
+[2025-12-21 19:00:42,532][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2025-12-21 19:00:51,140][__name__][ERROR] - ❌ Error running ro_wiki: CUDA out of memory. Tried to allocate 16.00 GiB. GPU 0 has a total capacity of 23.55 GiB of which 14.58 GiB is free. Including non-PyTorch memory, this process has 8.37 GiB memory in use. Of the allocated memory 2.75 GiB is allocated by PyTorch, and 5.31 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[2025-12-21 19:00:51,180][__name__][INFO] - Skipping _ro_arc_challenge (not in tasks_to_run)
+[2025-12-21 19:00:51,181][__name__][INFO] - Skipping arc_challenge (not in tasks_to_run)
+[2025-12-21 19:00:51,182][__name__][INFO] - Skipping winogrande (not in tasks_to_run)
+[2025-12-21 19:00:51,184][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-12-21_19-00-34/eval_results.json
+[2025-12-21 19:00:51,184][__name__][INFO] - 📊 Summary:
+[2025-12-21 19:00:51,184][__name__][INFO] -   - ro_wiki: No metrics found
+[2025-12-21 19:01:41,846][__name__][INFO] - Starting Romanian evaluation run
+[2025-12-21 19:01:42,020][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2025-12-21 19:01:42,020][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-12-21_19-01-42
+[2025-12-21 19:01:42,020][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2025-12-21 19:01:42,020][__name__][INFO] - Running google/gemma-3-1b-pt with apply_chat_template False
+[2025-12-21 19:01:42,021][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-12-21 19:01:42,021][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-pt', 'max_length': 2048, 'truncation': True}
+[2025-12-21 19:01:42,067][lm-eval][INFO] - Using device 'cuda'
+[2025-12-21 19:01:44,275][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-12-21 19:01:51,557][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_winogrande from None to 5
+[2025-12-21 19:01:51,557][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-12-21 19:01:51,557][lm-eval][INFO] - Building contexts for _ro_winogrande on rank 0...
+[2025-12-21 19:01:51,600][lm-eval][INFO] - Running loglikelihood requests
+[2025-12-21 19:02:13,174][__name__][INFO] - ✅ Finished _ro_winogrande
+[2025-12-21 19:02:13,254][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-12-21_19-01-42/_ro_winogrande.json
+[2025-12-21 19:02:13,254][__name__][INFO] - Skipping _ro_belebele (not in tasks_to_run)
+[2025-12-21 19:02:13,254][__name__][INFO] - Skipping ro_wiki (not in tasks_to_run)
+[2025-12-21 19:02:13,254][__name__][INFO] - Skipping _ro_arc_challenge (not in tasks_to_run)
+[2025-12-21 19:02:13,254][__name__][INFO] - Skipping arc_challenge (not in tasks_to_run)
+[2025-12-21 19:02:13,254][__name__][INFO] - Skipping winogrande (not in tasks_to_run)
+[2025-12-21 19:02:13,328][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-12-21_19-01-42/eval_results.json
+[2025-12-21 19:02:13,328][__name__][INFO] - 📊 Summary:
+[2025-12-21 19:02:13,328][__name__][INFO] -   - _ro_winogrande: {'acc,none': 0.531, 'acc_stderr,none': 0.015788865959538965}
+[2025-12-21 19:02:33,715][__name__][INFO] - Starting Romanian evaluation run
+[2025-12-21 19:02:33,868][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2025-12-21 19:02:33,869][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-12-21_19-02-33
+[2025-12-21 19:02:33,869][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2025-12-21 19:02:33,869][__name__][INFO] - Running google/gemma-3-1b-pt with apply_chat_template False
+[2025-12-21 19:02:33,870][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-12-21 19:02:33,870][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-pt', 'max_length': 2048, 'truncation': True}
+[2025-12-21 19:02:33,910][lm-eval][INFO] - Using device 'cuda'
+[2025-12-21 19:02:36,004][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-12-21 19:02:41,098][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_winogrande from None to 5
+[2025-12-21 19:02:41,098][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-12-21 19:02:41,098][lm-eval][INFO] - Building contexts for _ro_winogrande on rank 0...
+[2025-12-21 19:02:41,140][lm-eval][INFO] - Running loglikelihood requests
+[2025-12-21 19:03:02,664][__name__][INFO] - ✅ Finished _ro_winogrande
+[2025-12-21 19:03:02,740][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-12-21_19-02-33/_ro_winogrande.json
+[2025-12-21 19:03:02,741][__name__][INFO] - Skipping _ro_belebele (not in tasks_to_run)
+[2025-12-21 19:03:02,741][__name__][INFO] - Skipping ro_wiki (not in tasks_to_run)
+[2025-12-21 19:03:02,741][__name__][INFO] - Skipping _ro_arc_challenge (not in tasks_to_run)
+[2025-12-21 19:03:02,741][__name__][INFO] - Skipping arc_challenge (not in tasks_to_run)
+[2025-12-21 19:03:02,741][__name__][INFO] - Skipping winogrande (not in tasks_to_run)
+[2025-12-21 19:03:02,813][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-12-21_19-02-33/eval_results.json
+[2025-12-21 19:03:02,813][__name__][INFO] - 📊 Summary:
+[2025-12-21 19:03:02,814][__name__][INFO] -   - _ro_winogrande: {'acc,none': 0.531, 'acc_stderr,none': 0.015788865959538965}
+[2025-12-21 19:05:07,716][__name__][INFO] - Starting Romanian evaluation run
+[2025-12-21 19:05:07,876][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2025-12-21 19:05:07,876][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-12-21_19-05-07
+[2025-12-21 19:05:07,876][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2025-12-21 19:05:07,876][__name__][INFO] - Running google/gemma-3-1b-pt with apply_chat_template False
+[2025-12-21 19:05:07,877][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-12-21 19:05:07,877][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-pt', 'max_length': 2048, 'truncation': True}
+[2025-12-21 19:05:07,921][lm-eval][INFO] - Using device 'cuda'
+[2025-12-21 19:05:10,027][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-12-21 19:05:15,166][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_winogrande from None to 5
+[2025-12-21 19:05:15,166][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-12-21 19:05:15,166][lm-eval][INFO] - Building contexts for _ro_winogrande on rank 0...
+[2025-12-21 19:05:15,208][lm-eval][INFO] - Running loglikelihood requests
+[2025-12-21 19:05:35,598][__name__][INFO] - ✅ Finished _ro_winogrande
+[2025-12-21 19:05:35,673][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-12-21_19-05-07/_ro_winogrande.json
+[2025-12-21 19:05:35,673][__name__][INFO] - Skipping _ro_belebele (not in tasks_to_run)
+[2025-12-21 19:05:35,673][__name__][INFO] - Skipping ro_wiki (not in tasks_to_run)
+[2025-12-21 19:05:35,673][__name__][INFO] - Skipping _ro_arc_challenge (not in tasks_to_run)
+[2025-12-21 19:05:35,673][__name__][INFO] - Skipping arc_challenge (not in tasks_to_run)
+[2025-12-21 19:05:35,673][__name__][INFO] - Skipping winogrande (not in tasks_to_run)
+[2025-12-21 19:05:35,746][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-12-21_19-05-07/eval_results.json
+[2025-12-21 19:05:35,746][__name__][INFO] - 📊 Summary:
+[2025-12-21 19:05:35,746][__name__][INFO] -   - _ro_winogrande: {'acc,none': 0.532, 'acc_stderr,none': 0.015786868759359002}
+[2025-12-21 19:06:09,319][__name__][INFO] - Starting Romanian evaluation run
+[2025-12-21 19:06:09,453][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2025-12-21 19:06:09,454][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-12-21_19-06-09
+[2025-12-21 19:06:09,454][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2025-12-21 19:06:09,454][__name__][INFO] - Running google/gemma-3-1b-pt with apply_chat_template False
+[2025-12-21 19:06:09,455][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2025-12-21 19:06:09,455][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'google/gemma-3-1b-pt', 'max_length': 2048, 'truncation': True}
+[2025-12-21 19:06:09,495][lm-eval][INFO] - Using device 'cuda'
+[2025-12-21 19:06:11,577][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2025-12-21 19:06:16,688][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_winogrande from None to 5
+[2025-12-21 19:06:16,688][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2025-12-21 19:06:16,689][lm-eval][INFO] - Building contexts for _ro_winogrande on rank 0...
+[2025-12-21 19:06:16,736][lm-eval][INFO] - Running loglikelihood requests
+[2025-12-21 19:06:18,858][__name__][ERROR] - ❌ Error running _ro_winogrande: CUDA out of memory. Tried to allocate 7.59 GiB. GPU 0 has a total capacity of 23.55 GiB of which 3.66 GiB is free. Including non-PyTorch memory, this process has 19.27 GiB memory in use. Of the allocated memory 18.00 GiB is allocated by PyTorch, and 988.47 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[2025-12-21 19:06:18,901][__name__][INFO] - Skipping _ro_belebele (not in tasks_to_run)
+[2025-12-21 19:06:18,902][__name__][INFO] - Skipping ro_wiki (not in tasks_to_run)
+[2025-12-21 19:06:18,903][__name__][INFO] - Skipping _ro_arc_challenge (not in tasks_to_run)
+[2025-12-21 19:06:18,903][__name__][INFO] - Skipping arc_challenge (not in tasks_to_run)
+[2025-12-21 19:06:18,903][__name__][INFO] - Skipping winogrande (not in tasks_to_run)
+[2025-12-21 19:06:18,904][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/google_gemma-3-1b-pt/2025-12-21_19-06-09/eval_results.json
+[2025-12-21 19:06:18,904][__name__][INFO] - 📊 Summary:
+[2025-12-21 19:06:18,904][__name__][INFO] -   - _ro_winogrande: No metrics found

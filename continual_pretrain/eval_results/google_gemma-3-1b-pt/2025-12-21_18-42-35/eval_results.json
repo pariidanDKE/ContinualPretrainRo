@@ -1,0 +1,5 @@
+{
+  "ro_wiki": {
+    "error": "You are trying to access a gated repo.\nMake sure to have access to it at https://huggingface.co/google/gemma-3-1b-pt.\n401 Client Error. (Request ID: Root=1-6948318b-641c085609f0861c0d10dfac;6556ba2c-db3d-4bd3-b3f0-978aeb20e6b7)\n\nCannot access gated repo for url https://huggingface.co/google/gemma-3-1b-pt/resolve/main/config.json.\nAccess to model google/gemma-3-1b-pt is restricted. You must have access to it and be authenticated to access it. Please log in."
+  }
+}

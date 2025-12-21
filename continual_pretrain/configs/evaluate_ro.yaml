@@ -6,7 +6,7 @@ num_fewshot: 5
 device : auto
 tasks_to_run: ["_ro_winogrande", "_ro_belebele",  "_ro_arc_challenge", "arc_challenge", "winogrande"] #  "ro_wiki" 
 output_dir: eval_results
-
+max_length: 2048
 use_mps: false
 
 # List of all available tasks and their configs

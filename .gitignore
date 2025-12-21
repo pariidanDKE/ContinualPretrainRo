@@ -5,3 +5,5 @@ continual_pretrain/__pycache__/data_module.cpython-312.pyc
 continual_pretrain/wandb/
 continual_pretrain/notebooks/wandb
 continual_pretrain/__pycache__
+continual_pretrain/.hydra
+

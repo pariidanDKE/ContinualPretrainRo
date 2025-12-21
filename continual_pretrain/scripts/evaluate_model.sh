@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # This script runs tests on preliminary language understanding,
 # providing an early signal of which model understands Romanian better.
-export eval_batch_size=1
-export use_mps=True
+export eval_batch_size=32
+export use_mps=False
 
 #model_paths=("google/gemma-3-1b-pt" "meta-llama/Llama-3.2-1B" "meta-llama/Llama-3.2-1B-Instruct" "Qwen/Qwen2.5-1.5B")
-model_paths=("Qwen/Qwen2.5-1.5B-Instruct") 
-tasks_to_run=("ro_wiki")
+model_paths=("google/gemma-3-1b-pt") 
+tasks_to_run=("_ro_winogrande")
 tasks_list="[$(IFS=,; echo "${tasks_to_run[*]}")]"
 
 for model_path in "${model_paths[@]}"; do
@@ -33,3 +33,6 @@ for model_path in "${model_paths[@]}"; do
 done
 
 echo "🎯 All evaluations completed!"
+
+
+

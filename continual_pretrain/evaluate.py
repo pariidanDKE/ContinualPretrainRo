@@ -31,6 +31,7 @@ def main(cfg: DictConfig):
     if torch.cuda.is_available():
         device = "cuda"
         logger.info(f"🚀 CUDA is available. Using GPU: {torch.cuda.get_device_name(0)}")
+        
     elif cfg.use_mps:
         device = "mps"
         logger.info("Using MPS as specified in the config.")
@@ -38,9 +39,11 @@ def main(cfg: DictConfig):
         device = "cpu"
         logger.info("💻 CUDA not available. Using CPU")
 
-    max_length = cfg.get("max_length", 4096)  # Default to 2048, configurable
-    model_args_str = f"pretrained={cfg.model_path},max_length={max_length}"
-  
+    dtype = "bfloat16" if device=='cuda' else 'float16'
+    max_length = cfg.get("max_length",2048)  # Default to 2048, configurable
+    model_args_str = (
+        f"pretrained={cfg.model_path},max_length={max_length},truncation=True"
+    )  
     # ---- Create results folder with timestamp ----
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     model_name = cfg.model_path.replace("/", "_")
@@ -125,3 +128,4 @@ def main(cfg: DictConfig):
 
 if __name__ == "__main__":
     main()
+
