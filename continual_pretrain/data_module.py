@@ -5,30 +5,43 @@ from torch.utils.data import Dataset
 
 class DataPreprocessor:
     # ---- Special token maps ----
+    # Map Romanian tags to native instruction format for each model family
+    # Works for BOTH base and instruct models - base models will learn, instruct models already know
+
     LLAMA_SPECIAL_MAP = {
-        "<sistem>": "<|reserved_special_token_0|>",
-        "</sistem>": "<|reserved_special_token_1|>",
-        "<utilizator>": "<|reserved_special_token_2|>",
-        "</utilizator>": "<|reserved_special_token_3|>",
-        "<asistent>": "<|reserved_special_token_4|>",
-        "</asistent>": "<|reserved_special_token_5|>",
+        "<sistem>": "<|start_header_id|>system<|end_header_id|>\n\n",
+        "</sistem>": "<|eot_id|>",
+        "<utilizator>": "<|start_header_id|>user<|end_header_id|>\n\n",
+        "</utilizator>": "<|eot_id|>",
+        "<asistent>": "<|start_header_id|>assistant<|end_header_id|>\n\n",
+        "</asistent>": "<|eot_id|>",
     }
 
     GEMMA_SPECIAL_MAP = {
-        "<sistem>": "<unused0>",
-        "</sistem>": "<unused1>",
-        "<utilizator>": "<unused2>",
-        "</utilizator>": "<unused3>",
-        "<asistent>": "<unused4>",
-        "</asistent>": "<unused5>",
+        "<sistem>": "<start_of_turn>user\n",  # Gemma handles system prompts as user context
+        "</sistem>": "\n\n",
+        "<utilizator>": "<start_of_turn>user\n",
+        "</utilizator>": "<end_of_turn>\n",
+        "<asistent>": "<start_of_turn>model\n",
+        "</asistent>": "<end_of_turn>\n",
+    }
+
+    QWEN_SPECIAL_MAP = {
+        "<sistem>": "<|im_start|>system\n",
+        "</sistem>": "<|im_end|>\n",
+        "<utilizator>": "<|im_start|>user\n",
+        "</utilizator>": "<|im_end|>\n",
+        "<asistent>": "<|im_start|>assistant\n",
+        "</asistent>": "<|im_end|>\n",
     }
 
     SPECIAL_MAPS = {
         "llama": LLAMA_SPECIAL_MAP,
         "gemma": GEMMA_SPECIAL_MAP,
+        "qwen": QWEN_SPECIAL_MAP,
     }
 
-    def __init__(self, tokenizer, text_field: str = "formatted_text", add_bos_eos: bool = True):
+    def __init__(self, tokenizer, text_field: str = "formatted_text", add_bos_eos: bool = True, use_sft_config = False):
         """
         tokenizer: HF tokenizer
         text_field: name of the field in the dataset that contains the formatted dialogue text
@@ -37,6 +50,7 @@ class DataPreprocessor:
         self.tokenizer = tokenizer
         self.text_field = text_field
         self.add_bos_eos = add_bos_eos
+        self.use_sft_config = use_sft_config
 
         self.family = self._detect_model_family()
         print(f"[DataPreprocessor] Detected model family: {self.family}")
@@ -45,16 +59,92 @@ class DataPreprocessor:
     # ---- Model family detection ----
     def _detect_model_family(self):
         vocab = self.tokenizer.get_vocab()
+        model_name = getattr(self.tokenizer, 'name_or_path', '').lower()
 
-        # LLaMA-style special reserved tokens
-        if "<|reserved_special_token_0|>" in vocab:
+        # Detect Llama (both base and instruct models have these tokens)
+        if "<|start_header_id|>" in vocab or "<|reserved_special_token_0|>" in vocab:
             return "llama"
 
-        # Gemma-style unused tokens
-        if "<unused0>" in vocab:
+        # Detect Gemma (both base and IT models have these tokens)
+        if "<start_of_turn>" in vocab or "<unused0>" in vocab:
             return "gemma"
 
-        return None  # fallback if neither is detected
+        # Detect Qwen (both base and instruct models have these tokens)
+        if "<|im_start|>" in vocab or "qwen" in model_name:
+            return "qwen"
+
+        return None  # fallback if no family detected
+
+    # ---- Chat template generation ----
+    def get_chat_template(self) -> str:
+        """
+        Generate a Jinja2 chat template dynamically based on the detected model family.
+        This template uses the special tokens mapped for Romanian dialogue tags.
+
+        Templates are simplified versions that match native templates but without:
+        - Date/time stamps (Llama)
+        - Other metadata that doesn't affect Romanian evaluation
+
+        Returns:
+            A Jinja2 template string compatible with HuggingFace tokenizers
+        """
+        if self.special_map is None:
+            raise ValueError("Cannot generate chat template: model family not detected")
+
+        # Build family-specific templates
+        if self.family == "llama":
+            # Simplified Llama template with BOS but without date stamps
+            template = (
+                "{{ bos_token }}"  # Add BOS token at start
+                "{% for message in messages %}"
+                "{% if message['role'] == 'system' %}"
+                "{{ '<|start_header_id|>system<|end_header_id|>\\n\\n' + message['content'] + '<|eot_id|>' }}"
+                "{% elif message['role'] == 'user' %}"
+                "{{ '<|start_header_id|>user<|end_header_id|>\\n\\n' + message['content'] + '<|eot_id|>' }}"
+                "{% elif message['role'] == 'assistant' %}"
+                "{{ '<|start_header_id|>assistant<|end_header_id|>\\n\\n' + message['content'] + '<|eot_id|>' }}"
+                "{% endif %}"
+                "{% endfor %}"
+            )
+
+        elif self.family == "gemma":
+            # Simplified Gemma template with BOS
+            # Gemma merges system message into first user message if present
+            template = (
+                "{{ bos_token }}"
+                "{% if messages[0]['role'] == 'system' %}"
+                "{{ '<start_of_turn>user\\n' + messages[0]['content'] + '\\n\\n' }}"
+                "{% set loop_messages = messages[1:] %}"
+                "{% else %}"
+                "{% set loop_messages = messages %}"
+                "{% endif %}"
+                "{% for message in loop_messages %}"
+                "{% if message['role'] == 'user' %}"
+                "{{ '<start_of_turn>user\\n' + message['content'] + '<end_of_turn>\\n' }}"
+                "{% elif message['role'] == 'assistant' %}"
+                "{{ '<start_of_turn>model\\n' + message['content'] + '<end_of_turn>\\n' }}"
+                "{% endif %}"
+                "{% endfor %}"
+            )
+
+        elif self.family == "qwen":
+            # Qwen template (already matches perfectly)
+            template = (
+                "{% for message in messages %}"
+                "{% if message['role'] == 'system' %}"
+                "{{ '<|im_start|>system\\n' + message['content'] + '<|im_end|>\\n' }}"
+                "{% elif message['role'] == 'user' %}"
+                "{{ '<|im_start|>user\\n' + message['content'] + '<|im_end|>\\n' }}"
+                "{% elif message['role'] == 'assistant' %}"
+                "{{ '<|im_start|>assistant\\n' + message['content'] + '<|im_end|>\\n' }}"
+                "{% endif %}"
+                "{% endfor %}"
+            )
+
+        else:
+            raise ValueError(f"Unsupported model family: {self.family}")
+
+        return template
 
     # ---- Generic tag replacer ----
     @staticmethod
@@ -64,63 +154,107 @@ class DataPreprocessor:
         return text
 
     # ---- Unified loss mask (system + user masked, assistant unmasked) ----
-    def _apply_loss_mask(self, tokens, token_ids):
+    def _apply_loss_mask(self, token_ids):
         """Return label tensor with system/user/pad masked (-100) and assistant unmasked."""
         special_map = self.special_map
         tokenizer = self.tokenizer
 
-        SYS_OPEN = special_map["<sistem>"]
-        SYS_CLOSE = special_map["</sistem>"]
-        USER_OPEN = special_map["<utilizator>"]
-        USER_CLOSE = special_map["</utilizator>"]
+        # Encode the special token strings to get their token ID sequences
+        # These can be multi-token sequences (e.g., "<|start_header_id|>system<|end_header_id|>\n\n" = 4 tokens)
+        sys_open_ids = tokenizer.encode(special_map["<sistem>"], add_special_tokens=False)
+        sys_close_ids = tokenizer.encode(special_map["</sistem>"], add_special_tokens=False)
+        user_open_ids = tokenizer.encode(special_map["<utilizator>"], add_special_tokens=False)
+        user_close_ids = tokenizer.encode(special_map["</utilizator>"], add_special_tokens=False)
+        asst_open_ids = tokenizer.encode(special_map["<asistent>"], add_special_tokens=False)
+        asst_close_ids = tokenizer.encode(special_map["</asistent>"], add_special_tokens=False)
 
-        BOS = tokenizer.bos_token or None
-        EOS = tokenizer.eos_token or None
-
+        BOS = tokenizer.bos_token_id or None
+        EOS = tokenizer.eos_token_id or None
         pad_id = tokenizer.pad_token_id if tokenizer.pad_token_id is not None else -1
 
+        # Helper function to check if a sequence matches at position i
+        def matches_sequence(tokens, seq, pos):
+            if pos + len(seq) > len(tokens):
+                return False
+            return tokens[pos:pos+len(seq)] == seq
+
         labels = []
+        i = 0
         in_system = False
         in_user = False
+        in_assistant = False
 
-        for tok, tid in zip(tokens, token_ids):
-            # ----- system section -----
-            if tok == SYS_OPEN:
+        while i < len(token_ids):
+            tid = token_ids[i]
+
+            # Check for role transitions - opening a new role closes the previous one
+            # System role
+            if matches_sequence(token_ids, sys_open_ids, i):
                 in_system = True
-                labels.append(-100)
-                continue
-            if tok == SYS_CLOSE:
-                labels.append(-100)
-                in_system = False
-                continue
-
-            # ----- user section -----
-            if tok == USER_OPEN:
-                in_user = True
-                labels.append(-100)
-                continue
-            if tok == USER_CLOSE:
-                labels.append(-100)
                 in_user = False
+                in_assistant = False
+                for _ in range(len(sys_open_ids)):
+                    labels.append(-100)
+                i += len(sys_open_ids)
                 continue
 
-            # Inside system/user → masked
+            # User role
+            if matches_sequence(token_ids, user_open_ids, i):
+                in_system = False
+                in_user = True
+                in_assistant = False
+                for _ in range(len(user_open_ids)):
+                    labels.append(-100)
+                i += len(user_open_ids)
+                continue
+
+            # Assistant role
+            if matches_sequence(token_ids, asst_open_ids, i):
+                in_system = False
+                in_user = False
+                in_assistant = True
+                for _ in range(len(asst_open_ids)):
+                    labels.append(-100)
+                i += len(asst_open_ids)
+                continue
+
+            # Close tags (like <|eot_id|>, <end_of_turn>, <|im_end|>) - mask them but don't change state
+            # The state only changes when a NEW role opens
+            if (matches_sequence(token_ids, sys_close_ids, i) or
+                matches_sequence(token_ids, user_close_ids, i) or
+                matches_sequence(token_ids, asst_close_ids, i)):
+
+                # Determine length of closing sequence
+                close_len = 0
+                if matches_sequence(token_ids, sys_close_ids, i):
+                    close_len = len(sys_close_ids)
+                elif matches_sequence(token_ids, user_close_ids, i):
+                    close_len = len(user_close_ids)
+                elif matches_sequence(token_ids, asst_close_ids, i):
+                    close_len = len(asst_close_ids)
+
+                # Mask the closing tokens
+                for _ in range(close_len):
+                    labels.append(-100)
+                i += close_len
+                continue
+
+            # Handle content based on current role
             if in_system or in_user:
+                # Mask system and user content
                 labels.append(-100)
-                continue
+            elif in_assistant:
+                # Keep assistant content (this is what we train on)
+                labels.append(tid)
+            else:
+                # Outside any role, mask BOS/EOS/PAD
+                if tid == BOS or tid == EOS or tid == pad_id:
+                    labels.append(-100)
+                else:
+                    # Default: mask unknown content
+                    labels.append(-100)
 
-            # Mask BOS/EOS
-            if tok == BOS or tok == EOS:
-                labels.append(-100)
-                continue
-
-            # Padding should be masked
-            if tid == pad_id:
-                labels.append(-100)
-                continue
-
-            # Otherwise assistant text → unmasked (model predicts these)
-            labels.append(tid)
+            i += 1
 
         return labels
 
@@ -147,35 +281,39 @@ class DataPreprocessor:
         else:
             text = original_local
 
-        # Tokenize
-        encoded = self.tokenizer(
-            text,
-            add_special_tokens=False,
-            return_attention_mask=True,
-        )
-        ids = encoded["input_ids"]
+        if self.use_sft_config:
+            return {
+                'formatted_text' : text
+            }
+        else : 
 
-        # Convert ids → tokens for boundary detection
-        tokens = self.tokenizer.convert_ids_to_tokens(ids)
+            # Tokenize
+            encoded = self.tokenizer(
+                text,
+                add_special_tokens=False,
+                return_attention_mask=True,
+            )
+            ids = encoded["input_ids"]
 
-        # Build labels using unified masking logic
-        if self.special_map is not None:
-            labels = self._apply_loss_mask(tokens, ids)
-        else:
-            # Fallback: no masking, train on everything except pad
-            pad_id = self.tokenizer.pad_token_id if self.tokenizer.pad_token_id is not None else -1
-            labels = [tid if tid != pad_id else -100 for tid in ids]
+            # Build labels using unified masking logic
+            if self.special_map is not None:
+                labels = self._apply_loss_mask(ids)
+            else:
+                # Fallback: no masking, train on everything except pad
+                pad_id = self.tokenizer.pad_token_id if self.tokenizer.pad_token_id is not None else -1
+                labels = [tid if tid != pad_id else -100 for tid in ids]
 
-        # loss_mask: 1 where we compute loss, 0 where ignored (optional)
-        loss_mask = [0 if l == -100 else 1 for l in labels]
+            # loss_mask: 1 where we compute loss, 0 where ignored (optional)
+            loss_mask = [0 if l == -100 else 1 for l in labels]
 
-        return {
-            "input_ids": ids,
-            "labels": labels,
-            # uncomment if you want these:
-            # "loss_mask": loss_mask,
-            "attention_mask": encoded["attention_mask"],
-        }
+            return {
+                "input_ids": ids,
+                "labels": labels,
+            
+                "attention_mask": encoded["attention_mask"],
+                # uncomment if you want these:
+                # "loss_mask": loss_mask,
+            }
 
 ################## DATA COLLATOR ###########################
 

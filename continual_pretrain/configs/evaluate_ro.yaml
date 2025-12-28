@@ -1,13 +1,20 @@
 model_path: google/gemma-3-1b-pt
 verbosity: INFO
 apply_chat_template: true
-eval_batch_size: 32
+eval_batch_size: 16
 num_fewshot: 5
 device : auto
-tasks_to_run: ["_ro_winogrande", "_ro_belebele",  "_ro_arc_challenge", "arc_challenge", "winogrande"] #  "ro_wiki" 
+tasks_to_run: ["_ro_winogrande", "_ro_belebele",  "_ro_arc_challenge", "arc_challenge", "winogrande", "ro_wiki", "wikitext"] #
+preplexity_tasks: ["ro_wiki", "wikitext"] # for these do not apply chat template
+
 output_dir: eval_results
-max_length: 2048
+max_length: 4096  # Model's maximum context length
+eval_max_length: 16384
 use_mps: false
+
+# W&B configuration
+use_wandb: true
+wandb_project: romanian-llm-eval-3
 
 # List of all available tasks and their configs
 evaluation_tasks:
@@ -27,6 +34,9 @@ evaluation_tasks:
     fewshot: 5
     limit: 1000
   - name: winogrande
+    fewshot: 5
+    limit: 1000
+  - name: wikitext
     fewshot: 5
     limit: 1000
 

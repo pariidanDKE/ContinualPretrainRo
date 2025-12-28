@@ -4,7 +4,7 @@ dataset_name: wikitext-2-raw-v1
 output_type: loglikelihood_rolling
 training_split: train
 validation_split: validation
-test_split: test
+test_split: train # do perplxity eval on 600 and not 60 rows
 doc_to_text: ""
 doc_to_target: !function preprocess_wikitext.wikitext_detokenizer
 process_results: !function preprocess_wikitext.process_results

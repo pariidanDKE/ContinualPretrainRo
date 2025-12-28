@@ -1,9 +1,18 @@
 continual_pretrain/data/
 *.env
 continual_pretrain/outputs/
-continual_pretrain/__pycache__/data_module.cpython-312.pyc
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
 continual_pretrain/wandb/
 continual_pretrain/notebooks/wandb
-continual_pretrain/__pycache__
 continual_pretrain/.hydra
-
+continual_pretrain/.pyt
+.python-version
+continual_pretrain/unsloth_compiled_cache/
+continual_pretrain/eval_results/
+.python-version
+continual_pretrain/checkpoints

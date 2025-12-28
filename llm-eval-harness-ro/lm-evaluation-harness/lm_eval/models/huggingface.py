@@ -94,6 +94,7 @@ class HFLM(TemplateLM):
         truncation: Optional[bool] = False,
         logits_cache: bool = True,
         max_length: Optional[int] = None,
+        eval_max_length: Optional[int] = None,  # Separate truncation length for evaluation
         device: Optional[str] = "cuda",
         dtype: Optional[Union[str, torch.dtype]] = "auto",
         batch_size: Optional[Union[int, str]] = 1,
@@ -267,6 +268,7 @@ class HFLM(TemplateLM):
         self.add_bos_token = True
 
         self._max_length = max_length
+        self._eval_max_length = eval_max_length  # Store separate eval truncation length
         self.pretrained = pretrained
         self.delta = delta
         self.peft = peft
@@ -380,6 +382,11 @@ class HFLM(TemplateLM):
                 return self._DEFAULT_MAX_LENGTH
             return self.tokenizer.model_max_length
         return self._DEFAULT_MAX_LENGTH
+
+    @property
+    def eval_max_length(self):
+        """Returns the truncation length for evaluation. Defaults to max_length if not set."""
+        return self._eval_max_length if self._eval_max_length else self.max_length
 
     @property
     def max_gen_toks(self) -> int:
@@ -739,11 +746,26 @@ class HFLM(TemplateLM):
         else:
             special_tokens_kwargs = {"add_special_tokens": add_special_tokens}
 
-        encoding = self.tokenizer.encode(string, **special_tokens_kwargs)
+        # If truncation is enabled and we have a max_length, apply truncation during tokenization
+        # to prevent OOM on very long inputs
+        import sys
+        if self.truncation and left_truncate_len:
+            encoding = self.tokenizer.encode(
+                string,
+                max_length=left_truncate_len,
+                truncation=True,
+                **special_tokens_kwargs
+            )
+        else:
+            print(f"[DEBUG] Encoding string: {string[:200]}{'...' if len(string) > 200 else ''}", flush=True)
+            print(f"[DEBUG] Special tokens kwargs: {special_tokens_kwargs}", flush=True)
+            encoding = self.tokenizer.encode(string, **special_tokens_kwargs)
+            print(f"[DEBUG] Encoded to {len(encoding)} tokens, first 10: {encoding[:10]}", flush=True)
+            sys.stdout.flush()
 
-        # left-truncate the encoded context to be at most `left_truncate_len` tokens long
-        if left_truncate_len:
-            encoding = encoding[-left_truncate_len:]
+            # left-truncate the encoded context to be at most `left_truncate_len` tokens long
+            if left_truncate_len:
+                encoding = encoding[-left_truncate_len:]
 
         return encoding
 
@@ -761,10 +783,13 @@ class HFLM(TemplateLM):
         add_special_tokens = {}
         if self.AUTO_MODEL_CLASS == transformers.AutoModelForCausalLM:
             add_special_tokens = {"add_special_tokens": False or self.add_bos_token}
-        # print(strings)
-        # print(len(strings))
-        # import sys
-        # sys.exit()
+
+        import sys
+        print(f"\n[DEBUG tok_batch_encode] Encoding {len(strings)} strings", flush=True)
+        for i, s in enumerate(strings[:3]):  # Show first 3 strings only
+            preview = s[:200] + ('...' if len(s) > 200 else '')
+            print(f"  String [{i}]: {preview}", flush=True)
+        sys.stdout.flush()
 
         encoding = self.tokenizer(
             strings,
@@ -875,20 +900,29 @@ class HFLM(TemplateLM):
             print(f"Determined Largest batch size: {batch_size}")
             adaptive_batch_size = batch_size
 
-        for (string,) in tqdm(
+        import sys
+        for idx, (string,) in enumerate(tqdm(
             [req.args for req in requests], disable=(disable_tqdm or (self.rank != 0))
-        ):
+        )):
+            # Use print to bypass any logging filters - force output to stdout
+
+
+            # Encode the string - will be truncated if too long
+            # Use eval_max_length for truncation (can be different from model's max_length)
+            encoded_tokens = self.tok_encode(string, left_truncate_len=self.eval_max_length)
+     
             rolling_token_windows = list(
                 map(
                     utils.make_disjoint_window,
                     utils.get_rolling_token_windows(
-                        token_list=self.tok_encode(string),
+                        token_list=encoded_tokens,
                         prefix_token=self.prefix_token_id,
                         max_seq_len=self.max_length,
                         context_len=1,
                     ),
                 )
             )
+  
 
             # TODO: Right now, we pass single EOT token to the Encoder and the full context to the decoder, in seq2seq case
             rolling_token_windows = [(None,) + x for x in rolling_token_windows]
@@ -1298,13 +1332,20 @@ class HFLM(TemplateLM):
         """
         Method to apply a chat template to a list of chat history between user and model.
         """
+        # print(f" Chat history : {chat_history}",flush=True)
+        # sys.stdout.flush()
         templated_history = self.tokenizer.apply_chat_template(chat_history, tokenize=False, add_generation_prompt=True)
-        bos_token_str = self.tokenizer.decode([self.tokenizer.bos_token_id])
-        # print(templated_history)
-        # print(bos_token_str)
-        if self.add_bos_token == True and templated_history.startswith(bos_token_str):
-            templated_history = templated_history[len(bos_token_str):]
-        # print(templated_history)
+
+        # Only decode BOS token if it exists (Qwen models don't have BOS token)
+        if self.tokenizer.bos_token_id is not None:
+            bos_token_str = self.tokenizer.decode([self.tokenizer.bos_token_id])
+            # print(templated_history)
+            # print(bos_token_str)
+            if self.add_bos_token == True and templated_history.startswith(bos_token_str):
+                templated_history = templated_history[len(bos_token_str):]
+
+        # print(f"templated_history : {templated_history}\n***************************", flush=True)
+        # sys.stdout.flush()
         return templated_history
         # return self.tokenizer.apply_chat_template(
         #     chat_history, tokenize=False, add_generation_prompt=True

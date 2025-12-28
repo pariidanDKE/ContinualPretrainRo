@@ -112,18 +112,15 @@ hydra:
     hydra:
     - hydra.mode=RUN
     task:
-    - eval_batch_size=64
-    - model_path=google/gemma-3-1b-pt
-    - use_mps=False
-    - apply_chat_template=false
-    - tasks_to_run=[_ro_winogrande]
+    - model_path=checkpoints/milestones/checkpoint-0M
+    - use_wandb=false
   job:
     name: evaluate
     chdir: null
-    override_dirname: apply_chat_template=false,eval_batch_size=64,model_path=google/gemma-3-1b-pt,tasks_to_run=[_ro_winogrande],use_mps=False
+    override_dirname: model_path=checkpoints/milestones/checkpoint-0M,use_wandb=false
     id: ???
     num: ???
-    config_name: evaluate_ro.yaml
+    config_name: evaluate_ro
     env_set: {}
     env_copy: []
     config:

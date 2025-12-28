@@ -1,9 +1,7 @@
-from __future__ import annotations
-
+from unsloth import FastLanguageModel
 import logging
 from dataclasses import dataclass, field
 from typing import Any, Optional, Sequence, Tuple, Union
-
 import torch
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 from transformers import (
@@ -79,7 +77,7 @@ class ModelBuilderConfig:
     unsloth_path: Optional[str] = None
     unsloth_dtype: Union[str, torch.dtype, None] = None
     unsloth_gradient_checkpointing: Union[bool, str] = "unsloth"
-    unsloth_random_state: int = 3407
+    seed: int = 3407
     unsloth_use_rslora: bool = True
     unsloth_loftq_config: Optional[dict] = None
     unsloth_load_in_4bit: Optional[bool] = None
@@ -149,7 +147,9 @@ class ModelBuilder:
 
         peft_config = self.lora_config.to_peft_config()
         model = get_peft_model(model, peft_config)
-        self._log_trainable_parameters(model)
+        if hasattr(model, "print_trainable_parameters"):
+            model.print_trainable_parameters()  # pragma: no cover - logging helper
+        #self._log_trainable_parameters(model)
         return model, tokenizer
 
     # --------------------------------------------------------------------- #
@@ -158,26 +158,15 @@ class ModelBuilder:
     def _build_unsloth_model(
         self,
     ) -> Tuple[PreTrainedModel, PreTrainedTokenizerBase]:
-        try:
-            from unsloth import FastLanguageModel
-        except ImportError as exc:  # pragma: no cover - optional dependency
-            raise ImportError(
-                "The `unsloth` package is required but not installed. "
-                "Install it with `pip install unsloth` or disable `use_unsloth`."
-            ) from exc
 
         cfg = self.config
         model_name = cfg.unsloth_path or cfg.model_name
-        load_in_4bit = (
-            cfg.unsloth_load_in_4bit
-            if cfg.unsloth_load_in_4bit is not None
-            else cfg.load_in_4bit
-        )
+        load_in_4bit = cfg.load_in_4bit
 
         model, tokenizer = FastLanguageModel.from_pretrained(
             model_name=model_name,
             max_seq_length=cfg.max_seq_length,
-            dtype=self._resolve_dtype(cfg.unsloth_dtype, allow_none=True),
+            dtype=self._resolve_dtype(cfg.bnb_4bit_compute_dtype, allow_none=True),
             load_in_4bit=load_in_4bit,
         )
 
@@ -188,8 +177,8 @@ class ModelBuilder:
             lora_alpha=self.lora_config.lora_alpha,
             lora_dropout=self.lora_config.lora_dropout,
             bias=self.lora_config.bias,
-            use_gradient_checkpointing=cfg.unsloth_gradient_checkpointing,
-            random_state=cfg.unsloth_random_state,
+            use_gradient_checkpointing=cfg.gradient_checkpointing,
+            random_state=cfg.seed,
             use_rslora=cfg.unsloth_use_rslora,
             loftq_config=cfg.unsloth_loftq_config,
         )
@@ -209,20 +198,20 @@ class ModelBuilder:
                 "Tokenizer lacked a pad token, defaulting pad_token to eos_token."
             )
 
-    def _log_trainable_parameters(self, model: PreTrainedModel) -> None:
-        """Log ratio of trainable vs total parameters."""
-        trainable = 0
-        total = 0
-        for param in model.parameters():
-            numel = param.numel()
-            total += numel
-            if param.requires_grad:
-                trainable += numel
+    # def _log_trainable_parameters(self, model: PreTrainedModel) -> None:
+    #     """Log ratio of trainable vs total parameters."""
+    #     trainable = 0
+    #     total = 0
+    #     for param in model.parameters():
+    #         numel = param.numel()
+    #         total += numel
+    #         if param.requires_grad:
+    #             trainable += numel
 
-        pct = (trainable / total) * 100 if total else 0
-        self.logger.info(
-            "Trainable parameters: %s / %s (%.2f%%)", f"{trainable:,}", f"{total:,}", pct
-        )
+    #     pct = (trainable / total) * 100 if total else 0
+    #     self.logger.info(
+    #         "Trainable parameters: %s / %s (%.2f%%)", f"{trainable:,}", f"{total:,}", pct
+    #     )
 
     @staticmethod
     def _resolve_dtype(
@@ -230,25 +219,14 @@ class ModelBuilder:
         allow_none: bool = False,
     ) -> Optional[torch.dtype]:
         """Map user-provided dtype strings to `torch.dtype`."""
-        if dtype is None:
-            return None if allow_none else torch.float32
-        if isinstance(dtype, torch.dtype):
-            return dtype
-        if isinstance(dtype, str):
-            normalized = dtype.strip().lower()
-            mapping = {
-                "bfloat16": torch.bfloat16,
-                "bf16": torch.bfloat16,
-                "float16": torch.float16,
-                "fp16": torch.float16,
-                "half": torch.float16,
-                "float32": torch.float32,
-                "fp32": torch.float32,
-                "single": torch.float32,
-                "float64": torch.float64,
-                "fp64": torch.float64,
-            }
-            if normalized not in mapping:
-                raise ValueError(f"Unsupported dtype value: {dtype}")
-            return mapping[normalized]
-        raise TypeError(f"Unsupported dtype type: {type(dtype)!r}")
+     
+        normalized = dtype.strip().lower()
+        mapping = {
+            "bfloat16": torch.bfloat16,
+            "bf16": torch.bfloat16,
+            "fp16": torch.float16,
+            "fp32": torch.float32,
+        }
+
+        return mapping[normalized]
+

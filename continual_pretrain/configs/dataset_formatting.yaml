@@ -3,42 +3,42 @@
 
 # List of datasets to process
 datasets:
-  # - name: "OpenLLM-Ro/ro_sft_norobots"
-  #   split: "train"
-  #   output_path: "./data/formatted_data/norobots"
-  #   push_to_hub: false
-  #   hub_repo_id: null  # Set this if push_to_hub is true
-  
-  # - name: "OpenLLM-Ro/ro_sft_dolly"
-  #   split: "train"
-  #   output_path: "./data/formatted_data/dolly"
-  #   push_to_hub: false
-  #   hub_repo_id: null  # Set this if push_to_hub is true
-
-
-  # - name: "OpenLLM-Ro/ro_sft_camel"
-  #   split: "train"
-  #   output_path: "./data/formatted_data/camel"
-  #   push_to_hub: false
-  #   hub_repo_id: null  # Set this if push_to_hub is true
-
-  # - name: "OpenLLM-Ro/ro_sft_orca"
-  #   split: "train"
-  #   output_path: "./data/formatted_data/orca"
-  #   push_to_hub: false
-  #   hub_repo_id: null  # Set this if push_to_hub is true
-
-  # - name: "OpenLLM-Ro/ro_sft_oasst"
-  #   split: "train"
-  #   output_path: "./data/formatted_data/oasst"
-  #   push_to_hub: false
-  #   hub_repo_id: null  # Set this if push_to_hub is true
-
-  - name: "OpenLLM-Ro/ro_sft_magpie_mt"
+  - name: "OpenLLM-Ro/ro_sft_norobots"
     split: "train"
-    output_path: "./data/formatted_data/maggie"
+    output_path: "./data/formatted_data/norobots"
     push_to_hub: false
     hub_repo_id: null  # Set this if push_to_hub is true
+  
+  - name: "OpenLLM-Ro/ro_sft_dolly"
+    split: "train"
+    output_path: "./data/formatted_data/dolly"
+    push_to_hub: false
+    hub_repo_id: null  # Set this if push_to_hub is true
+
+
+  - name: "OpenLLM-Ro/ro_sft_camel"
+    split: "train"
+    output_path: "./data/formatted_data/camel"
+    push_to_hub: false
+    hub_repo_id: null  # Set this if push_to_hub is true
+
+  - name: "OpenLLM-Ro/ro_sft_orca"
+    split: "train"
+    output_path: "./data/formatted_data/orca"
+    push_to_hub: false
+    hub_repo_id: null  # Set this if push_to_hub is true
+
+  - name: "OpenLLM-Ro/ro_sft_oasst"
+    split: "train"
+    output_path: "./data/formatted_data/oasst"
+    push_to_hub: false
+    hub_repo_id: null  # Set this if push_to_hub is true
+
+  # - name: "OpenLLM-Ro/ro_sft_magpie_mt"
+  #   split: "train"
+  #   output_path: "./data/formatted_data/maggie"
+  #   push_to_hub: false
+  #   hub_repo_id: null  # Set this if push_to_hub is true
 
 # Special tokens for formatting
 special_tokens:

@@ -1,12 +1,28 @@
 #!/usr/bin/env bash
 # This script runs tests on preliminary language understanding,
 # providing an early signal of which model understands Romanian better.
-export eval_batch_size=32
+export eval_batch_size=16
 export use_mps=False
 
-#model_paths=("google/gemma-3-1b-pt" "meta-llama/Llama-3.2-1B" "meta-llama/Llama-3.2-1B-Instruct" "Qwen/Qwen2.5-1.5B")
-model_paths=("google/gemma-3-1b-pt") 
-tasks_to_run=("_ro_winogrande")
+# All models to evaluate
+model_paths=(
+    "google/gemma-3-1b-pt"
+    "google/gemma-3-1b-it"
+    # "meta-llama/Llama-3.2-1B"
+    # "meta-llama/Llama-3.2-1B-Instruct"
+    # "Qwen/Qwen2.5-1.5B"
+    #  "Qwen/Qwen2.5-1.5B-Instruct"
+)
+# All Romanian and English tasks
+tasks_to_run=(
+    "_ro_arc_challenge"
+    # "arc_challenge"
+    # "wikitext"
+    # "ro_wiki"
+    # "_ro_winogrande"
+    # "_ro_belebele"
+    # "winogrande"
+)
 tasks_list="[$(IFS=,; echo "${tasks_to_run[*]}")]"
 
 for model_path in "${model_paths[@]}"; do
@@ -16,9 +32,9 @@ for model_path in "${model_paths[@]}"; do
     
     # Conditionally set apply_chat_template based on the model type
     if [[ "$model_path" == *"-it" ]] || [[ "$model_path" == *"Instruct"* ]]; then
-        apply_chat_template=false
+        apply_chat_template=true
     else
-        apply_chat_template=false
+        apply_chat_template=true
     fi
 
     python evaluate.py \

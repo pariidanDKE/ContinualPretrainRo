@@ -345,10 +345,12 @@ class TemplateLM(LM):
 
         model_class = getattr(self, "AUTO_MODEL_CLASS", None)
 
+        # Get max_length for truncation if available
+        max_length = getattr(self, "max_length", None)
 
         if model_class == transformers.AutoModelForSeq2SeqLM:
-            context_enc = self.tok_encode(context)
-            continuation_enc = self.tok_encode(continuation, add_special_tokens=False)
+            context_enc = self.tok_encode(context, left_truncate_len=max_length)
+            continuation_enc = self.tok_encode(continuation, left_truncate_len=max_length, add_special_tokens=False)
         else:
             if callable(getattr(self.tokenizer, 'convert_tokens_to_ids', None)):
                 if self.tokenizer.convert_tokens_to_ids("<|eot_id|>") == 128009:
@@ -356,11 +358,11 @@ class TemplateLM(LM):
                     eos_token = self.tokenizer.convert_tokens_to_ids("<|eot_id|>")
                 else:
                     eos_token = self.tokenizer.eos_token_id
-            
-                whole_enc = self.tok_encode(context + continuation) + [eos_token]
+
+                whole_enc = self.tok_encode(context + continuation, left_truncate_len=max_length) + [eos_token]
             else:
-                whole_enc = self.tok_encode(context + continuation)
-            context_enc = self.tok_encode(context)
+                whole_enc = self.tok_encode(context + continuation, left_truncate_len=max_length)
+            context_enc = self.tok_encode(context, left_truncate_len=max_length)
 
             context_enc_len = len(context_enc)
             continuation_enc = whole_enc[context_enc_len:]
@@ -380,13 +382,12 @@ class TemplateLM(LM):
             else:
                 context_enc, continuation_enc = self._encode_pair(context, continuation)
 
-            # print("Context:", context)
-            # print("Continuation:", continuation)
-            # print()
-            # print("Context_enc:", context_enc)
-            # print("Continuation_enc:", continuation_enc)
             # import sys
-            # sys.exit()
+            # print("\n[DEBUG loglikelihood]", flush=True)
+            # print(f"Context ({len(context)} chars): {context[:2000]}{'...' if len(context) > 2000 else ''}", flush=True)
+            # print(f"Continuation: {continuation}", flush=True)
+            # sys.stdout.flush()
+       
             new_reqs.append(((context, continuation), context_enc, continuation_enc))
 
         return self._loglikelihood_tokens(new_reqs, disable_tqdm=disable_tqdm)

@@ -4,27 +4,33 @@ defaults:
 seed: 42
 
 dataset:
+  tokenize: false
+  sample_size: 1000  # set to an int for quick smoke tests
+  text_field: "formatted_text"
+
   name: "danp27/norobots_sft"
   split: "train"
-  text_field: "formatted_text"
-  add_bos_eos: true
+ 
+  add_bos_eos: false
   num_proc: 1
-  sample_size: 100  # set to an int for quick smoke tests
+
+  
 
 data_builder:
   enabled: true
+  
   datasets:
     - name: "danp27/norobots_sft"
       split: "train"
       proportion: 0.5
-      sample_size: null
+      #sample_size: 1000
       text_field: null
       add_bos_eos: null
       num_proc: null
     - name: "./data/formatted_data/dolly"
       split: "train"
       proportion: 0.5
-      sample_size: null
+      #sample_size: 1000
       text_field: null
       add_bos_eos: null
       num_proc: null
@@ -33,6 +39,7 @@ data_builder:
 data_collator:
   pack_length: 2048
   use_custom_packed : false
+  packing : true
 
 model:
   builder:
@@ -49,7 +56,7 @@ model:
     require_grads: true
     max_seq_length: 4096
     use_unsloth: false
-    unsloth_path: null
+    seed: 42
   lora:
     r: 16
     lora_alpha: 32
@@ -64,13 +71,14 @@ model:
       - gate_proj
       - up_proj
       - down_proj
-      # - embed_tokens
-      # - lm_head
+      - embed_tokens
+      - lm_head
 
 training_args:
   output_dir: "./outputs/train_llama"
   per_device_train_batch_size: 1
   gradient_accumulation_steps: 4
+  max_length: 2048
   logging_steps: 1
   learning_rate: 2e-5
   num_train_epochs: 1
@@ -88,6 +96,13 @@ wandb:
   enabled: false
   project: "ContinualPretrainRo"
   run_name: "test1"
+
+milestone:
+  enabled: false  # Set to true to use train_with_milestones.py
+  milestone_tokens: 50000000  # 50M tokens per milestone
+
+  checkpoint_dir: "checkpoints/milestones"
+  eval_config_path: "configs/evaluate_ro.yaml"
 
 hydra:
   run:

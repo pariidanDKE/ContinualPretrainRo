@@ -15,10 +15,11 @@ SAMPLE_SIZES=(
 )
 
 BATCH_SIZES=( # SOMETHING IS BROKE HERE THIS DOES NOT ACTUALLY AFFECT ANYTHING
-  4
+  32
 )
 
-GRAD_ACC_STEPS=4
+GRAD_ACC_STEPS=2
+use_unsloth=true
 
 for model_name in "${MODEL_NAMES[@]}"; do
   for sample_size in "${SAMPLE_SIZES[@]}"; do
@@ -34,11 +35,11 @@ for model_name in "${MODEL_NAMES[@]}"; do
 
       python train_model.py \
         model.builder.model_name="${model_name}" \
-        model.builder.device_map='"mps"' \
         dataset.sample_size="${sample_size}" \
         training_args.per_device_train_batch_size=${batch_size} \
         training_args.gradient_accumulation_steps=${GRAD_ACC_STEPS} \
-        training_args.output_dir="${output_dir}"
+        training_args.output_dir="${output_dir}"  \
+        model.builder.use_unsloth=${use_unsloth}
 
       echo "✅ Finished training for ${model_name} (sample_size=${sample_size}, batch=${batch_size})"
       echo

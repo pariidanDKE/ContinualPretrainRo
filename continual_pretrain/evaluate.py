@@ -8,6 +8,7 @@ from datetime import datetime
 from pathlib import Path
 from dotenv import load_dotenv
 import torch
+import wandb
 
 logger = logging.getLogger("__name__")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -23,6 +24,9 @@ logging.getLogger("lm-eval").addFilter(IgnoreTagWarning())
 def main(cfg: DictConfig):
     logger.info("Starting Romanian evaluation run")
     load_dotenv()
+
+    # Disable tokenizers parallelism warning
+    os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
     hf_token = os.getenv("HF_TOKEN", "")
     os.environ["HF_TOKEN"] = hf_token
@@ -40,10 +44,29 @@ def main(cfg: DictConfig):
         logger.info("💻 CUDA not available. Using CPU")
 
     dtype = "bfloat16" if device=='cuda' else 'float16'
-    max_length = cfg.get("max_length",2048)  # Default to 2048, configurable
+    max_length = cfg.get("max_length", 2048)  # Model's max context length
+    eval_max_length = cfg.get("eval_max_length", max_length)  # Defaults to max_length if not specified
+
+    # ---- Map PT models to their IT tokenizer equivalents ----
+    PT_TO_IT_TOKENIZER_MAP = {
+        "google/gemma-3-1b-pt": "google/gemma-3-1b-it",
+        "meta-llama/Llama-3.2-1B": "meta-llama/Llama-3.2-1B-Instruct",
+        "Qwen/Qwen2.5-1.5B": "Qwen/Qwen2.5-1.5B-Instruct",
+    }
+
+    # Determine tokenizer path: use IT tokenizer for PT models when chat template is enabled
+    tokenizer_path = cfg.model_path
+    if cfg.apply_chat_template and cfg.model_path in PT_TO_IT_TOKENIZER_MAP:
+        tokenizer_path = PT_TO_IT_TOKENIZER_MAP[cfg.model_path]
+        logger.info(f"Using IT tokenizer {tokenizer_path} for PT model {cfg.model_path}")
+
     model_args_str = (
-        f"pretrained={cfg.model_path},max_length={max_length},truncation=True"
-    )  
+        f"pretrained={cfg.model_path},tokenizer={tokenizer_path},"
+        f"max_length={max_length},eval_max_length={eval_max_length},"
+        f"truncation=True,dtype={dtype}"
+    )
+           
+
     # ---- Create results folder with timestamp ----
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     model_name = cfg.model_path.replace("/", "_")
@@ -52,7 +75,27 @@ def main(cfg: DictConfig):
 
     logger.info(f"📁 Results will be saved in: {run_dir.resolve()}")
 
+    # ---- Initialize W&B with GPU monitoring ----
+    if cfg.get("use_wandb", False):
+        wandb.init(
+            project=cfg.get("wandb_project", "romanian-llm-eval"),
+            name=f"{model_name}_{timestamp}",
+            config={
+                "model_path": cfg.model_path,
+                "tasks": list(cfg.get("tasks_to_run", [])),
+                "eval_batch_size": cfg.eval_batch_size,
+                "max_length": max_length,
+                "eval_max_length": eval_max_length,
+                "apply_chat_template": cfg.apply_chat_template,
+                "device": device,
+                "dtype": dtype,
+            },
+            settings=wandb.Settings(start_method="thread")
+        )
+        logger.info("📊 W&B logging enabled with GPU monitoring")
+
     selected_tasks = set(cfg.get("tasks_to_run", []))
+    preplexity_tasks = set(cfg.get("preplexity_tasks", []))
     results = {}
 
     # ---- Safe JSON dump helper ----
@@ -65,6 +108,8 @@ def main(cfg: DictConfig):
     # ---- Iterate through evaluation tasks ----
     for task_cfg in cfg.evaluation_tasks:
         task_name = task_cfg.name
+        apply_chat_template = (task_name not in preplexity_tasks) and cfg.apply_chat_template # exclude perplexity tasks
+
         if selected_tasks and task_name not in selected_tasks:
             logger.info(f"Skipping {task_name} (not in tasks_to_run)")
             continue
@@ -75,27 +120,43 @@ def main(cfg: DictConfig):
 
             logger.info(f"🚀 Running evaluation for {task_name} | fewshot={fewshot} | limit={limit}")
             logger.info(f"Running {cfg.model_path} with apply_chat_template {cfg.apply_chat_template}")
-            res = evaluator.simple_evaluate(
-                batch_size=cfg.eval_batch_size,
-                model="hf",
-                model_args=model_args_str,
-                apply_chat_template=cfg.apply_chat_template,
-                tasks=[task_name],
-                limit=limit,
-                verbosity=cfg.verbosity,
-                num_fewshot=fewshot,
-                log_samples=True,
-                write_out=False,
-                device=device,
 
-                fewshot_random_seed = 23,
-                random_seed = 23,
-                numpy_random_seed = 23,
-                torch_random_seed = 23
-            )
+            # Prepare evaluation kwargs
+            eval_kwargs = {
+                "batch_size": cfg.eval_batch_size,
+                "model": "hf",
+                "model_args": model_args_str,
+                "apply_chat_template": apply_chat_template,
+                "tasks": [task_name],
+                "limit": limit,
+                "verbosity": cfg.verbosity,
+                "num_fewshot": fewshot,
+                "log_samples": True,
+                "write_out": False,
+                "device": device,
+                "fewshot_random_seed": 23,
+                "random_seed": 23,
+                "numpy_random_seed": 23,
+                "torch_random_seed": 23,
+            }
+
+            # Add multiturn and system instruction only when using chat templates
+            if apply_chat_template:
+                eval_kwargs["fewshot_as_multiturn"] = True
+                eval_kwargs["system_instruction"] = "Answer the following questions accurately."
+                logger.info("📝 Using fewshot_as_multiturn=True and custom system instruction")
+
+            res = evaluator.simple_evaluate(**eval_kwargs)
 
             results[task_name] = res
             logger.info(f"✅ Finished {task_name}")
+
+            # ---- Log to W&B ----
+            if cfg.get("use_wandb", False):
+                task_results = res.get("results", {}).get(task_name, {})
+                metrics_to_log = {f"{task_name}/{k}": v for k, v in task_results.items() if isinstance(v, (int, float))}
+                if metrics_to_log:
+                    wandb.log(metrics_to_log)
 
             # ---- Save this task's results ----
             task_file = run_dir / f"{task_name}.json"
@@ -125,6 +186,11 @@ def main(cfg: DictConfig):
             logger.info(f"  - {task_name}: {metrics}")
         else:
             logger.info(f"  - {task_name}: No metrics found")
+
+    # ---- Finish W&B run ----
+    if cfg.get("use_wandb", False):
+        wandb.finish()
+        logger.info("📊 W&B run finished")
 
 if __name__ == "__main__":
     main()
