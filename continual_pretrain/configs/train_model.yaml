@@ -12,7 +12,7 @@ dataset:
   split: "train"
  
   add_bos_eos: false
-  num_proc: 1
+  num_proc: 4
 
   
 
@@ -48,15 +48,15 @@ model:
     load_in_4bit: false
     bnb_4bit_quant_type: "nf4"
     bnb_4bit_compute_dtype: "bfloat16"
-    bnb_4bit_use_double_quant: true
     device_map: "auto"
     gradient_checkpointing: true
     use_cache: false
     prepare_kbit_training: true
     require_grads: true
-    max_seq_length: 4096
+    max_seq_length: 2048
     use_unsloth: false
     seed: 42
+
   lora:
     r: 16
     lora_alpha: 32
@@ -94,15 +94,20 @@ training_args:
 
 wandb:
   enabled: false
-  project: "ContinualPretrainRo"
+  project: "RoLLM"
   run_name: "test1"
 
 milestone:
-  enabled: false  # Set to true to use train_with_milestones.py
-  milestone_tokens: 50000000  # 50M tokens per milestone
+  # Configuration for train_milestone_segment.py
+  target_tokens: 1000000  # Target tokens for this segment (e.g., 1M, 100M)
+  resume_from_checkpoint: null  # Path to checkpoint to resume from (or null for scratch)
+  merged_output_dir: null  # Where to save merged LoRA models for evaluation (or null to skip)
+  total_training_tokens: null  # Total tokens across ALL milestones (for consistent LR scheduling). Set to null to use target_tokens.
+  do_evaluate: true  # Whether to run evaluation after training (set to false for testing)
 
-  checkpoint_dir: "checkpoints/milestones"
-  eval_config_path: "configs/evaluate_ro.yaml"
+  # Prebuilt dataset configuration (built with build_mixed_dataset.py)
+  prebuilt_dataset_path: null  # Path to prebuilt milestone dataset (or null to build on-the-fly)
+  current_milestone: 0  # Which milestone to load from prebuilt dataset (0-indexed)
 
 hydra:
   run:

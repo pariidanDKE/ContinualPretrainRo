@@ -53,8 +53,8 @@ class DataPreprocessor:
         self.use_sft_config = use_sft_config
 
         self.family = self._detect_model_family()
-        print(f"[DataPreprocessor] Detected model family: {self.family}")
         self.special_map = self.SPECIAL_MAPS.get(self.family, None)
+
 
     # ---- Model family detection ----
     def _detect_model_family(self):
@@ -305,7 +305,7 @@ class DataPreprocessor:
 
             # loss_mask: 1 where we compute loss, 0 where ignored (optional)
             loss_mask = [0 if l == -100 else 1 for l in labels]
-
+          
             return {
                 "input_ids": ids,
                 "labels": labels,

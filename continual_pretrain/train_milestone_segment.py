@@ -13,7 +13,8 @@ Usage:
         milestone.target_tokens=200000000 \
         milestone.resume_from_checkpoint=outputs/checkpoint-6104
 """
-
+import os
+import unsloth
 import logging
 import hydra
 from omegaconf import DictConfig
@@ -21,46 +22,25 @@ from pathlib import Path
 from transformers import set_seed
 from dotenv import load_dotenv
 
-from train_model import (
-    _prepare_dataset,
-    _build_collator,
-    _to_dict,
-    _apply_wandb_config,
+from train_utils import (
+    prepare_dataset,
+    load_milestone_shard,
+    build_collator,
+    to_dict,
+    apply_wandb_config,
+    calculate_max_steps,
+    merge_lora_checkpoint,
+    PT_TO_IT_TOKENIZER_MAP,
+    SchedulerFixCallback
 )
 from model import ModelBuilder, ModelBuilderConfig, LoraAdapterConfig
 from trl import SFTConfig, SFTTrainer
-from transformers import TrainingArguments, Trainer
+from transformers import TrainingArguments, Trainer, AutoTokenizer
 from data_module import DataPreprocessor
 
 logger = logging.getLogger(__name__)
 
 
-def calculate_max_steps(
-    target_tokens: int,
-    batch_size: int,
-    grad_accum: int,
-    seq_length: int,
-    world_size: int = 1
-) -> int:
-    """
-    Calculate max_steps needed to process target_tokens.
-
-    tokens_per_step = batch_size × grad_accum × seq_length × world_size
-    max_steps = target_tokens / tokens_per_step
-    """
-    tokens_per_step = batch_size * grad_accum * seq_length * world_size
-    max_steps = target_tokens // tokens_per_step
-
-    logger.info(f"Token calculation:")
-    logger.info(f"  Batch size: {batch_size}")
-    logger.info(f"  Gradient accumulation: {grad_accum}")
-    logger.info(f"  Sequence length: {seq_length}")
-    logger.info(f"  World size: {world_size}")
-    logger.info(f"  Tokens per step: {tokens_per_step:,}")
-    logger.info(f"  Target tokens: {target_tokens:,}")
-    logger.info(f"  Max steps: {max_steps:,}")
-
-    return max_steps
 
 
 @hydra.main(config_path="configs", config_name="train_model.yaml", version_base=None)
@@ -83,27 +63,24 @@ def main(cfg: DictConfig) -> None:
         set_seed(int(cfg.seed))
 
     # Extract milestone configuration
-    milestone_cfg = _to_dict(cfg.get("milestone", {}))
+    milestone_cfg = to_dict(cfg.get("milestone", {}))
     target_tokens = milestone_cfg.get("target_tokens")
+    total_training_tokens = milestone_cfg.get("total_training_tokens") or target_tokens
     resume_checkpoint = milestone_cfg.get("resume_from_checkpoint")
-
-    if target_tokens is None:
-        raise ValueError("milestone.target_tokens must be specified")
+    prebuilt_dataset_path = milestone_cfg.get("prebuilt_dataset_path")
+    current_milestone = milestone_cfg.get("current_milestone", 0)
 
     logger.info(f"Milestone configuration:")
     logger.info(f"  Target tokens: {target_tokens:,}")
+    logger.info(f"  Total training tokens (for LR schedule): {total_training_tokens:,}")
     logger.info(f"  Resume from: {resume_checkpoint if resume_checkpoint else 'scratch'}")
-
-    # Map PT models to IT tokenizer equivalents
-    PT_TO_IT_TOKENIZER_MAP = {
-        "google/gemma-3-1b-pt": "google/gemma-3-1b-it",
-        "meta-llama/Llama-3.2-1B": "meta-llama/Llama-3.2-1B-Instruct",
-        "Qwen/Qwen2.5-1.5B": "Qwen/Qwen2.5-1.5B-Instruct",
-    }
+    if prebuilt_dataset_path:
+        logger.info(f"  Using prebuilt dataset: {prebuilt_dataset_path}")
+        logger.info(f"  Current milestone: {current_milestone}")
 
     # Build model and tokenizer
-    builder_cfg = ModelBuilderConfig(**_to_dict(cfg.model.builder))
-    lora_cfg = LoraAdapterConfig(**_to_dict(cfg.model.lora))
+    builder_cfg = ModelBuilderConfig(**to_dict(cfg.model.builder))
+    lora_cfg = LoraAdapterConfig(**to_dict(cfg.model.lora))
     builder = ModelBuilder(builder_cfg, lora_cfg)
     model, tokenizer = builder.build()
 
@@ -111,20 +88,30 @@ def main(cfg: DictConfig) -> None:
     model_name = builder_cfg.model_name
     use_sft = not cfg.dataset.get("tokenize", True)
     if use_sft and model_name in PT_TO_IT_TOKENIZER_MAP:
-        from transformers import AutoTokenizer
+        
         it_tokenizer_name = PT_TO_IT_TOKENIZER_MAP[model_name]
         logger.info(f"Loading IT tokenizer {it_tokenizer_name} for chat template")
         it_tokenizer = AutoTokenizer.from_pretrained(it_tokenizer_name, trust_remote_code=True)
         tokenizer.chat_template = it_tokenizer.chat_template
 
     # Prepare dataset
-    dataset = _prepare_dataset(cfg, tokenizer)
+    if prebuilt_dataset_path and os.path.exists(prebuilt_dataset_path):
+        # Use prebuilt milestone-tagged dataset
+        logger.info(f"Loading prebuilt milestone dataset from: {prebuilt_dataset_path}")
+        dataset = load_milestone_shard(prebuilt_dataset_path, current_milestone)
+    else:
+        # Fallback: Build dataset on-the-fly
+        if prebuilt_dataset_path:
+            logger.warning(f"Prebuilt dataset path specified but not found: {prebuilt_dataset_path}")
+            logger.warning("Falling back to on-the-fly dataset preparation")
+        dataset = prepare_dataset(cfg, tokenizer)
 
     # Calculate max_steps for this milestone
     batch_size = cfg.training_args.per_device_train_batch_size
     grad_accum = cfg.training_args.gradient_accumulation_steps
     seq_length = cfg.training_args.get("max_length", 2048)
     world_size = cfg.training_args.get("world_size", 1)
+    logger.info(f"  Tokens per step: batch_size{batch_size * grad_accum * seq_length * world_size:,}")
 
     max_steps = calculate_max_steps(
         target_tokens=target_tokens,
@@ -134,16 +121,40 @@ def main(cfg: DictConfig) -> None:
         world_size=world_size
     )
 
+    # Calculate total steps for scheduler (ensures consistent LR across milestones)
+    total_steps = calculate_max_steps(
+        target_tokens=total_training_tokens,
+        batch_size=batch_size,
+        grad_accum=grad_accum,
+        seq_length=seq_length,
+        world_size=world_size
+    )
+    logger.info(
+        f"Step Calculation Details:\n"
+        f"  - Target Tokens: {total_training_tokens}\n"
+        f"  - Batch Size: {batch_size}\n"
+        f"  - Gradient Accumulation Steps: {grad_accum}\n"
+        f"  - Sequence Length: {seq_length}\n"
+        f"  - World Size (GPUs): {world_size}\n"
+        f"  - Resulting Total Steps: {total_steps}"
+    )
+
+    logger.info(f"Token calculation:")
+    logger.info(f"  Tokens per step: {batch_size * grad_accum * seq_length * world_size:,}")
+    logger.info(f"  Max steps (current milestone): {max_steps:,}")
+    logger.info(f"  Total steps (for scheduler): {total_steps:,}")
+
     # Prepare training arguments
-    training_kwargs = _to_dict(cfg.training_args)
-    wandb_cfg = _to_dict(cfg.get("wandb"), resolve=False)
-    training_kwargs = _apply_wandb_config(cfg, training_kwargs, wandb_cfg)
+    training_kwargs = to_dict(cfg.training_args)
+    wandb_cfg = to_dict(cfg.get("wandb"), resolve=False)
+    training_kwargs = apply_wandb_config(cfg, training_kwargs, wandb_cfg)
 
     # Override max_steps and save settings for milestone training
     training_kwargs['max_steps'] = max_steps
     training_kwargs['save_strategy'] = 'steps'
     training_kwargs['save_steps'] = max_steps  # Save exactly at milestone
-    training_kwargs['logging_steps'] = 10  # Log frequently to monitor progress
+    training_kwargs['logging_steps'] = 1  # Log frequently to monitor progress
+
 
     # Create trainer
     if use_sft:
@@ -164,7 +175,7 @@ def main(cfg: DictConfig) -> None:
             **training_kwargs,
             packing=cfg.data_collator.get("packing", False),
             dataset_text_field=text_field,
-            max_length=seq_length,
+            #max_length=seq_length,
         )
 
         trainer = SFTTrainer(
@@ -175,7 +186,7 @@ def main(cfg: DictConfig) -> None:
         )
     else:
         logger.info("Using regular Trainer with custom data collator")
-        collator = _build_collator(cfg, tokenizer)
+        collator = build_collator(cfg, tokenizer)
         training_args = TrainingArguments(**training_kwargs)
 
         trainer = Trainer(
@@ -185,6 +196,11 @@ def main(cfg: DictConfig) -> None:
             tokenizer=tokenizer,
             data_collator=collator,
         )
+
+
+    scheduler_callback = SchedulerFixCallback(total_steps)
+    trainer.add_callback(scheduler_callback)
+    
 
     # Start training (resume if checkpoint provided)
     logger.info("=" * 80)
@@ -202,6 +218,21 @@ def main(cfg: DictConfig) -> None:
     logger.info("Milestone segment training complete!")
     logger.info(f"Checkpoint saved to: {training_args.output_dir}/checkpoint-{max_steps}")
     logger.info(f"Total steps: {trainer.state.global_step}")
+
+    # Verify we reached the target
+    if trainer.state.global_step < max_steps:
+        logger.error(f"Training stopped early! Expected {max_steps} steps, got {trainer.state.global_step}")
+        logger.error("Dataset exhausted before reaching milestone. Consider: smaller milestones, more data, or multiple epochs.")
+        raise RuntimeError(f"Insufficient data: reached {trainer.state.global_step}/{max_steps} steps")
+
+    # Merge LoRA weights for evaluation if using PEFT
+    merged_output_dir = milestone_cfg.get("merged_output_dir")
+
+    if merged_output_dir:
+        logger.info("=" * 80)
+        merged_path = Path(merged_output_dir) / f"checkpoint-{max_steps}"
+        merge_lora_checkpoint(trainer, merged_path, tokenizer)
+
     logger.info("=" * 80)
 
 

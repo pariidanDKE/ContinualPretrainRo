@@ -29,7 +29,6 @@ def _default_target_modules() -> Tuple[str, ...]:
         "lm_head",
     )
 
-
 @dataclass
 class LoraAdapterConfig:
     """High-level settings for constructing a LoRA adapter."""
@@ -57,14 +56,13 @@ class LoraAdapterConfig:
 
 @dataclass
 class ModelBuilderConfig:
-    """Configuration for constructing continual pretraining models."""
+    """Configuration for constructing models."""
 
     model_name: str
     tokenizer_name: Optional[str] = None
     load_in_4bit: bool = True
     bnb_4bit_quant_type: str = "nf4"
     bnb_4bit_compute_dtype: Union[str, torch.dtype, None] = "bfloat16"
-    bnb_4bit_use_double_quant: bool = True
     device_map: Union[str, dict, None] = "auto"
     gradient_checkpointing: bool = True
     use_cache: bool = False
@@ -125,10 +123,10 @@ class ModelBuilder:
                 bnb_4bit_compute_dtype=self._resolve_dtype(
                     cfg.bnb_4bit_compute_dtype
                 ),
-                bnb_4bit_use_double_quant=cfg.bnb_4bit_use_double_quant,
             )
             model_kwargs["quantization_config"] = quant_config
         else:
+
             dtype = self._resolve_dtype(cfg.bnb_4bit_compute_dtype)
             if dtype is not None:
                 model_kwargs["dtype"] = dtype
@@ -149,7 +147,7 @@ class ModelBuilder:
         model = get_peft_model(model, peft_config)
         if hasattr(model, "print_trainable_parameters"):
             model.print_trainable_parameters()  # pragma: no cover - logging helper
-        #self._log_trainable_parameters(model)
+
         return model, tokenizer
 
     # --------------------------------------------------------------------- #
@@ -197,21 +195,6 @@ class ModelBuilder:
             self.logger.info(
                 "Tokenizer lacked a pad token, defaulting pad_token to eos_token."
             )
-
-    # def _log_trainable_parameters(self, model: PreTrainedModel) -> None:
-    #     """Log ratio of trainable vs total parameters."""
-    #     trainable = 0
-    #     total = 0
-    #     for param in model.parameters():
-    #         numel = param.numel()
-    #         total += numel
-    #         if param.requires_grad:
-    #             trainable += numel
-
-    #     pct = (trainable / total) * 100 if total else 0
-    #     self.logger.info(
-    #         "Trainable parameters: %s / %s (%.2f%%)", f"{trainable:,}", f"{total:,}", pct
-    #     )
 
     @staticmethod
     def _resolve_dtype(

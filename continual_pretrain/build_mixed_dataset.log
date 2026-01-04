@@ -1,0 +1,264 @@
+[2026-01-03 16:21:21,983][__main__][INFO] - ================================================================================
+[2026-01-03 16:21:21,983][__main__][INFO] - BUILDING MIXED MILESTONE DATASET
+[2026-01-03 16:21:21,983][__main__][INFO] - ================================================================================
+[2026-01-03 16:21:21,986][__main__][INFO] - Dataset seed: 42
+[2026-01-03 16:21:21,986][__main__][INFO] - Output directory: data/mixed_milestone_dataset
+[2026-01-03 16:21:22,748][accelerate.utils.modeling][INFO] - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+[2026-01-03 16:21:25,304][model][INFO] - Tokenizer lacked a pad token, defaulting pad_token to eos_token.
+[2026-01-03 16:21:25,304][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 16:22:14,378][__main__][INFO] - ✓ Mixed dataset created: 143,472 examples
+[2026-01-03 16:22:14,408][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 16:22:14,408][__main__][INFO] - Adding token counts to dataset...
+[2026-01-03 17:06:41,478][__main__][INFO] - ================================================================================
+[2026-01-03 17:06:41,478][__main__][INFO] - BUILDING MIXED MILESTONE DATASET
+[2026-01-03 17:06:41,478][__main__][INFO] - ================================================================================
+[2026-01-03 17:06:41,479][__main__][INFO] - Dataset seed: 42
+[2026-01-03 17:06:41,479][__main__][INFO] - Output directory: data/mixed_milestone_dataset
+[2026-01-03 17:06:42,045][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 17:07:22,288][__main__][INFO] - ✓ Mixed dataset created: 143,472 examples
+[2026-01-03 17:07:22,306][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 17:07:22,307][__main__][INFO] - Adding token counts to dataset...
+[2026-01-03 17:13:01,887][__main__][INFO] - ================================================================================
+[2026-01-03 17:13:01,887][__main__][INFO] - BUILDING MIXED MILESTONE DATASET
+[2026-01-03 17:13:01,888][__main__][INFO] - ================================================================================
+[2026-01-03 17:13:01,889][__main__][INFO] - Dataset seed: 42
+[2026-01-03 17:13:01,889][__main__][INFO] - Output directory: data/mixed_milestone_dataset
+[2026-01-03 17:13:02,452][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 17:13:02,452][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:13:07,826][__main__][INFO] - ✓ Mixed dataset created: 143,472 examples
+[2026-01-03 17:13:07,827][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 17:13:07,828][__main__][INFO] - Adding token counts to dataset...
+[2026-01-03 17:19:08,205][__main__][INFO] - ================================================================================
+[2026-01-03 17:19:08,205][__main__][INFO] - BUILDING MIXED MILESTONE DATASET
+[2026-01-03 17:19:08,205][__main__][INFO] - ================================================================================
+[2026-01-03 17:19:08,207][__main__][INFO] - Dataset seed: 42
+[2026-01-03 17:19:08,207][__main__][INFO] - Output directory: data/mixed_milestone_dataset
+[2026-01-03 17:19:08,795][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 17:19:08,795][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:19:15,090][__main__][INFO] - ✓ Mixed dataset created: 143,472 examples
+[2026-01-03 17:19:15,162][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 17:19:15,162][__main__][INFO] - Adding token counts to dataset...
+[2026-01-03 17:45:14,767][__main__][INFO] - ================================================================================
+[2026-01-03 17:45:14,767][__main__][INFO] - BUILDING MIXED MILESTONE DATASET
+[2026-01-03 17:45:14,767][__main__][INFO] - ================================================================================
+[2026-01-03 17:45:14,769][__main__][INFO] - Dataset seed: 42
+[2026-01-03 17:45:14,769][__main__][INFO] - Output directory: data/mixed_milestone_dataset
+[2026-01-03 17:45:15,326][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 17:45:15,326][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:45:21,789][__main__][INFO] - ✓ Mixed dataset created: 143,472 examples
+[2026-01-03 17:45:21,810][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 17:45:21,811][__main__][INFO] - Adding token counts to dataset...
+[2026-01-03 17:45:49,301][__main__][INFO] - ================================================================================
+[2026-01-03 17:45:49,301][__main__][INFO] - BUILDING MIXED MILESTONE DATASET
+[2026-01-03 17:45:49,301][__main__][INFO] - ================================================================================
+[2026-01-03 17:45:49,302][__main__][INFO] - Dataset seed: 42
+[2026-01-03 17:45:49,303][__main__][INFO] - Output directory: data/mixed_milestone_dataset
+[2026-01-03 17:45:49,836][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 17:45:49,836][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:45:55,720][__main__][INFO] - ✓ Mixed dataset created: 143,472 examples
+[2026-01-03 17:45:55,722][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 17:45:55,722][__main__][INFO] - Adding token counts to dataset...
+[2026-01-03 17:45:55,772][__main__][INFO] - EXAMPLE : {'formatted_text': '<|start_header_id|>user<|end_header_id|>\n\n\nSă presupunem că există două sisteme de ecuații liniare date mai jos. Utilizați matrice bloc pentru a rezolva valorile lui x, y și z în ambele sisteme.\n\nSistemul 1:\n$$\\început{cases}\n3x+y+2z=8\\\\ \nx+2y-3z=1\\\\\n-2x+4y+z=7\n\\end{cases}$\n\nSistemul 2:\n$$\\început{cases}\n2x-y+4z=6\\\\ \n3x+2y-5z=6\\\\\nx+3y-6z=-1\n\\end{cases}$\n<|eot_id|>\n<|start_header_id|>assistant<|end_header_id|>\n\n\nPentru a rezolva aceste sisteme folosind matrice bloc, vom reprezenta mai întâi fiecare sistem ca o ecuație matrice AX = B, unde A este matricea coeficienților, X este matricea coloanelor de variabile (x, y, z), iar B este matricea coloanelor de constante.\n\nPentru Sistemul 1:\nA1 = $\\start{bmatrix}\n3 & 1 & 2\\\\ \n1 & 2 & -3\\\\\n-2 și 4 și 1\n\\end{bmatrix}$, \nX1 = $\\start{bmatrix}\nx\\\\ \ny\\\\\nz\n\\end{bmatrix}$, \nB1 = $\\start{bmatrix}\n8\\ \n1\\\n7\n\\end{bmatrix}$\n\nPentru Sistemul 2:\nA2 = $\\start{bmatrix}\n2 & -1 & 4\\\\ \n3 & 2 & -5\\\\\n1 & 3 & -6\n\\end{bmatrix}$, \nX2 = $\\start{bmatrix}\nx\\\\ \ny\\\\\nz\n\\end{bmatrix}$, \nB2 = $\\start{bmatrix}\n6\\ \n6\\\n-1\n\\end{bmatrix}$\n\nAcum, vom găsi inversa lui A1 și A2, și apoi înmulțim ambele părți ale ecuației matricei cu inversa pentru a găsi valorile lui x, y și z.\n\nPentru Sistemul 1:\n$A1^{-1} = \\frac{1}{-21}\\start{bmatrix}\n-5 & 1 & 4\\ \n2 & 1 & 1\\\\\n4 & -2 & -3\n\\end{bmatrix}$\n\n$X1 = A1^{-1}B1 = \\frac{1}{-21}\\start{bmatrix}\n-5 & 1 & 4\\ \n2 & 1 & 1\\\\\n4 & -2 & -3\n\\sfîrșit{bmatrix}\\începere{bmatrix}\n8\\ \n1\\\n7\n\\end{bmatrix} = \\start{bmatrix}\n1\\ \n2\\\n1\n\\end{bmatrix}$\n\nDeci, pentru Sistemul 1: x = 1, y = 2 și z = 1.\n\nPentru Sistemul 2:\n$A2^{-1} = \\frac{1}{-1}\\start{bmatrix}\n-9 & -2 & 8\\\\ \n-6 & -1 & 5\\\n-4 și -1 și 3\n\\end{bmatrix}$\n\n$X2 = A2^{-1}B2 = \\frac{1}{-1}\\start{bmatrix}\n-9 & -2 & 8\\\\ \n-6 & -1 & 5\\\n-4 și -1 și 3\n\\sfîrșit{bmatrix}\\începere{bmatrix}\n6\\ \n6\\\n-1\n\\end{bmatrix} = \\start{bmatrix}\n1\\ \n-1\\\\\n2\n\\end{bmatrix}$\n\nDeci, pentru Sistemul 2: x = 1, y = -1, și z = 2.\n<|eot_id|>\n'}
+[2026-01-03 17:48:57,198][__main__][INFO] - ================================================================================
+[2026-01-03 17:48:57,198][__main__][INFO] - BUILDING MIXED MILESTONE DATASET
+[2026-01-03 17:48:57,198][__main__][INFO] - ================================================================================
+[2026-01-03 17:48:57,200][__main__][INFO] - Dataset seed: 42
+[2026-01-03 17:48:57,200][__main__][INFO] - Output directory: data/mixed_milestone_dataset
+[2026-01-03 17:48:57,765][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 17:49:00,117][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:49:01,018][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:49:01,127][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:49:01,225][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:49:01,327][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:49:01,427][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:49:04,267][__main__][INFO] - ✓ Mixed dataset created: 143,472 examples
+[2026-01-03 17:49:04,286][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 17:49:04,286][__main__][INFO] - Adding token counts to dataset...
+[2026-01-03 17:49:38,078][__main__][INFO] - ================================================================================
+[2026-01-03 17:49:38,078][__main__][INFO] - BUILDING MIXED MILESTONE DATASET
+[2026-01-03 17:49:38,078][__main__][INFO] - ================================================================================
+[2026-01-03 17:49:38,079][__main__][INFO] - Dataset seed: 42
+[2026-01-03 17:49:38,079][__main__][INFO] - Output directory: data/mixed_milestone_dataset
+[2026-01-03 17:49:38,629][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 17:49:40,719][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:49:41,651][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:49:41,757][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:49:41,854][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:49:41,951][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:49:42,053][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:49:44,872][__main__][INFO] - ✓ Mixed dataset created: 143,472 examples
+[2026-01-03 17:49:44,900][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 17:49:44,900][__main__][INFO] - Adding token counts to dataset...
+[2026-01-03 17:50:02,774][__main__][INFO] - ================================================================================
+[2026-01-03 17:50:02,774][__main__][INFO] - BUILDING MIXED MILESTONE DATASET
+[2026-01-03 17:50:02,774][__main__][INFO] - ================================================================================
+[2026-01-03 17:50:02,776][__main__][INFO] - Dataset seed: 42
+[2026-01-03 17:50:02,776][__main__][INFO] - Output directory: data/mixed_milestone_dataset
+[2026-01-03 17:50:03,326][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 17:50:06,714][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:51:43,237][__main__][INFO] - ================================================================================
+[2026-01-03 17:51:43,237][__main__][INFO] - BUILDING MIXED MILESTONE DATASET
+[2026-01-03 17:51:43,237][__main__][INFO] - ================================================================================
+[2026-01-03 17:51:43,238][__main__][INFO] - Dataset seed: 42
+[2026-01-03 17:51:43,238][__main__][INFO] - Output directory: data/mixed_milestone_dataset
+[2026-01-03 17:51:43,821][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 17:51:46,595][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:51:47,495][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:51:47,604][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:51:47,704][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:51:47,809][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:51:47,915][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:51:50,716][__main__][INFO] - ✓ Mixed dataset created: 143,472 examples
+[2026-01-03 17:51:50,734][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 17:51:50,734][__main__][INFO] - Adding token counts to dataset...
+[2026-01-03 17:52:24,581][__main__][INFO] - ================================================================================
+[2026-01-03 17:52:24,581][__main__][INFO] - BUILDING MIXED MILESTONE DATASET
+[2026-01-03 17:52:24,581][__main__][INFO] - ================================================================================
+[2026-01-03 17:52:24,582][__main__][INFO] - Dataset seed: 42
+[2026-01-03 17:52:24,582][__main__][INFO] - Output directory: data/mixed_milestone_dataset
+[2026-01-03 17:52:25,160][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 17:52:27,128][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:52:38,558][train_utils][INFO] - dataset_defaults tokenize : True
+[2026-01-03 17:53:22,603][__main__][INFO] - ================================================================================
+[2026-01-03 17:53:22,603][__main__][INFO] - BUILDING MIXED MILESTONE DATASET
+[2026-01-03 17:53:22,603][__main__][INFO] - ================================================================================
+[2026-01-03 17:53:22,605][__main__][INFO] - Dataset seed: 42
+[2026-01-03 17:53:22,605][__main__][INFO] - Output directory: data/mixed_milestone_dataset
+[2026-01-03 17:53:23,159][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 18:56:32,429][__main__][INFO] - ================================================================================
+[2026-01-03 18:56:32,429][__main__][INFO] - BUILDING MIXED MILESTONE DATASET
+[2026-01-03 18:56:32,429][__main__][INFO] - ================================================================================
+[2026-01-03 18:56:32,430][__main__][INFO] - Dataset seed: 42
+[2026-01-03 18:56:32,430][__main__][INFO] - Output directory: data/mixed_milestone_dataset
+[2026-01-03 18:56:33,010][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 18:57:56,676][__main__][INFO] - ✓ Mixed dataset created: 143,796 examples
+[2026-01-03 18:57:56,725][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 18:57:56,725][__main__][INFO] - Adding token counts to dataset...
+[2026-01-03 18:59:26,479][__main__][INFO] - ================================================================================
+[2026-01-03 18:59:26,479][__main__][INFO] - BUILDING MIXED MILESTONE DATASET
+[2026-01-03 18:59:26,479][__main__][INFO] - ================================================================================
+[2026-01-03 18:59:26,480][__main__][INFO] - Dataset seed: 42
+[2026-01-03 18:59:26,480][__main__][INFO] - Output directory: data/mixed_milestone_dataset
+[2026-01-03 18:59:27,079][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 18:59:32,405][__main__][INFO] - ✓ Mixed dataset created: 143,796 examples
+[2026-01-03 18:59:32,407][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 18:59:32,407][__main__][INFO] - Adding token counts to dataset...
+[2026-01-03 19:04:55,354][__main__][INFO] - ================================================================================
+[2026-01-03 19:04:55,354][__main__][INFO] - BUILDING MIXED MILESTONE DATASET
+[2026-01-03 19:04:55,354][__main__][INFO] - ================================================================================
+[2026-01-03 19:04:55,355][__main__][INFO] - Dataset seed: 42
+[2026-01-03 19:04:55,355][__main__][INFO] - Output directory: data/mixed_milestone_dataset
+[2026-01-03 19:04:55,919][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 19:05:45,793][__main__][INFO] - ================================================================================
+[2026-01-03 19:05:45,793][__main__][INFO] - BUILDING MIXED MILESTONE DATASET
+[2026-01-03 19:05:45,793][__main__][INFO] - ================================================================================
+[2026-01-03 19:05:45,795][__main__][INFO] - Dataset seed: 42
+[2026-01-03 19:05:45,795][__main__][INFO] - Output directory: data/mixed_milestone_dataset
+[2026-01-03 19:05:46,358][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 19:05:55,768][__main__][INFO] - ✓ Mixed dataset created: 143,796 examples
+[2026-01-03 19:05:55,791][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 19:05:55,791][__main__][INFO] - Adding token counts to dataset...
+[2026-01-03 19:06:10,206][__main__][INFO] - ✓ Total tokens in dataset: 159,049,470
+[2026-01-03 19:06:10,208][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 19:06:11,406][__main__][INFO] - Calculating milestone boundaries...
+[2026-01-03 19:06:11,406][__main__][INFO] - ✓ Calculated 10 milestone boundaries
+[2026-01-03 19:06:11,406][__main__][INFO] - ✓ Target training tokens: 100,000,000
+[2026-01-03 19:06:11,406][__main__][INFO] - ✓ Total dataset tokens: 159,049,470
+[2026-01-03 19:06:11,406][__main__][INFO] - ✓ Excess tokens (will be unused): 59,049,470
+[2026-01-03 19:06:11,406][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 19:06:11,406][__main__][INFO] - Assigning milestone numbers to examples...
+[2026-01-03 19:06:13,431][__main__][INFO] - ✓ Assigned milestone numbers (0 to 9, -1 for unused)
+[2026-01-03 19:06:13,432][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 19:10:47,816][__main__][INFO] - ================================================================================
+[2026-01-03 19:10:47,816][__main__][INFO] - BUILDING MIXED MILESTONE DATASET
+[2026-01-03 19:10:47,816][__main__][INFO] - ================================================================================
+[2026-01-03 19:10:47,817][__main__][INFO] - Dataset seed: 42
+[2026-01-03 19:10:47,817][__main__][INFO] - Output directory: data/mixed_milestone_dataset
+[2026-01-03 19:10:48,406][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 19:10:48,406][train_utils][INFO] -  DATASETS CFG : [{'name': 'danp27/norobots_sft', 'split': 'train', 'proportion': 0.024, 'sample_size': None}, {'name': './data/formatted_data/dolly', 'split': 'train', 'proportion': 0.022, 'sample_size': None}, {'name': './data/formatted_data/oasst', 'split': 'train', 'proportion': 0.024, 'sample_size': None}, {'name': './data/formatted_data/camel', 'split': 'train', 'proportion': 0.42, 'sample_size': None}, {'name': './data/formatted_data/orca', 'split': 'train', 'proportion': 0.12, 'sample_size': 51000}, {'name': './data/formatted_data/maggie', 'split': 'train', 'proportion': 0.4, 'sample_size': 57000}]
+[2026-01-03 19:11:04,098][__main__][INFO] - ✓ Mixed dataset created: 143,796 examples
+[2026-01-03 19:11:04,100][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 19:11:04,100][__main__][INFO] - Adding token counts to dataset...
+[2026-01-03 19:11:05,282][__main__][INFO] - ✓ Total tokens in dataset: 159,049,470
+[2026-01-03 19:11:05,283][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 19:11:06,447][__main__][INFO] - Calculating milestone boundaries...
+[2026-01-03 19:11:06,447][__main__][INFO] - ✓ Calculated 10 milestone boundaries
+[2026-01-03 19:11:06,447][__main__][INFO] - ✓ Target training tokens: 100,000,000
+[2026-01-03 19:11:06,447][__main__][INFO] - ✓ Total dataset tokens: 159,049,470
+[2026-01-03 19:11:06,447][__main__][INFO] - ✓ Excess tokens (will be unused): 59,049,470
+[2026-01-03 19:11:06,447][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 19:11:06,447][__main__][INFO] - Assigning milestone numbers to examples...
+[2026-01-03 19:11:06,458][__main__][INFO] - ✓ Assigned milestone numbers (0 to 9, -1 for unused)
+[2026-01-03 19:11:06,459][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 19:15:42,030][__main__][INFO] - --------------------------------------------------------------------------------
+[2026-01-03 19:15:42,030][__main__][INFO] - Saving dataset to: data/mixed_milestone_dataset
+[2026-01-03 19:15:43,061][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 19:15:43,061][__main__][INFO] - ✓ Saved metadata to: data/mixed_milestone_dataset/metadata.json
+[2026-01-03 19:23:54,581][__main__][INFO] - ================================================================================
+[2026-01-03 19:23:54,581][__main__][INFO] - BUILDING MIXED MILESTONE DATASET
+[2026-01-03 19:23:54,581][__main__][INFO] - ================================================================================
+[2026-01-03 19:23:54,582][__main__][INFO] - Dataset seed: 42
+[2026-01-03 19:23:54,583][__main__][INFO] - Output directory: data/mixed_milestone_dataset
+[2026-01-03 19:23:55,147][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 19:23:55,147][train_utils][INFO] -  DATASETS CFG : [{'name': 'danp27/norobots_sft', 'split': 'train', 'proportion': 0.024, 'sample_size': None}, {'name': './data/formatted_data/dolly', 'split': 'train', 'proportion': 0.022, 'sample_size': None}, {'name': './data/formatted_data/oasst', 'split': 'train', 'proportion': 0.024, 'sample_size': None}, {'name': './data/formatted_data/camel', 'split': 'train', 'proportion': 0.42, 'sample_size': None}, {'name': './data/formatted_data/orca', 'split': 'train', 'proportion': 0.12, 'sample_size': 51000}, {'name': './data/formatted_data/maggie', 'split': 'train', 'proportion': 0.4, 'sample_size': 57000}]
+[2026-01-03 19:24:08,268][__main__][INFO] - ✓ Mixed dataset created: 143,796 examples
+[2026-01-03 19:24:08,290][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 19:24:08,290][__main__][INFO] - Adding token counts to dataset...
+[2026-01-03 19:24:49,427][__main__][INFO] - ✓ Total tokens in dataset: 159,049,470
+[2026-01-03 19:24:49,428][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 19:24:50,590][__main__][INFO] - Calculating milestone boundaries...
+[2026-01-03 19:24:50,590][__main__][INFO] - ✓ Calculated 10 milestone boundaries
+[2026-01-03 19:24:50,591][__main__][INFO] - ✓ Target training tokens: 100,000,000
+[2026-01-03 19:24:50,591][__main__][INFO] - ✓ Total dataset tokens: 159,049,470
+[2026-01-03 19:24:50,591][__main__][INFO] - ✓ Excess tokens (will be unused): 59,049,470
+[2026-01-03 19:24:50,591][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 19:24:50,591][__main__][INFO] - Assigning milestone numbers to examples...
+[2026-01-03 19:24:51,650][__main__][INFO] - ✓ Assigned milestone numbers (0 to 9, -1 for unused)
+[2026-01-03 19:24:51,651][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 19:24:58,011][__main__][INFO] - --------------------------------------------------------------------------------
+[2026-01-03 19:24:58,012][__main__][INFO] - Saving dataset to: data/mixed_milestone_dataset
+[2026-01-03 19:24:58,260][__main__][INFO] - 
+--------------------------------------------------------------------------------
+[2026-01-03 19:24:58,261][__main__][INFO] - ✓ Saved metadata to: data/mixed_milestone_dataset/metadata.json

@@ -14,7 +14,7 @@ use_mps: false
 
 # W&B configuration
 use_wandb: true
-wandb_project: romanian-llm-eval-3
+wandb_project: RoLLM
 
 # List of all available tasks and their configs
 evaluation_tasks:
