@@ -1,2 +1,5 @@
-- model_path=checkpoints/milestones/checkpoint-0M
-- use_wandb=false
+- model.builder.model_name=meta-llama/Llama-3.2-1B-Instruct
+- output_dir=data/mixed_milestone_dataset
+- milestone.num_milestones=5
+- milestone.tokens_per_milestone=5000000
+- dataset.sample_size=null

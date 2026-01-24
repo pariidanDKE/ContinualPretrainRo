@@ -36,7 +36,3 @@ NoRobots: SELECTED
     - 700k rows
     - has multi-turn conversations
     
-
-
-
-Instruct training run : 2B

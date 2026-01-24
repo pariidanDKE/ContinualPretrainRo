@@ -4,11 +4,11 @@ defaults:
 
 # Override specific settings for dataset building
 output_dir: "data/mixed_milestone_dataset"
-dataset_seed: 42  # Critical: Fixed seed for reproducible mixing
+seed: 23 # the default seed is 42(!)
 
 milestone:
-  num_milestones: 10  # Number of milestones to divide data into
-  tokens_per_milestone: 20000000  # 20M tokens per milestone (200M total)
+  num_milestones: 8  # Number of milestones to divide data into
+  tokens_per_milestone: 25000000  # 20M tokens per milestone (200M total)
 
 # For testing, set sample_size to a small number
 # dataset:
@@ -36,32 +36,32 @@ dataset:
 data_builder:
   enabled: true
   datasets:
-    - name: "danp27/norobots_sft"
-      split: "train"
-      proportion: 0.024
-      sample_size: null  # Use all 9,999 examples (~4.8M tokens)
+    # - name: "danp27/norobots_sft"
+    #   split: "train"
+    #   proportion: 0.024
+    #   sample_size: null  # Use all 9,999 examples (~4.8M tokens)
 
-    - name: "./data/formatted_data/dolly"
-      split: "train"
-      proportion: 0.022
-      sample_size: null  # Use all 15,011 examples (~4.4M tokens)
+    # - name: "./data/formatted_data/dolly"
+    #   split: "train"
+    #   proportion: 0.022
+    #   sample_size: null  # Use all 15,011 examples (~4.4M tokens)
 
-    - name: "./data/formatted_data/oasst"
-      split: "train"
-      proportion: 0.024
-      sample_size: null  # Use all 8,658 examples (~4.7M tokens)
+    # - name: "./data/formatted_data/oasst"
+    #   split: "train"
+    #   proportion: 0.024
+    #   sample_size: null  # Use all 8,658 examples (~4.7M tokens)
 
-    - name: "./data/formatted_data/camel"
-      split: "train"
-      proportion: 0.420
-      sample_size: null  # Use all 110,000 examples (~84M tokens)
+    # - name: "./data/formatted_data/camel"
+    #   split: "train"
+    #   proportion: 0.465
+    #   sample_size: 110000  # Use all 110,000 examples (~84M tokens)
 
     - name: "./data/formatted_data/orca"
       split: "train"
-      proportion: 0.120
-      sample_size: 51000  # 24M tokens / 611 tok/ex × 1.3 buffer
+      proportion: 0.5 #0.465
+      sample_size: 110000  # 48M tokens / 611 tok/ex × 1.3 buffer
 
     - name: "./data/formatted_data/maggie"
       split: "train"
-      proportion: 0.400
-      sample_size: 57000  # 80M tokens / 1839 tok/ex × 1.3 buffer
+      proportion: 0.5 #0.465
+      sample_size: 110000  # 160M tokens / 1839 tok/ex × 1.3 buffer

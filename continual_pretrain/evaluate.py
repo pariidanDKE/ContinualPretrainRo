@@ -117,13 +117,14 @@ def main(cfg: DictConfig):
         try:
             fewshot = task_cfg.fewshot
             limit = task_cfg.limit
+            batch_size = task_cfg.task_batch_size
 
             logger.info(f"🚀 Running evaluation for {task_name} | fewshot={fewshot} | limit={limit}")
             logger.info(f"Running {cfg.model_path} with apply_chat_template {cfg.apply_chat_template}")
 
             # Prepare evaluation kwargs
             eval_kwargs = {
-                "batch_size": cfg.eval_batch_size,
+                "batch_size": batch_size,
                 "model": "hf",
                 "model_args": model_args_str,
                 "apply_chat_template": apply_chat_template,
@@ -140,10 +141,10 @@ def main(cfg: DictConfig):
                 "torch_random_seed": 23,
             }
 
-            # Add multiturn and system instruction only when using chat templates
-            if apply_chat_template:
+            # Add multiturn and system instruction only when using chat templates AND have fewshot examples
+            if apply_chat_template and fewshot > 0:
                 eval_kwargs["fewshot_as_multiturn"] = True
-                eval_kwargs["system_instruction"] = "Answer the following questions accurately."
+                #eval_kwargs["system_instruction"] = "Answer the following questions accurately."
                 logger.info("📝 Using fewshot_as_multiturn=True and custom system instruction")
 
             res = evaluator.simple_evaluate(**eval_kwargs)

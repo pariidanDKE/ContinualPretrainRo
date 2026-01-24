@@ -173,6 +173,20 @@ def print_statistics(dataset, num_milestones, tokens_per_milestone):
             pct = (tokens / tokens_per_milestone) * 100
             print(f"  % of target:       {pct:>11.1f}%")
 
+    # Check for validation data
+    val_subset = dataset.filter(
+        lambda x: x['milestone_num'] == 99,
+        num_proc=4
+    )
+
+    if len(val_subset) > 0:
+        val_tokens = sum(val_subset['num_tokens'])
+        print(f"\nVALIDATION DATA (shared across all milestones):")
+        print(f"  Examples:          {len(val_subset):>12,}")
+        print(f"  Tokens:            {val_tokens:>12,}")
+        avg_val_tokens = val_tokens / len(val_subset) if len(val_subset) > 0 else 0
+        print(f"  Avg tokens/example: {avg_val_tokens:>11.1f}")
+
     # Check for unused data
     unused_subset = dataset.filter(
         lambda x: x['milestone_num'] == -1,
@@ -232,7 +246,7 @@ def main(cfg: DictConfig) -> None:
     logger.info("=" * 80)
 
     # Set random seed for reproducibility
-    dataset_seed = int(cfg.get('dataset_seed', 42))
+    dataset_seed = int(cfg.get('seed', 42))
     set_seed(dataset_seed)
     logger.info(f"Dataset seed: {dataset_seed}")
 
@@ -248,21 +262,23 @@ def main(cfg: DictConfig) -> None:
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
-    # Load and mix datasets
+    # Load and mix datasets with train/validation split
     logger.info("\n" + "-" * 80)
-    dataset = prepare_dataset(cfg, tokenizer)
-    logger.info(f"✓ Mixed dataset created: {len(dataset):,} examples")
+    train_dataset, val_dataset = prepare_dataset(cfg, tokenizer, return_validation=True, validation_split=0.005)
+    logger.info(f"✓ Mixed training dataset created: {len(train_dataset):,} examples")
+    logger.info(f"✓ Mixed validation dataset created: {len(val_dataset):,} examples")
 
     # Shuffle with fixed seed for reproducibility
-    dataset = dataset.shuffle(seed=dataset_seed)
+    train_dataset = train_dataset.shuffle(seed=dataset_seed)
+    val_dataset = val_dataset.shuffle(seed=dataset_seed)
 
-    # Add token counts (counts from formatted_text, doesn't save tokenized version)
+    # Add token counts to training data
     logger.info("\n" + "-" * 80)
-    dataset, total_tokens = add_token_counts(dataset, tokenizer)
+    train_dataset, total_train_tokens = add_token_counts(train_dataset, tokenizer)
 
-    # Calculate milestone boundaries
+    # Calculate milestone boundaries (only for training data)
     logger.info("\n" + "-" * 80)
-    token_counts = np.array(dataset['num_tokens'])
+    token_counts = np.array(train_dataset['num_tokens'])
     boundaries, total_target_tokens, cumulative_tokens = calculate_milestone_boundaries(
         token_counts,
         num_milestones,
@@ -272,9 +288,30 @@ def main(cfg: DictConfig) -> None:
     # Actual number of milestones (may be less if dataset is too small)
     actual_num_milestones = len(boundaries)
 
-    # Assign milestone numbers
+    # Assign milestone numbers to training data
     logger.info("\n" + "-" * 80)
-    dataset = assign_milestone_numbers(dataset, boundaries)
+    train_dataset = assign_milestone_numbers(train_dataset, boundaries)
+
+    # Add token counts to validation data
+    logger.info("\n" + "-" * 80)
+    val_dataset, total_val_tokens = add_token_counts(val_dataset, tokenizer)
+
+    # Assign milestone_num=99 to all validation examples
+    logger.info("Assigning milestone_num=99 to validation examples...")
+    val_dataset = val_dataset.map(
+        lambda x: {'milestone_num': 99},
+        num_proc=4,
+        desc="Assigning validation milestone"
+    )
+    logger.info(f"✓ Assigned {len(val_dataset):,} examples to validation (milestone_num=99)")
+
+    # Combine train and validation datasets
+    from datasets import concatenate_datasets
+    logger.info("\n" + "-" * 80)
+    logger.info("Combining training and validation datasets...")
+    dataset = concatenate_datasets([train_dataset, val_dataset])
+    logger.info(f"✓ Combined dataset: {len(dataset):,} examples")
+    total_tokens = total_train_tokens + total_val_tokens
 
     # Print statistics
     logger.info("\n" + "-" * 80)

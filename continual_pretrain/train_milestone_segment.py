@@ -31,16 +31,19 @@ from train_utils import (
     calculate_max_steps,
     merge_lora_checkpoint,
     PT_TO_IT_TOKENIZER_MAP,
-    SchedulerFixCallback
+    LinearSchedulerCallback,
+    EpochResetCallback,
+    CosineSchedulerCallback,
+    OptimizerStateDiagnosticCallback,  # Remove after debugging
 )
+from token_stats_callback import create_trainer_with_token_stats, TokenStatsCallback
 from model import ModelBuilder, ModelBuilderConfig, LoraAdapterConfig
 from trl import SFTConfig, SFTTrainer
 from transformers import TrainingArguments, Trainer, AutoTokenizer
+from unsloth import UnslothTrainer, UnslothTrainingArguments
 from data_module import DataPreprocessor
 
 logger = logging.getLogger(__name__)
-
-
 
 
 @hydra.main(config_path="configs", config_name="train_model.yaml", version_base=None)
@@ -54,9 +57,7 @@ def main(cfg: DictConfig) -> None:
         format="[%(asctime)s][%(name)s][%(levelname)s] - %(message)s"
     )
 
-    logger.info("=" * 80)
     logger.info("Starting Milestone Segment Training")
-    logger.info("=" * 80)
 
     # Set random seed
     if cfg.get("seed") is not None:
@@ -88,23 +89,20 @@ def main(cfg: DictConfig) -> None:
     model_name = builder_cfg.model_name
     use_sft = not cfg.dataset.get("tokenize", True)
     if use_sft and model_name in PT_TO_IT_TOKENIZER_MAP:
-        
         it_tokenizer_name = PT_TO_IT_TOKENIZER_MAP[model_name]
-        logger.info(f"Loading IT tokenizer {it_tokenizer_name} for chat template")
         it_tokenizer = AutoTokenizer.from_pretrained(it_tokenizer_name, trust_remote_code=True)
         tokenizer.chat_template = it_tokenizer.chat_template
 
-    # Prepare dataset
+    # Prepare dataset (with validation split)
     if prebuilt_dataset_path and os.path.exists(prebuilt_dataset_path):
         # Use prebuilt milestone-tagged dataset
-        logger.info(f"Loading prebuilt milestone dataset from: {prebuilt_dataset_path}")
-        dataset = load_milestone_shard(prebuilt_dataset_path, current_milestone)
+        train_dataset, val_dataset = load_milestone_shard(prebuilt_dataset_path, current_milestone)
     else:
-        # Fallback: Build dataset on-the-fly
+        # Fallback: Build dataset on-the-fly with 90/10 split
         if prebuilt_dataset_path:
             logger.warning(f"Prebuilt dataset path specified but not found: {prebuilt_dataset_path}")
             logger.warning("Falling back to on-the-fly dataset preparation")
-        dataset = prepare_dataset(cfg, tokenizer)
+        train_dataset, val_dataset = prepare_dataset(cfg, tokenizer, return_validation=True, validation_split=0.1)
 
     # Calculate max_steps for this milestone
     batch_size = cfg.training_args.per_device_train_batch_size
@@ -143,6 +141,8 @@ def main(cfg: DictConfig) -> None:
     logger.info(f"  Tokens per step: {batch_size * grad_accum * seq_length * world_size:,}")
     logger.info(f"  Max steps (current milestone): {max_steps:,}")
     logger.info(f"  Total steps (for scheduler): {total_steps:,}")
+    logger.info(f"  Validation Dataset Length: {len(val_dataset):,}")
+
 
     # Prepare training arguments
     training_kwargs = to_dict(cfg.training_args)
@@ -153,11 +153,47 @@ def main(cfg: DictConfig) -> None:
     training_kwargs['max_steps'] = max_steps
     training_kwargs['save_strategy'] = 'steps'
     training_kwargs['save_steps'] = max_steps  # Save exactly at milestone
-    training_kwargs['logging_steps'] = 1  # Log frequently to monitor progress
+    training_kwargs['logging_steps'] = 2  # Log frequently to monitor progress
 
+    # Add evaluation configuration
+    # training_kwargs['eval_strategy'] = 'steps'
+    # training_kwargs['eval_steps'] = max_steps # Evaluate at end of milestone
+    # training_kwargs['per_device_eval_batch_size'] = 8 #training_kwargs.get('per_device_eval_batch_size', batch_size)
+    # training_kwargs['prediction_loss_only'] = True  # Only compute loss, don't store logits/predictions (prevents OOM)
 
+    logger.info(f"Full Training kwargs : {training_kwargs}")
     # Create trainer
-    if use_sft:
+    use_unsloth = cfg.model.builder.get("use_unsloth", False)
+
+    if use_unsloth:
+        logger.info("Using UnslothTrainer with decoupled learning rates")
+        text_field = cfg.dataset.get("text_field", "formatted_text")
+
+        if not tokenizer.chat_template and model_name not in PT_TO_IT_TOKENIZER_MAP:
+            preprocessor = DataPreprocessor(
+                tokenizer=tokenizer,
+                text_field=text_field,
+                add_bos_eos=cfg.dataset.get("add_bos_eos", True),
+                use_sft_config=True
+            )
+            chat_template = preprocessor.get_chat_template()
+            tokenizer.chat_template = chat_template
+
+        training_args = UnslothTrainingArguments(
+            **training_kwargs,
+            packing=cfg.data_collator.get("packing", False),
+            dataset_text_field=text_field,
+        )
+
+        trainer = create_trainer_with_token_stats(
+            UnslothTrainer,
+            model=model,
+            args=training_args,
+            train_dataset=train_dataset,
+            #eval_dataset=val_dataset,
+            tokenizer=tokenizer,
+        )
+    elif use_sft:
         logger.info("Using SFTTrainer with chat template")
         text_field = cfg.dataset.get("text_field", "formatted_text")
 
@@ -178,10 +214,12 @@ def main(cfg: DictConfig) -> None:
             #max_length=seq_length,
         )
 
-        trainer = SFTTrainer(
+        trainer = create_trainer_with_token_stats(
+            SFTTrainer,
             model=model,
             args=training_args,
-            train_dataset=dataset,
+            train_dataset=train_dataset,
+            #eval_dataset=val_dataset,
             processing_class=tokenizer,
         )
     else:
@@ -189,28 +227,43 @@ def main(cfg: DictConfig) -> None:
         collator = build_collator(cfg, tokenizer)
         training_args = TrainingArguments(**training_kwargs)
 
-        trainer = Trainer(
+        trainer = create_trainer_with_token_stats(
+            Trainer,
             model=model,
             args=training_args,
-            train_dataset=dataset,
+            train_dataset=train_dataset,
+            #eval_dataset=val_dataset,
             tokenizer=tokenizer,
             data_collator=collator,
         )
+    trainer.step_size = batch_size * grad_accum * seq_length * world_size
 
 
-    scheduler_callback = SchedulerFixCallback(total_steps)
+    # Add callbacks for continuous epoch and LR tracking across milestones
+    num_train_epochs = training_kwargs.get('num_train_epochs', 1.0)
+
+    scheduler_callback = CosineSchedulerCallback(total_steps, warmup_ratio=0.03)
+    epoch_callback = EpochResetCallback(total_steps, num_train_epochs=num_train_epochs)
+
+
+    # Add token statistics callback to track packing efficiency
+    token_stats_callback = TokenStatsCallback(tokenizer, log_every_n_steps=1)
+    trainer.add_callback(token_stats_callback)
     trainer.add_callback(scheduler_callback)
-    
+    trainer.add_callback(epoch_callback)
+
+    # from torch.utils.data import SequentialSampler
+    # def _get_train_sampler_no_shuffle(dataset):
+    #     """Override to always return SequentialSampler instead of RandomSampler"""
+    #     return SequentialSampler(dataset)
+    #trainer._get_train_sampler = _get_train_sampler_no_shuffle
+
+
 
     # Start training (resume if checkpoint provided)
     logger.info("=" * 80)
     if resume_checkpoint:
         logger.info(f"Resuming training from: {resume_checkpoint}")
-        logger.info(f"Will train until step: {max_steps}")
-    else:
-        logger.info(f"Starting training from scratch")
-        logger.info(f"Will train for: {max_steps} steps ({target_tokens:,} tokens)")
-    logger.info("=" * 80)
 
     trainer.train(resume_from_checkpoint=resume_checkpoint)
 
