@@ -27,12 +27,12 @@ DATASET_CONFIG_NAME=${DATASET_CONFIG_NAME:-"build_dataset"}
 
 
 # Milestone configuration
-MILESTONE_TOKENS=${MILESTONE_TOKENS:-5000000}
-NUM_MILESTONES=${NUM_MILESTONES:-5}
-DO_EVALUATE=${DO_EVALUATE:-false}
+MILESTONE_TOKENS=${MILESTONE_TOKENS:-25000000}
+NUM_MILESTONES=${NUM_MILESTONES:-4}
+DO_EVALUATE=${DO_EVALUATE:-true}
 
 # Output directories
-OUTPUT_DIR=${OUTPUT_DIR:-"outputs/fixloss/fixloss_test9_tokenstats_noval_gradacum1"}
+OUTPUT_DIR=${OUTPUT_DIR:-"outputs/test_runs/"}
 MERGED_DIR="${OUTPUT_DIR}/merged"
 PREBUILT_DATASET_PATH="data/mixed_milestone_dataset"
 
@@ -88,99 +88,99 @@ echo ""
 # MAIN LOOP
 # =============================================================================
 
-# echo "Milestone Training: ${NUM_MILESTONES} x ${MILESTONE_TOKENS} tokens"
-# echo "Model: ${MODEL_NAME}, LoRA r=${LORA_RANK}, BS=${BATCH_SIZE}"
-# echo "WandB Run ID: ${WANDB_RUN_ID}"
-# echo ""
+echo "Milestone Training: ${NUM_MILESTONES} x ${MILESTONE_TOKENS} tokens"
+echo "Model: ${MODEL_NAME}, LoRA r=${LORA_RANK}, BS=${BATCH_SIZE}"
+echo "WandB Run ID: ${WANDB_RUN_ID}"
+echo ""
 
-# mkdir -p "${MERGED_DIR}"
-
-
-# RESUME_CHECKPOINT=""
-# TOTAL_CALCULATED_TOKENS=$(( MILESTONE_TOKENS * NUM_MILESTONES)) 
+mkdir -p "${MERGED_DIR}"
 
 
-# # Initial baseline eval
-# if [ "${DO_EVALUATE}" = "true" ]; then
-#     log "Evaluating..."
-#     python evaluate.py \
-#         --config-path=configs \
-#         --config-name=evaluate_ro \
-#         model_path="${MODEL_NAME}"
-# else
-#     log "Skipping evaluation (DO_EVALUATE=false)"
-# fi
+RESUME_CHECKPOINT=""
+TOTAL_CALCULATED_TOKENS=$(( MILESTONE_TOKENS * NUM_MILESTONES)) 
 
 
-# for i in $(seq 1 ${NUM_MILESTONES}); do
-#     CURRENT_MILESTONE=$((i - 1))  # Convert to 0-indexed
-#     TARGET_TOKENS=$((MILESTONE_TOKENS * i))
-#     STEPS=$(calc_steps ${TARGET_TOKENS})
-#     CHECKPOINT="${OUTPUT_DIR}/checkpoint-${STEPS}"
-#     MERGED="${MERGED_DIR}/checkpoint-${STEPS}"
+# Initial baseline eval
+if [ "${DO_EVALUATE}" = "true" ]; then
+    log "Evaluating..."
+    python evaluate.py \
+        --config-path=configs \
+        --config-name=evaluate_ro \
+        model_path="${MODEL_NAME}"
+else
+    log "Skipping evaluation (DO_EVALUATE=false)"
+fi
 
-#     echo "=========================================="
-#     echo "MILESTONE ${i}/${NUM_MILESTONES} (index ${CURRENT_MILESTONE}) - ${TARGET_TOKENS} tokens"
-#     echo "=========================================="
 
-#     #Train (merges LoRA automatically at the end)
-#     log "Training milestone ${CURRENT_MILESTONE} to ${TARGET_TOKENS} tokens..."
-#     python train_milestone_segment.py \
-#         model.builder.model_name="${MODEL_NAME}" \
-#         model.builder.use_unsloth="${USE_UNSLOTH}" \
-#         data_collator.packing="${USE_PACKING}" \
-#         model.lora.r=${LORA_RANK} \
-#         model.lora.lora_alpha=${LORA_ALPHA} \
-#         training_args.per_device_train_batch_size=${BATCH_SIZE} \
-#         training_args.gradient_accumulation_steps=${GRAD_ACCUM} \
-#         training_args.output_dir="${OUTPUT_DIR}" \
-#         training_args.max_length=${MAX_LENGTH} \
-#         milestone.target_tokens=${TARGET_TOKENS} \
-#         milestone.total_training_tokens=${TOTAL_CALCULATED_TOKENS} \
-#         milestone.merged_output_dir="${MERGED_DIR}" \
-#         milestone.do_evaluate=${DO_EVALUATE} \
-#         milestone.prebuilt_dataset_path="${PREBUILT_DATASET_PATH}" \
-#         milestone.current_milestone=${CURRENT_MILESTONE} \
-#         wandb.group="${WANDB_GROUP}" \
-#         ${LEARNING_RATE:+training_args.learning_rate=${LEARNING_RATE}} \
-#         ${EMBEDDING_LEARNING_RATE:+training_args.embedding_learning_rate=${EMBEDDING_LEARNING_RATE}} \
-#         ${WANDB_RUN_NAME:+wandb.run_name=${WANDB_RUN_NAME}} \
-#         ${RESUME_CHECKPOINT:+milestone.resume_from_checkpoint=${RESUME_CHECKPOINT}}
+for i in $(seq 1 ${NUM_MILESTONES}); do
+    CURRENT_MILESTONE=$((i - 1))  # Convert to 0-indexed
+    TARGET_TOKENS=$((MILESTONE_TOKENS * i))
+    STEPS=$(calc_steps ${TARGET_TOKENS})
+    CHECKPOINT="${OUTPUT_DIR}/checkpoint-${STEPS}"
+    MERGED="${MERGED_DIR}/checkpoint-${STEPS}"
 
-#     # Evaluate (if enabled)
-#     if [ "${DO_EVALUATE}" = "true" ]; then
-#         log "Evaluating..."
-#         python evaluate.py \
-#             --config-path=configs \
-#             --config-name=evaluate_ro \
-#             model_path="${MERGED}"
-#     else
-#         log "Skipping evaluation (DO_EVALUATE=false)"
-#     fi
+    echo "=========================================="
+    echo "MILESTONE ${i}/${NUM_MILESTONES} (index ${CURRENT_MILESTONE}) - ${TARGET_TOKENS} tokens"
+    echo "=========================================="
 
-#     RESUME_CHECKPOINT="${CHECKPOINT}"
-#     log "✅ Milestone ${i} complete"
-#     echo ""
-# done
+    #Train (merges LoRA automatically at the end)
+    log "Training milestone ${CURRENT_MILESTONE} to ${TARGET_TOKENS} tokens..."
+    python train_milestone_segment.py \
+        model.builder.model_name="${MODEL_NAME}" \
+        model.builder.use_unsloth="${USE_UNSLOTH}" \
+        data_collator.packing="${USE_PACKING}" \
+        model.lora.r=${LORA_RANK} \
+        model.lora.lora_alpha=${LORA_ALPHA} \
+        training_args.per_device_train_batch_size=${BATCH_SIZE} \
+        training_args.gradient_accumulation_steps=${GRAD_ACCUM} \
+        training_args.output_dir="${OUTPUT_DIR}" \
+        training_args.max_length=${MAX_LENGTH} \
+        milestone.target_tokens=${TARGET_TOKENS} \
+        milestone.total_training_tokens=${TOTAL_CALCULATED_TOKENS} \
+        milestone.merged_output_dir="${MERGED_DIR}" \
+        milestone.do_evaluate=${DO_EVALUATE} \
+        milestone.prebuilt_dataset_path="${PREBUILT_DATASET_PATH}" \
+        milestone.current_milestone=${CURRENT_MILESTONE} \
+        wandb.group="${WANDB_GROUP}" \
+        ${LEARNING_RATE:+training_args.learning_rate=${LEARNING_RATE}} \
+        ${EMBEDDING_LEARNING_RATE:+training_args.embedding_learning_rate=${EMBEDDING_LEARNING_RATE}} \
+        ${WANDB_RUN_NAME:+wandb.run_name=${WANDB_RUN_NAME}} \
+        ${RESUME_CHECKPOINT:+milestone.resume_from_checkpoint=${RESUME_CHECKPOINT}}
 
-# echo ""
-# echo "=========================================="
-# echo "All milestones completed!"
-# echo "=========================================="
-# echo "Final checkpoint: ${RESUME_CHECKPOINT}"
-# echo ""
+    # Evaluate (if enabled)
+    if [ "${DO_EVALUATE}" = "true" ]; then
+        log "Evaluating..."
+        python evaluate.py \
+            --config-path=configs \
+            --config-name=evaluate_ro \
+            model_path="${MERGED}"
+    else
+        log "Skipping evaluation (DO_EVALUATE=false)"
+    fi
 
-# # =============================================================================
-# # CLEANUP
-# # =============================================================================
+    RESUME_CHECKPOINT="${CHECKPOINT}"
+    log "✅ Milestone ${i} complete"
+    echo ""
+done
 
-# log "Cleaning up prebuilt dataset..."
-# if [ -d "${PREBUILT_DATASET_PATH}" ]; then
-#     rm -rf "${PREBUILT_DATASET_PATH}"
-#     log "✅ Removed ${PREBUILT_DATASET_PATH}"
-# else
-#     log "⚠️  Prebuilt dataset not found (already deleted?)"
-# fi
+echo ""
+echo "=========================================="
+echo "All milestones completed!"
+echo "=========================================="
+echo "Final checkpoint: ${RESUME_CHECKPOINT}"
+echo ""
 
-# echo ""
-# echo "🎉 Training complete!"
+# =============================================================================
+# CLEANUP
+# =============================================================================
+
+log "Cleaning up prebuilt dataset..."
+if [ -d "${PREBUILT_DATASET_PATH}" ]; then
+    rm -rf "${PREBUILT_DATASET_PATH}"
+    log "✅ Removed ${PREBUILT_DATASET_PATH}"
+else
+    log "⚠️  Prebuilt dataset not found (already deleted?)"
+fi
+
+echo ""
+echo "🎉 Training complete!"

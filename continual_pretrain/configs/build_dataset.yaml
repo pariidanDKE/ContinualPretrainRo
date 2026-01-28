@@ -8,7 +8,8 @@ seed: 23 # the default seed is 42(!)
 
 milestone:
   num_milestones: 8  # Number of milestones to divide data into
-  tokens_per_milestone: 25000000  # 20M tokens per milestone (200M total)
+  tokens_per_milestone: 25000000  # 25M tokens per milestone (200M total)
+  buffer_multiplier: 1.5  # Shard size multiplier (1.5x = 37.5M per shard for 25M target)
 
 # For testing, set sample_size to a small number
 # dataset:

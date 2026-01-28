@@ -21037,3 +21037,990 @@ If the dataset is based on a loading script, please ask the dataset author to re
 [2026-01-20 19:45:23,680][lm-eval][INFO] - Running loglikelihood_rolling requests
 [2026-01-20 19:47:58,516][asyncio][WARNING] - socket.send() raised exception.
 [2026-01-20 19:47:58,613][asyncio][WARNING] - socket.send() raised exception.
+[2026-01-25 14:44:53,662][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-25 14:44:53,816][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-25 14:44:53,816][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-25_14-44-53
+[2026-01-25 14:44:55,642][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-25 14:44:55,642][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=1000
+[2026-01-25 14:44:55,642][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-25 14:44:55,642][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 14:44:55,644][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 14:44:55,644][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 14:44:55,688][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 14:44:59,359][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 14:45:05,023][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-25 14:45:05,023][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 14:45:05,023][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-25 14:45:08,095][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 14:48:46,531][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-25 14:48:46,801][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-25_14-44-53/_ro_mmlu.json
+[2026-01-25 14:48:46,801][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2026-01-25 14:48:46,802][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-25 14:48:46,802][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 14:48:46,803][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 14:48:46,803][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 14:48:46,804][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 14:48:48,157][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 14:48:53,740][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_winogrande from None to 5
+[2026-01-25 14:48:53,741][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 14:48:53,741][lm-eval][INFO] - Building contexts for _ro_winogrande on rank 0...
+[2026-01-25 14:48:53,846][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 14:49:24,177][__name__][INFO] - ✅ Finished _ro_winogrande
+[2026-01-25 14:49:24,269][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-25_14-44-53/_ro_winogrande.json
+[2026-01-25 14:49:24,270][__name__][INFO] - 🚀 Running evaluation for _ro_belebele | fewshot=5 | limit=1000
+[2026-01-25 14:49:24,270][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-25 14:49:24,270][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 14:49:24,271][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 14:49:24,271][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 14:49:24,272][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 14:49:25,632][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 14:49:30,571][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_belebele from None to 5
+[2026-01-25 14:49:30,572][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 14:49:30,572][lm-eval][INFO] - Building contexts for _ro_belebele on rank 0...
+[2026-01-25 14:49:35,387][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 14:54:09,460][__name__][INFO] - ✅ Finished _ro_belebele
+[2026-01-25 14:54:09,707][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-25_14-44-53/_ro_belebele.json
+[2026-01-25 14:54:09,707][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2026-01-25 14:54:09,707][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-25 14:54:09,709][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 14:54:09,709][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 14:54:09,710][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 14:54:11,012][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 14:54:13,931][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 14:54:13,931][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 14:54:13,931][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 14:54:13,932][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 14:54:13,932][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-25 14:54:13,932][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 14:54:16,325][lm-eval][WARNING] - Overwriting default num_fewshot of ro_wiki from None to 0
+[2026-01-25 14:54:16,326][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 14:54:16,326][lm-eval][INFO] - Building contexts for ro_wiki on rank 0...
+[2026-01-25 14:54:16,491][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-25 14:54:55,297][__name__][INFO] - ✅ Finished ro_wiki
+[2026-01-25 14:54:55,422][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-25_14-44-53/ro_wiki.json
+[2026-01-25 14:54:55,423][__name__][INFO] - 🚀 Running evaluation for _ro_arc_challenge | fewshot=5 | limit=1000
+[2026-01-25 14:54:55,423][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-25 14:54:55,423][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 14:54:55,424][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 14:54:55,425][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 14:54:55,425][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 14:54:56,832][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 14:55:02,099][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_arc_challenge from None to 5
+[2026-01-25 14:55:02,100][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 14:55:02,101][lm-eval][INFO] - Building contexts for _ro_arc_challenge on rank 0...
+[2026-01-25 14:55:03,543][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 14:56:33,750][__name__][INFO] - ✅ Finished _ro_arc_challenge
+[2026-01-25 14:56:33,940][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-25_14-44-53/_ro_arc_challenge.json
+[2026-01-25 14:56:33,940][__name__][INFO] - 🚀 Running evaluation for arc_challenge | fewshot=5 | limit=1000
+[2026-01-25 14:56:33,941][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-25 14:56:33,941][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 14:56:33,942][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 14:56:33,942][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 14:56:33,943][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 14:56:35,305][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 14:56:40,208][lm-eval][WARNING] - Overwriting default num_fewshot of arc_challenge from None to 5
+[2026-01-25 14:56:40,209][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 14:56:40,210][lm-eval][INFO] - Building contexts for arc_challenge on rank 0...
+[2026-01-25 14:56:44,568][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 14:57:42,524][__name__][INFO] - ✅ Finished arc_challenge
+[2026-01-25 14:57:42,701][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-25_14-44-53/arc_challenge.json
+[2026-01-25 14:57:42,702][__name__][INFO] - 🚀 Running evaluation for winogrande | fewshot=5 | limit=1000
+[2026-01-25 14:57:42,702][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-25 14:57:42,703][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 14:57:42,704][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 14:57:42,705][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 14:57:42,706][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 14:57:44,459][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 14:57:47,377][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'winogrande' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-25 14:57:52,665][lm-eval][WARNING] - Overwriting default num_fewshot of winogrande from None to 5
+[2026-01-25 14:57:52,665][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 14:57:52,670][lm-eval][INFO] - Building contexts for winogrande on rank 0...
+[2026-01-25 14:57:52,758][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 14:58:14,198][__name__][INFO] - ✅ Finished winogrande
+[2026-01-25 14:58:14,292][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-25_14-44-53/winogrande.json
+[2026-01-25 14:58:14,293][__name__][INFO] - 🚀 Running evaluation for wikitext | fewshot=0 | limit=1000
+[2026-01-25 14:58:14,293][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-25 14:58:14,295][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 14:58:14,295][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 14:58:14,296][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 14:58:15,630][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 14:58:18,578][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 14:58:18,579][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 14:58:18,579][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 14:58:18,579][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 14:58:18,579][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-25 14:58:18,579][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 14:58:18,580][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'EleutherAI/wikitext_document_level' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-25 14:58:20,667][lm-eval][WARNING] - Overwriting default num_fewshot of wikitext from None to 0
+[2026-01-25 14:58:20,667][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 14:58:20,668][lm-eval][INFO] - Building contexts for wikitext on rank 0...
+[2026-01-25 14:58:21,175][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-25 15:00:35,031][__name__][INFO] - ✅ Finished wikitext
+[2026-01-25 15:00:35,467][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-25_14-44-53/wikitext.json
+[2026-01-25 15:00:36,729][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-25_14-44-53/eval_results.json
+[2026-01-25 15:00:36,729][__name__][INFO] - 📊 Summary:
+[2026-01-25 15:00:36,729][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.349, 'acc_stderr,none': 0.015080663991563052}
+[2026-01-25 15:00:36,729][__name__][INFO] -   - _ro_winogrande: {'acc,none': 0.519, 'acc_stderr,none': 0.015807874268505835}
+[2026-01-25 15:00:36,730][__name__][INFO] -   - _ro_belebele: {'acc_norm,none': 0.37555555555555553, 'acc_norm_stderr,none': 0.016151176109106005}
+[2026-01-25 15:00:36,730][__name__][INFO] -   - ro_wiki: {'word_perplexity,none': 126.9400707863589, 'byte_perplexity,none': 2.0444140335568415, 'bits_per_byte,none': 1.0316873996367184}
+[2026-01-25 15:00:36,730][__name__][INFO] -   - _ro_arc_challenge: {'acc_norm,none': 0.264, 'acc_norm_stderr,none': 0.01394627184944057}
+[2026-01-25 15:00:36,730][__name__][INFO] -   - arc_challenge: {'acc,none': 0.39, 'acc_stderr,none': 0.01543172505386673, 'acc_norm,none': 0.394, 'acc_norm_stderr,none': 0.015459721957493382}
+[2026-01-25 15:00:36,730][__name__][INFO] -   - winogrande: {'acc,none': 0.59, 'acc_stderr,none': 0.015560917136921659}
+[2026-01-25 15:00:36,731][__name__][INFO] -   - wikitext: {'word_perplexity,none': 18.05999098848607, 'byte_perplexity,none': 1.7212832475798572, 'bits_per_byte,none': 0.7834845211171497}
+[2026-01-25 15:00:38,145][__name__][INFO] - 📊 W&B run finished
+[2026-01-25 15:56:08,117][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-25 15:56:08,298][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-25 15:56:08,298][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-190/2026-01-25_15-56-08
+[2026-01-25 15:56:10,009][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-25 15:56:10,009][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=1000
+[2026-01-25 15:56:10,010][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190 with apply_chat_template True
+[2026-01-25 15:56:10,010][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 15:56:10,015][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 15:56:10,016][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 15:56:10,067][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 15:56:10,939][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 15:56:16,474][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-25 15:56:16,475][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 15:56:16,475][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-25 15:56:19,523][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 15:59:57,735][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190'. Use `repo_type` argument if needed.
+[2026-01-25 15:59:58,827][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-25 15:59:59,096][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-190/2026-01-25_15-56-08/_ro_mmlu.json
+[2026-01-25 15:59:59,096][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2026-01-25 15:59:59,097][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190 with apply_chat_template True
+[2026-01-25 15:59:59,097][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 15:59:59,098][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 15:59:59,098][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 15:59:59,099][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 15:59:59,737][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 16:00:05,163][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_winogrande from None to 5
+[2026-01-25 16:00:05,163][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 16:00:05,167][lm-eval][INFO] - Building contexts for _ro_winogrande on rank 0...
+[2026-01-25 16:00:05,269][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 16:00:34,528][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190'. Use `repo_type` argument if needed.
+[2026-01-25 16:00:35,630][__name__][INFO] - ✅ Finished _ro_winogrande
+[2026-01-25 16:00:35,724][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-190/2026-01-25_15-56-08/_ro_winogrande.json
+[2026-01-25 16:00:35,725][__name__][INFO] - 🚀 Running evaluation for _ro_belebele | fewshot=5 | limit=1000
+[2026-01-25 16:00:35,725][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190 with apply_chat_template True
+[2026-01-25 16:00:35,725][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 16:00:35,726][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 16:00:35,726][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 16:00:35,727][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 16:00:36,368][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 16:00:41,266][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_belebele from None to 5
+[2026-01-25 16:00:41,266][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 16:00:41,267][lm-eval][INFO] - Building contexts for _ro_belebele on rank 0...
+[2026-01-25 16:00:46,076][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 16:05:18,773][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190'. Use `repo_type` argument if needed.
+[2026-01-25 16:05:19,846][__name__][INFO] - ✅ Finished _ro_belebele
+[2026-01-25 16:05:20,083][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-190/2026-01-25_15-56-08/_ro_belebele.json
+[2026-01-25 16:05:20,083][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2026-01-25 16:05:20,083][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190 with apply_chat_template True
+[2026-01-25 16:05:20,084][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 16:05:20,085][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 16:05:20,086][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 16:05:20,704][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 16:05:23,680][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 16:05:23,681][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 16:05:23,681][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 16:05:23,681][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 16:05:23,681][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-25 16:05:23,681][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 16:05:26,729][lm-eval][WARNING] - Overwriting default num_fewshot of ro_wiki from None to 0
+[2026-01-25 16:05:26,729][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 16:05:26,730][lm-eval][INFO] - Building contexts for ro_wiki on rank 0...
+[2026-01-25 16:05:26,889][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-25 16:06:04,552][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190'. Use `repo_type` argument if needed.
+[2026-01-25 16:06:05,658][__name__][INFO] - ✅ Finished ro_wiki
+[2026-01-25 16:06:05,782][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-190/2026-01-25_15-56-08/ro_wiki.json
+[2026-01-25 16:06:05,783][__name__][INFO] - 🚀 Running evaluation for _ro_arc_challenge | fewshot=5 | limit=1000
+[2026-01-25 16:06:05,783][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190 with apply_chat_template True
+[2026-01-25 16:06:05,784][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 16:06:05,785][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 16:06:05,785][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 16:06:05,786][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 16:06:06,424][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 16:06:11,733][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_arc_challenge from None to 5
+[2026-01-25 16:06:11,733][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 16:06:11,734][lm-eval][INFO] - Building contexts for _ro_arc_challenge on rank 0...
+[2026-01-25 16:06:13,196][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 16:07:42,308][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190'. Use `repo_type` argument if needed.
+[2026-01-25 16:07:43,458][__name__][INFO] - ✅ Finished _ro_arc_challenge
+[2026-01-25 16:07:43,640][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-190/2026-01-25_15-56-08/_ro_arc_challenge.json
+[2026-01-25 16:07:43,640][__name__][INFO] - 🚀 Running evaluation for arc_challenge | fewshot=5 | limit=1000
+[2026-01-25 16:07:43,640][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190 with apply_chat_template True
+[2026-01-25 16:07:43,640][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 16:07:43,642][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 16:07:43,642][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 16:07:43,643][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 16:07:44,277][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 16:07:49,298][lm-eval][WARNING] - Overwriting default num_fewshot of arc_challenge from None to 5
+[2026-01-25 16:07:49,298][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 16:07:49,299][lm-eval][INFO] - Building contexts for arc_challenge on rank 0...
+[2026-01-25 16:07:53,666][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 16:08:50,440][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190'. Use `repo_type` argument if needed.
+[2026-01-25 16:08:51,638][__name__][INFO] - ✅ Finished arc_challenge
+[2026-01-25 16:08:51,809][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-190/2026-01-25_15-56-08/arc_challenge.json
+[2026-01-25 16:08:51,810][__name__][INFO] - 🚀 Running evaluation for winogrande | fewshot=5 | limit=1000
+[2026-01-25 16:08:51,810][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190 with apply_chat_template True
+[2026-01-25 16:08:51,810][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 16:08:51,811][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 16:08:51,811][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 16:08:51,812][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 16:08:52,444][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 16:08:55,396][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'winogrande' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-25 16:08:59,503][lm-eval][WARNING] - Overwriting default num_fewshot of winogrande from None to 5
+[2026-01-25 16:08:59,504][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 16:08:59,504][lm-eval][INFO] - Building contexts for winogrande on rank 0...
+[2026-01-25 16:08:59,591][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 16:09:19,864][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190'. Use `repo_type` argument if needed.
+[2026-01-25 16:09:20,955][__name__][INFO] - ✅ Finished winogrande
+[2026-01-25 16:09:21,050][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-190/2026-01-25_15-56-08/winogrande.json
+[2026-01-25 16:09:21,050][__name__][INFO] - 🚀 Running evaluation for wikitext | fewshot=0 | limit=1000
+[2026-01-25 16:09:21,050][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190 with apply_chat_template True
+[2026-01-25 16:09:21,051][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 16:09:21,052][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 16:09:21,052][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 16:09:21,715][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 16:09:24,628][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 16:09:24,628][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 16:09:24,628][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 16:09:24,629][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 16:09:24,629][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-25 16:09:24,629][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 16:09:24,629][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'EleutherAI/wikitext_document_level' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-25 16:09:26,890][lm-eval][WARNING] - Overwriting default num_fewshot of wikitext from None to 0
+[2026-01-25 16:09:26,890][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 16:09:26,891][lm-eval][INFO] - Building contexts for wikitext on rank 0...
+[2026-01-25 16:09:27,415][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-25 16:11:40,464][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-190'. Use `repo_type` argument if needed.
+[2026-01-25 16:11:41,659][__name__][INFO] - ✅ Finished wikitext
+[2026-01-25 16:11:42,093][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-190/2026-01-25_15-56-08/wikitext.json
+[2026-01-25 16:11:43,365][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-190/2026-01-25_15-56-08/eval_results.json
+[2026-01-25 16:11:43,365][__name__][INFO] - 📊 Summary:
+[2026-01-25 16:11:43,366][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.258, 'acc_stderr,none': 0.013842963108656601}
+[2026-01-25 16:11:43,366][__name__][INFO] -   - _ro_winogrande: {'acc,none': 0.516, 'acc_stderr,none': 0.015811198373114985}
+[2026-01-25 16:11:43,366][__name__][INFO] -   - _ro_belebele: {'acc_norm,none': 0.28555555555555556, 'acc_norm_stderr,none': 0.01506432556116626}
+[2026-01-25 16:11:43,366][__name__][INFO] -   - ro_wiki: {'word_perplexity,none': 115.97509884240093, 'byte_perplexity,none': 2.0173277771100873, 'bits_per_byte,none': 1.0124455132974255}
+[2026-01-25 16:11:43,366][__name__][INFO] -   - _ro_arc_challenge: {'acc_norm,none': 0.293, 'acc_norm_stderr,none': 0.014399942998441292}
+[2026-01-25 16:11:43,367][__name__][INFO] -   - arc_challenge: {'acc,none': 0.369, 'acc_stderr,none': 0.015266698139154782, 'acc_norm,none': 0.361, 'acc_norm_stderr,none': 0.015195720118175049}
+[2026-01-25 16:11:43,367][__name__][INFO] -   - winogrande: {'acc,none': 0.602, 'acc_stderr,none': 0.015486634102859016}
+[2026-01-25 16:11:43,367][__name__][INFO] -   - wikitext: {'word_perplexity,none': 21.457527962102123, 'byte_perplexity,none': 1.7778780625867585, 'bits_per_byte,none': 0.8301563789854496}
+[2026-01-25 16:11:46,312][__name__][INFO] - 📊 W&B run finished
+[2026-01-25 17:07:41,642][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-25 17:07:41,799][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-25 17:07:41,799][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-381/2026-01-25_17-07-41
+[2026-01-25 17:07:43,722][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-25 17:07:43,723][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=1000
+[2026-01-25 17:07:43,723][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381 with apply_chat_template True
+[2026-01-25 17:07:43,724][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 17:07:43,726][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 17:07:43,726][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 17:07:43,774][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 17:07:44,970][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 17:07:50,528][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-25 17:07:50,528][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 17:07:50,529][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-25 17:07:53,578][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 17:11:31,677][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381'. Use `repo_type` argument if needed.
+[2026-01-25 17:11:32,677][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-25 17:11:32,949][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-381/2026-01-25_17-07-41/_ro_mmlu.json
+[2026-01-25 17:11:32,949][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2026-01-25 17:11:32,949][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381 with apply_chat_template True
+[2026-01-25 17:11:32,949][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 17:11:32,950][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 17:11:32,951][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 17:11:32,952][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 17:11:33,596][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 17:11:39,622][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_winogrande from None to 5
+[2026-01-25 17:11:39,623][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 17:11:39,624][lm-eval][INFO] - Building contexts for _ro_winogrande on rank 0...
+[2026-01-25 17:11:39,726][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 17:12:09,000][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381'. Use `repo_type` argument if needed.
+[2026-01-25 17:12:10,041][__name__][INFO] - ✅ Finished _ro_winogrande
+[2026-01-25 17:12:10,134][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-381/2026-01-25_17-07-41/_ro_winogrande.json
+[2026-01-25 17:12:10,135][__name__][INFO] - 🚀 Running evaluation for _ro_belebele | fewshot=5 | limit=1000
+[2026-01-25 17:12:10,135][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381 with apply_chat_template True
+[2026-01-25 17:12:10,135][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 17:12:10,136][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 17:12:10,137][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 17:12:10,137][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 17:12:10,782][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 17:12:15,866][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_belebele from None to 5
+[2026-01-25 17:12:15,866][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 17:12:15,867][lm-eval][INFO] - Building contexts for _ro_belebele on rank 0...
+[2026-01-25 17:12:20,669][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 17:16:53,515][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381'. Use `repo_type` argument if needed.
+[2026-01-25 17:16:54,573][__name__][INFO] - ✅ Finished _ro_belebele
+[2026-01-25 17:16:54,825][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-381/2026-01-25_17-07-41/_ro_belebele.json
+[2026-01-25 17:16:54,825][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2026-01-25 17:16:54,825][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381 with apply_chat_template True
+[2026-01-25 17:16:54,826][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 17:16:54,827][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 17:16:54,827][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 17:16:55,443][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 17:16:58,335][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 17:16:58,335][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 17:16:58,335][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 17:16:58,335][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 17:16:58,336][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-25 17:16:58,336][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 17:17:00,848][lm-eval][WARNING] - Overwriting default num_fewshot of ro_wiki from None to 0
+[2026-01-25 17:17:00,849][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 17:17:00,850][lm-eval][INFO] - Building contexts for ro_wiki on rank 0...
+[2026-01-25 17:17:01,007][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-25 17:17:38,765][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381'. Use `repo_type` argument if needed.
+[2026-01-25 17:17:39,828][__name__][INFO] - ✅ Finished ro_wiki
+[2026-01-25 17:17:39,952][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-381/2026-01-25_17-07-41/ro_wiki.json
+[2026-01-25 17:17:39,952][__name__][INFO] - 🚀 Running evaluation for _ro_arc_challenge | fewshot=5 | limit=1000
+[2026-01-25 17:17:39,953][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381 with apply_chat_template True
+[2026-01-25 17:17:39,953][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 17:17:39,954][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 17:17:39,954][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 17:17:39,955][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 17:17:40,588][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 17:17:46,510][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_arc_challenge from None to 5
+[2026-01-25 17:17:46,511][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 17:17:46,511][lm-eval][INFO] - Building contexts for _ro_arc_challenge on rank 0...
+[2026-01-25 17:17:47,965][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 17:19:17,055][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381'. Use `repo_type` argument if needed.
+[2026-01-25 17:19:18,160][__name__][INFO] - ✅ Finished _ro_arc_challenge
+[2026-01-25 17:19:18,352][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-381/2026-01-25_17-07-41/_ro_arc_challenge.json
+[2026-01-25 17:19:18,353][__name__][INFO] - 🚀 Running evaluation for arc_challenge | fewshot=5 | limit=1000
+[2026-01-25 17:19:18,353][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381 with apply_chat_template True
+[2026-01-25 17:19:18,353][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 17:19:18,355][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 17:19:18,355][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 17:19:18,356][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 17:19:18,984][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 17:19:24,028][lm-eval][WARNING] - Overwriting default num_fewshot of arc_challenge from None to 5
+[2026-01-25 17:19:24,028][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 17:19:24,029][lm-eval][INFO] - Building contexts for arc_challenge on rank 0...
+[2026-01-25 17:19:28,429][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 17:20:25,245][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381'. Use `repo_type` argument if needed.
+[2026-01-25 17:20:26,387][__name__][INFO] - ✅ Finished arc_challenge
+[2026-01-25 17:20:26,561][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-381/2026-01-25_17-07-41/arc_challenge.json
+[2026-01-25 17:20:26,562][__name__][INFO] - 🚀 Running evaluation for winogrande | fewshot=5 | limit=1000
+[2026-01-25 17:20:26,562][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381 with apply_chat_template True
+[2026-01-25 17:20:26,562][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 17:20:26,564][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 17:20:26,564][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 17:20:26,565][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 17:20:27,200][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 17:20:30,102][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'winogrande' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-25 17:20:34,375][lm-eval][WARNING] - Overwriting default num_fewshot of winogrande from None to 5
+[2026-01-25 17:20:34,375][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 17:20:34,376][lm-eval][INFO] - Building contexts for winogrande on rank 0...
+[2026-01-25 17:20:34,463][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 17:20:54,763][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381'. Use `repo_type` argument if needed.
+[2026-01-25 17:20:55,812][__name__][INFO] - ✅ Finished winogrande
+[2026-01-25 17:20:55,910][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-381/2026-01-25_17-07-41/winogrande.json
+[2026-01-25 17:20:55,911][__name__][INFO] - 🚀 Running evaluation for wikitext | fewshot=0 | limit=1000
+[2026-01-25 17:20:55,911][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381 with apply_chat_template True
+[2026-01-25 17:20:55,912][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 17:20:55,912][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 17:20:55,913][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 17:20:56,570][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 17:20:59,449][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 17:20:59,450][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 17:20:59,450][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 17:20:59,450][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 17:20:59,450][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-25 17:20:59,450][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 17:20:59,450][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'EleutherAI/wikitext_document_level' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-25 17:21:01,529][lm-eval][WARNING] - Overwriting default num_fewshot of wikitext from None to 0
+[2026-01-25 17:21:01,530][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 17:21:01,531][lm-eval][INFO] - Building contexts for wikitext on rank 0...
+[2026-01-25 17:21:02,051][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-25 17:23:15,093][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-381'. Use `repo_type` argument if needed.
+[2026-01-25 17:23:16,214][__name__][INFO] - ✅ Finished wikitext
+[2026-01-25 17:23:16,644][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-381/2026-01-25_17-07-41/wikitext.json
+[2026-01-25 17:23:17,910][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-381/2026-01-25_17-07-41/eval_results.json
+[2026-01-25 17:23:17,911][__name__][INFO] - 📊 Summary:
+[2026-01-25 17:23:17,911][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.317, 'acc_stderr,none': 0.014721675438880174}
+[2026-01-25 17:23:17,911][__name__][INFO] -   - _ro_winogrande: {'acc,none': 0.523, 'acc_stderr,none': 0.015802554246726087}
+[2026-01-25 17:23:17,911][__name__][INFO] -   - _ro_belebele: {'acc_norm,none': 0.3433333333333333, 'acc_norm_stderr,none': 0.015836187124508294}
+[2026-01-25 17:23:17,912][__name__][INFO] -   - ro_wiki: {'word_perplexity,none': 101.6110176290538, 'byte_perplexity,none': 1.9783292532064447, 'bits_per_byte,none': 0.9842825537197923}
+[2026-01-25 17:23:17,912][__name__][INFO] -   - _ro_arc_challenge: {'acc_norm,none': 0.314, 'acc_norm_stderr,none': 0.014683991951088084}
+[2026-01-25 17:23:17,912][__name__][INFO] -   - arc_challenge: {'acc,none': 0.363, 'acc_stderr,none': 0.01521389044467136, 'acc_norm,none': 0.358, 'acc_norm_stderr,none': 0.015167928865407633}
+[2026-01-25 17:23:17,912][__name__][INFO] -   - winogrande: {'acc,none': 0.598, 'acc_stderr,none': 0.015512467135714959}
+[2026-01-25 17:23:17,912][__name__][INFO] -   - wikitext: {'word_perplexity,none': 22.041431092988102, 'byte_perplexity,none': 1.786858905869251, 'bits_per_byte,none': 0.837425720647386}
+[2026-01-25 17:23:19,104][__name__][INFO] - 📊 W&B run finished
+[2026-01-25 18:18:55,547][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-25 18:18:55,696][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-25 18:18:55,698][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-572/2026-01-25_18-18-55
+[2026-01-25 18:18:57,668][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-25 18:18:57,669][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=1000
+[2026-01-25 18:18:57,669][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572 with apply_chat_template True
+[2026-01-25 18:18:57,669][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 18:18:57,671][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 18:18:57,671][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 18:18:57,722][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 18:18:58,660][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 18:19:04,157][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-25 18:19:04,157][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 18:19:04,158][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-25 18:19:07,201][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 18:22:45,358][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572'. Use `repo_type` argument if needed.
+[2026-01-25 18:22:46,378][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-25 18:22:46,646][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-572/2026-01-25_18-18-55/_ro_mmlu.json
+[2026-01-25 18:22:46,647][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2026-01-25 18:22:46,647][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572 with apply_chat_template True
+[2026-01-25 18:22:46,648][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 18:22:46,649][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 18:22:46,649][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 18:22:46,650][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 18:22:47,286][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 18:22:53,114][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_winogrande from None to 5
+[2026-01-25 18:22:53,115][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 18:22:53,116][lm-eval][INFO] - Building contexts for _ro_winogrande on rank 0...
+[2026-01-25 18:22:53,219][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 18:23:22,485][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572'. Use `repo_type` argument if needed.
+[2026-01-25 18:23:23,556][__name__][INFO] - ✅ Finished _ro_winogrande
+[2026-01-25 18:23:23,649][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-572/2026-01-25_18-18-55/_ro_winogrande.json
+[2026-01-25 18:23:23,650][__name__][INFO] - 🚀 Running evaluation for _ro_belebele | fewshot=5 | limit=1000
+[2026-01-25 18:23:23,650][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572 with apply_chat_template True
+[2026-01-25 18:23:23,650][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 18:23:23,652][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 18:23:23,652][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 18:23:23,653][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 18:23:24,299][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 18:23:29,399][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_belebele from None to 5
+[2026-01-25 18:23:29,399][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 18:23:29,400][lm-eval][INFO] - Building contexts for _ro_belebele on rank 0...
+[2026-01-25 18:23:34,292][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 18:28:06,847][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572'. Use `repo_type` argument if needed.
+[2026-01-25 18:28:07,888][__name__][INFO] - ✅ Finished _ro_belebele
+[2026-01-25 18:28:08,121][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-572/2026-01-25_18-18-55/_ro_belebele.json
+[2026-01-25 18:28:08,121][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2026-01-25 18:28:08,122][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572 with apply_chat_template True
+[2026-01-25 18:28:08,123][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 18:28:08,123][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 18:28:08,124][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 18:28:08,741][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 18:28:11,626][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 18:28:11,627][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 18:28:11,627][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 18:28:11,627][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 18:28:11,628][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-25 18:28:11,628][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 18:28:14,225][lm-eval][WARNING] - Overwriting default num_fewshot of ro_wiki from None to 0
+[2026-01-25 18:28:14,225][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 18:28:14,226][lm-eval][INFO] - Building contexts for ro_wiki on rank 0...
+[2026-01-25 18:28:14,384][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-25 18:28:52,007][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572'. Use `repo_type` argument if needed.
+[2026-01-25 18:28:53,059][__name__][INFO] - ✅ Finished ro_wiki
+[2026-01-25 18:28:53,181][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-572/2026-01-25_18-18-55/ro_wiki.json
+[2026-01-25 18:28:53,182][__name__][INFO] - 🚀 Running evaluation for _ro_arc_challenge | fewshot=5 | limit=1000
+[2026-01-25 18:28:53,182][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572 with apply_chat_template True
+[2026-01-25 18:28:53,183][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 18:28:53,184][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 18:28:53,184][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 18:28:53,185][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 18:28:53,826][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 18:28:59,042][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_arc_challenge from None to 5
+[2026-01-25 18:28:59,042][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 18:28:59,043][lm-eval][INFO] - Building contexts for _ro_arc_challenge on rank 0...
+[2026-01-25 18:29:00,485][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 18:30:29,512][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572'. Use `repo_type` argument if needed.
+[2026-01-25 18:30:30,629][__name__][INFO] - ✅ Finished _ro_arc_challenge
+[2026-01-25 18:30:30,814][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-572/2026-01-25_18-18-55/_ro_arc_challenge.json
+[2026-01-25 18:30:30,814][__name__][INFO] - 🚀 Running evaluation for arc_challenge | fewshot=5 | limit=1000
+[2026-01-25 18:30:30,815][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572 with apply_chat_template True
+[2026-01-25 18:30:30,815][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 18:30:30,816][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 18:30:30,816][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 18:30:30,817][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 18:30:31,457][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 18:30:36,996][lm-eval][WARNING] - Overwriting default num_fewshot of arc_challenge from None to 5
+[2026-01-25 18:30:36,996][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 18:30:36,996][lm-eval][INFO] - Building contexts for arc_challenge on rank 0...
+[2026-01-25 18:30:41,445][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 18:31:38,189][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572'. Use `repo_type` argument if needed.
+[2026-01-25 18:31:39,342][__name__][INFO] - ✅ Finished arc_challenge
+[2026-01-25 18:31:39,513][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-572/2026-01-25_18-18-55/arc_challenge.json
+[2026-01-25 18:31:39,514][__name__][INFO] - 🚀 Running evaluation for winogrande | fewshot=5 | limit=1000
+[2026-01-25 18:31:39,514][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572 with apply_chat_template True
+[2026-01-25 18:31:39,514][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 18:31:39,515][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 18:31:39,516][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 18:31:39,517][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 18:31:40,163][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 18:31:43,059][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'winogrande' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-25 18:31:47,266][lm-eval][WARNING] - Overwriting default num_fewshot of winogrande from None to 5
+[2026-01-25 18:31:47,266][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 18:31:47,267][lm-eval][INFO] - Building contexts for winogrande on rank 0...
+[2026-01-25 18:31:47,533][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 18:32:07,647][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572'. Use `repo_type` argument if needed.
+[2026-01-25 18:32:08,684][__name__][INFO] - ✅ Finished winogrande
+[2026-01-25 18:32:08,782][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-572/2026-01-25_18-18-55/winogrande.json
+[2026-01-25 18:32:08,783][__name__][INFO] - 🚀 Running evaluation for wikitext | fewshot=0 | limit=1000
+[2026-01-25 18:32:08,783][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572 with apply_chat_template True
+[2026-01-25 18:32:08,784][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 18:32:08,784][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 18:32:08,785][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 18:32:09,448][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 18:32:12,362][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 18:32:12,362][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 18:32:12,362][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 18:32:12,362][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 18:32:12,363][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-25 18:32:12,363][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 18:32:12,363][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'EleutherAI/wikitext_document_level' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-25 18:32:14,676][lm-eval][WARNING] - Overwriting default num_fewshot of wikitext from None to 0
+[2026-01-25 18:32:14,676][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 18:32:14,677][lm-eval][INFO] - Building contexts for wikitext on rank 0...
+[2026-01-25 18:32:15,172][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-25 18:34:28,116][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-572'. Use `repo_type` argument if needed.
+[2026-01-25 18:34:29,307][__name__][INFO] - ✅ Finished wikitext
+[2026-01-25 18:34:29,740][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-572/2026-01-25_18-18-55/wikitext.json
+[2026-01-25 18:34:31,005][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-572/2026-01-25_18-18-55/eval_results.json
+[2026-01-25 18:34:31,005][__name__][INFO] - 📊 Summary:
+[2026-01-25 18:34:31,006][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.285, 'acc_stderr,none': 0.014282120955200562}
+[2026-01-25 18:34:31,006][__name__][INFO] -   - _ro_winogrande: {'acc,none': 0.522, 'acc_stderr,none': 0.01580397942816194}
+[2026-01-25 18:34:31,006][__name__][INFO] -   - _ro_belebele: {'acc_norm,none': 0.34555555555555556, 'acc_norm_stderr,none': 0.01586044932223794}
+[2026-01-25 18:34:31,007][__name__][INFO] -   - ro_wiki: {'word_perplexity,none': 93.1471768302596, 'byte_perplexity,none': 1.9530895804469715, 'bits_per_byte,none': 0.9657581214227393}
+[2026-01-25 18:34:31,007][__name__][INFO] -   - _ro_arc_challenge: {'acc_norm,none': 0.309, 'acc_norm_stderr,none': 0.014619600977206347}
+[2026-01-25 18:34:31,007][__name__][INFO] -   - arc_challenge: {'acc,none': 0.37, 'acc_stderr,none': 0.015275252316519466, 'acc_norm,none': 0.369, 'acc_norm_stderr,none': 0.015266698139154782}
+[2026-01-25 18:34:31,007][__name__][INFO] -   - winogrande: {'acc,none': 0.587, 'acc_stderr,none': 0.015577986829936457}
+[2026-01-25 18:34:31,007][__name__][INFO] -   - wikitext: {'word_perplexity,none': 21.53391076454339, 'byte_perplexity,none': 1.7790640862990812, 'bits_per_byte,none': 0.8311184809932619}
+[2026-01-25 18:34:32,483][__name__][INFO] - 📊 W&B run finished
+[2026-01-25 18:57:03,572][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-25 18:57:03,610][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-25 18:57:03,611][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-25_18-57-03
+[2026-01-25 18:57:05,510][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-25 18:57:05,511][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=1000
+[2026-01-25 18:57:05,511][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-25 18:57:05,511][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 18:57:05,514][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 18:57:05,514][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 18:57:05,563][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 18:57:09,488][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 18:57:14,874][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-25 18:57:14,875][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 18:57:14,875][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-25 18:57:17,872][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 18:57:26,205][__name__][ERROR] - ❌ Error running _ro_mmlu: CUDA out of memory. Tried to allocate 3.91 GiB. GPU 0 has a total capacity of 23.57 GiB of which 1.34 GiB is free. Process 3898374 has 15.63 GiB memory in use. Including non-PyTorch memory, this process has 6.54 GiB memory in use. Of the allocated memory 6.23 GiB is allocated by PyTorch, and 13.48 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[2026-01-25 18:57:26,260][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2026-01-25 18:57:26,261][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-25 18:57:26,261][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 18:57:26,262][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 18:57:26,263][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 18:57:26,263][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 18:57:27,883][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 18:57:33,626][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_winogrande from None to 5
+[2026-01-25 18:57:33,626][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 18:57:33,631][lm-eval][INFO] - Building contexts for _ro_winogrande on rank 0...
+[2026-01-25 18:57:33,722][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 18:57:35,398][__name__][ERROR] - ❌ Error running _ro_winogrande: CUDA out of memory. Tried to allocate 1.43 GiB. GPU 0 has a total capacity of 23.57 GiB of which 1.34 GiB is free. Process 3898374 has 15.63 GiB memory in use. Including non-PyTorch memory, this process has 6.54 GiB memory in use. Of the allocated memory 5.20 GiB is allocated by PyTorch, and 1.03 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[2026-01-25 18:57:35,420][__name__][INFO] - 🚀 Running evaluation for _ro_belebele | fewshot=5 | limit=1000
+[2026-01-25 18:57:35,420][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-25 18:57:35,421][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 18:57:35,421][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 18:57:35,421][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 18:57:35,422][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 18:57:36,842][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 18:57:41,974][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_belebele from None to 5
+[2026-01-25 18:57:41,975][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 18:57:41,975][lm-eval][INFO] - Building contexts for _ro_belebele on rank 0...
+[2026-01-25 18:57:46,754][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 18:57:56,184][__name__][ERROR] - ❌ Error running _ro_belebele: CUDA out of memory. Tried to allocate 3.88 GiB. GPU 0 has a total capacity of 23.57 GiB of which 1.34 GiB is free. Process 3898374 has 15.63 GiB memory in use. Including non-PyTorch memory, this process has 6.54 GiB memory in use. Of the allocated memory 2.87 GiB is allocated by PyTorch, and 3.37 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[2026-01-25 18:57:56,257][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2026-01-25 18:57:56,258][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-25 18:57:56,258][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 18:57:56,259][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 18:57:56,259][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 18:57:57,687][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 18:58:00,588][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 18:58:00,589][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 18:58:00,589][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 18:58:00,589][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 18:58:00,589][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-25 18:58:00,590][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 18:58:02,910][lm-eval][WARNING] - Overwriting default num_fewshot of ro_wiki from None to 0
+[2026-01-25 18:58:02,910][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 18:58:02,911][lm-eval][INFO] - Building contexts for ro_wiki on rank 0...
+[2026-01-25 18:58:03,214][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-25 18:58:04,985][__name__][ERROR] - ❌ Error running ro_wiki: CUDA out of memory. Tried to allocate 2.94 GiB. GPU 0 has a total capacity of 23.57 GiB of which 1.34 GiB is free. Process 3898374 has 15.63 GiB memory in use. Including non-PyTorch memory, this process has 6.54 GiB memory in use. Of the allocated memory 5.25 GiB is allocated by PyTorch, and 1016.56 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[2026-01-25 18:58:05,002][__name__][INFO] - 🚀 Running evaluation for _ro_arc_challenge | fewshot=5 | limit=1000
+[2026-01-25 18:58:05,003][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-25 18:58:05,003][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 18:58:05,004][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 18:58:05,004][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 18:58:05,005][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 18:58:06,398][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 18:58:11,511][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_arc_challenge from None to 5
+[2026-01-25 18:58:11,511][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 18:58:11,512][lm-eval][INFO] - Building contexts for _ro_arc_challenge on rank 0...
+[2026-01-25 18:58:12,897][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 18:58:15,702][__name__][ERROR] - ❌ Error running _ro_arc_challenge: CUDA out of memory. Tried to allocate 3.33 GiB. GPU 0 has a total capacity of 23.57 GiB of which 1.34 GiB is free. Process 3898374 has 15.63 GiB memory in use. Including non-PyTorch memory, this process has 6.54 GiB memory in use. Of the allocated memory 2.79 GiB is allocated by PyTorch, and 3.45 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[2026-01-25 18:58:15,739][__name__][INFO] - 🚀 Running evaluation for arc_challenge | fewshot=5 | limit=1000
+[2026-01-25 18:58:15,739][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-25 18:58:15,740][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 18:58:15,740][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 18:58:15,741][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 18:58:15,742][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 18:58:17,428][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 18:58:22,279][lm-eval][WARNING] - Overwriting default num_fewshot of arc_challenge from None to 5
+[2026-01-25 18:58:22,279][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 18:58:22,279][lm-eval][INFO] - Building contexts for arc_challenge on rank 0...
+[2026-01-25 18:58:26,621][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 18:58:29,651][__name__][ERROR] - ❌ Error running arc_challenge: CUDA out of memory. Tried to allocate 1.65 GiB. GPU 0 has a total capacity of 23.57 GiB of which 1.34 GiB is free. Process 3898374 has 15.63 GiB memory in use. Including non-PyTorch memory, this process has 6.54 GiB memory in use. Of the allocated memory 5.67 GiB is allocated by PyTorch, and 578.26 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[2026-01-25 18:58:29,678][__name__][INFO] - 🚀 Running evaluation for winogrande | fewshot=5 | limit=1000
+[2026-01-25 18:58:29,679][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-25 18:58:29,679][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 18:58:29,679][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 18:58:29,680][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 18:58:29,681][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 18:58:31,081][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 18:58:33,981][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'winogrande' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-25 18:58:38,117][lm-eval][WARNING] - Overwriting default num_fewshot of winogrande from None to 5
+[2026-01-25 18:58:38,118][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 18:58:38,121][lm-eval][INFO] - Building contexts for winogrande on rank 0...
+[2026-01-25 18:58:38,208][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 18:59:31,355][__name__][INFO] - ✅ Finished winogrande
+[2026-01-25 18:59:31,438][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-25_18-57-03/winogrande.json
+[2026-01-25 18:59:31,439][__name__][INFO] - 🚀 Running evaluation for wikitext | fewshot=0 | limit=1000
+[2026-01-25 18:59:31,439][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-25 18:59:31,440][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 18:59:31,440][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 18:59:31,441][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 18:59:32,942][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 18:59:35,887][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 18:59:35,887][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 18:59:35,888][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 18:59:35,888][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 18:59:35,888][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-25 18:59:35,888][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 18:59:35,888][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'EleutherAI/wikitext_document_level' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-25 18:59:38,108][lm-eval][WARNING] - Overwriting default num_fewshot of wikitext from None to 0
+[2026-01-25 18:59:38,109][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 18:59:38,110][lm-eval][INFO] - Building contexts for wikitext on rank 0...
+[2026-01-25 18:59:38,571][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-25 18:59:44,141][__name__][ERROR] - ❌ Error running wikitext: CUDA out of memory. Tried to allocate 2.94 GiB. GPU 0 has a total capacity of 23.57 GiB of which 1.34 GiB is free. Process 3898374 has 15.63 GiB memory in use. Including non-PyTorch memory, this process has 6.54 GiB memory in use. Of the allocated memory 5.25 GiB is allocated by PyTorch, and 1016.56 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[2026-01-25 18:59:44,231][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-25_18-57-03/eval_results.json
+[2026-01-25 18:59:44,231][__name__][INFO] - 📊 Summary:
+[2026-01-25 18:59:44,231][__name__][INFO] -   - _ro_mmlu: No metrics found
+[2026-01-25 18:59:44,232][__name__][INFO] -   - _ro_winogrande: No metrics found
+[2026-01-25 18:59:44,232][__name__][INFO] -   - _ro_belebele: No metrics found
+[2026-01-25 18:59:44,232][__name__][INFO] -   - ro_wiki: No metrics found
+[2026-01-25 18:59:44,232][__name__][INFO] -   - _ro_arc_challenge: No metrics found
+[2026-01-25 18:59:44,232][__name__][INFO] -   - arc_challenge: No metrics found
+[2026-01-25 18:59:44,232][__name__][INFO] -   - winogrande: {'acc,none': 0.59, 'acc_stderr,none': 0.015560917136921659}
+[2026-01-25 18:59:44,233][__name__][INFO] -   - wikitext: No metrics found
+[2026-01-25 18:59:45,405][__name__][INFO] - 📊 W&B run finished
+[2026-01-25 19:30:47,988][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-25 19:30:48,050][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-25 19:30:48,051][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-762/2026-01-25_19-30-48
+[2026-01-25 19:30:50,065][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-25 19:30:50,066][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=1000
+[2026-01-25 19:30:50,066][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762 with apply_chat_template True
+[2026-01-25 19:30:50,066][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 19:30:50,070][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 19:30:50,070][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 19:30:50,118][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 19:30:51,603][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 19:30:57,442][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-25 19:30:57,442][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 19:30:57,443][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-25 19:31:00,515][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 19:34:38,663][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762'. Use `repo_type` argument if needed.
+[2026-01-25 19:34:39,730][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-25 19:34:39,999][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-762/2026-01-25_19-30-48/_ro_mmlu.json
+[2026-01-25 19:34:39,999][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2026-01-25 19:34:40,000][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762 with apply_chat_template True
+[2026-01-25 19:34:40,000][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 19:34:40,001][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 19:34:40,001][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 19:34:40,002][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 19:34:40,620][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 19:34:46,931][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_winogrande from None to 5
+[2026-01-25 19:34:46,932][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 19:34:46,935][lm-eval][INFO] - Building contexts for _ro_winogrande on rank 0...
+[2026-01-25 19:34:47,039][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 19:35:16,289][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762'. Use `repo_type` argument if needed.
+[2026-01-25 19:35:17,302][__name__][INFO] - ✅ Finished _ro_winogrande
+[2026-01-25 19:35:17,394][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-762/2026-01-25_19-30-48/_ro_winogrande.json
+[2026-01-25 19:35:17,394][__name__][INFO] - 🚀 Running evaluation for _ro_belebele | fewshot=5 | limit=1000
+[2026-01-25 19:35:17,394][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762 with apply_chat_template True
+[2026-01-25 19:35:17,395][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 19:35:17,396][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 19:35:17,396][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 19:35:17,397][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 19:35:18,013][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 19:35:22,987][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_belebele from None to 5
+[2026-01-25 19:35:22,987][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 19:35:22,988][lm-eval][INFO] - Building contexts for _ro_belebele on rank 0...
+[2026-01-25 19:35:27,844][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 19:40:00,401][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762'. Use `repo_type` argument if needed.
+[2026-01-25 19:40:01,384][__name__][INFO] - ✅ Finished _ro_belebele
+[2026-01-25 19:40:01,615][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-762/2026-01-25_19-30-48/_ro_belebele.json
+[2026-01-25 19:40:01,615][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2026-01-25 19:40:01,616][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762 with apply_chat_template True
+[2026-01-25 19:40:01,617][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 19:40:01,617][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 19:40:01,618][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 19:40:02,212][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 19:40:05,143][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 19:40:05,143][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 19:40:05,143][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 19:40:05,143][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 19:40:05,144][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-25 19:40:05,144][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 19:40:08,297][lm-eval][WARNING] - Overwriting default num_fewshot of ro_wiki from None to 0
+[2026-01-25 19:40:08,297][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 19:40:08,299][lm-eval][INFO] - Building contexts for ro_wiki on rank 0...
+[2026-01-25 19:40:08,461][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-25 19:40:46,184][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762'. Use `repo_type` argument if needed.
+[2026-01-25 19:40:47,211][__name__][INFO] - ✅ Finished ro_wiki
+[2026-01-25 19:40:47,334][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-762/2026-01-25_19-30-48/ro_wiki.json
+[2026-01-25 19:40:47,334][__name__][INFO] - 🚀 Running evaluation for _ro_arc_challenge | fewshot=5 | limit=1000
+[2026-01-25 19:40:47,334][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762 with apply_chat_template True
+[2026-01-25 19:40:47,335][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 19:40:47,336][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 19:40:47,336][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 19:40:47,337][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 19:40:47,958][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 19:40:54,074][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_arc_challenge from None to 5
+[2026-01-25 19:40:54,075][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 19:40:54,076][lm-eval][INFO] - Building contexts for _ro_arc_challenge on rank 0...
+[2026-01-25 19:40:55,550][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 19:42:24,669][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762'. Use `repo_type` argument if needed.
+[2026-01-25 19:42:25,729][__name__][INFO] - ✅ Finished _ro_arc_challenge
+[2026-01-25 19:42:25,913][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-762/2026-01-25_19-30-48/_ro_arc_challenge.json
+[2026-01-25 19:42:25,913][__name__][INFO] - 🚀 Running evaluation for arc_challenge | fewshot=5 | limit=1000
+[2026-01-25 19:42:25,913][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762 with apply_chat_template True
+[2026-01-25 19:42:25,914][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 19:42:25,915][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 19:42:25,915][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 19:42:25,916][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 19:42:26,520][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 19:42:31,456][lm-eval][WARNING] - Overwriting default num_fewshot of arc_challenge from None to 5
+[2026-01-25 19:42:31,456][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 19:42:31,456][lm-eval][INFO] - Building contexts for arc_challenge on rank 0...
+[2026-01-25 19:42:35,889][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 19:43:32,726][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762'. Use `repo_type` argument if needed.
+[2026-01-25 19:43:33,771][__name__][INFO] - ✅ Finished arc_challenge
+[2026-01-25 19:43:33,945][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-762/2026-01-25_19-30-48/arc_challenge.json
+[2026-01-25 19:43:33,946][__name__][INFO] - 🚀 Running evaluation for winogrande | fewshot=5 | limit=1000
+[2026-01-25 19:43:33,946][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762 with apply_chat_template True
+[2026-01-25 19:43:33,947][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 19:43:33,948][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 19:43:33,948][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 19:43:33,949][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 19:43:34,547][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 19:43:37,501][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'winogrande' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-25 19:43:42,528][lm-eval][WARNING] - Overwriting default num_fewshot of winogrande from None to 5
+[2026-01-25 19:43:42,529][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 19:43:42,531][lm-eval][INFO] - Building contexts for winogrande on rank 0...
+[2026-01-25 19:43:42,618][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 19:44:02,933][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762'. Use `repo_type` argument if needed.
+[2026-01-25 19:44:03,979][__name__][INFO] - ✅ Finished winogrande
+[2026-01-25 19:44:04,071][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-762/2026-01-25_19-30-48/winogrande.json
+[2026-01-25 19:44:04,071][__name__][INFO] - 🚀 Running evaluation for wikitext | fewshot=0 | limit=1000
+[2026-01-25 19:44:04,072][__name__][INFO] - Running outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762 with apply_chat_template True
+[2026-01-25 19:44:04,073][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 19:44:04,073][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762', 'tokenizer': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 19:44:04,074][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 19:44:04,683][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 19:44:07,584][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 19:44:07,585][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 19:44:07,585][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-25 19:44:07,585][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 19:44:07,585][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-25 19:44:07,586][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-25 19:44:07,586][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'EleutherAI/wikitext_document_level' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-25 19:44:10,068][lm-eval][WARNING] - Overwriting default num_fewshot of wikitext from None to 0
+[2026-01-25 19:44:10,068][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 19:44:10,069][lm-eval][INFO] - Building contexts for wikitext on rank 0...
+[2026-01-25 19:44:10,594][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-25 19:46:23,654][lm-eval][WARNING] - Failed to get model SHA for outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/fixloss/fixloss_test10_tokenstats_noval_skipWrongStep/merged/checkpoint-762'. Use `repo_type` argument if needed.
+[2026-01-25 19:46:24,724][__name__][INFO] - ✅ Finished wikitext
+[2026-01-25 19:46:25,156][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-762/2026-01-25_19-30-48/wikitext.json
+[2026-01-25 19:46:26,416][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_fixloss_fixloss_test10_tokenstats_noval_skipWrongStep_merged_checkpoint-762/2026-01-25_19-30-48/eval_results.json
+[2026-01-25 19:46:26,417][__name__][INFO] - 📊 Summary:
+[2026-01-25 19:46:26,417][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.293, 'acc_stderr,none': 0.014399942998441292}
+[2026-01-25 19:46:26,417][__name__][INFO] -   - _ro_winogrande: {'acc,none': 0.514, 'acc_stderr,none': 0.01581309754773093}
+[2026-01-25 19:46:26,418][__name__][INFO] -   - _ro_belebele: {'acc_norm,none': 0.3233333333333333, 'acc_norm_stderr,none': 0.015600294087844632}
+[2026-01-25 19:46:26,418][__name__][INFO] -   - ro_wiki: {'word_perplexity,none': 89.63980348882815, 'byte_perplexity,none': 1.9420536915361595, 'bits_per_byte,none': 0.9575830871845914}
+[2026-01-25 19:46:26,418][__name__][INFO] -   - _ro_arc_challenge: {'acc_norm,none': 0.312, 'acc_norm_stderr,none': 0.014658474370509055}
+[2026-01-25 19:46:26,418][__name__][INFO] -   - arc_challenge: {'acc,none': 0.367, 'acc_stderr,none': 0.015249378464171699, 'acc_norm,none': 0.353, 'acc_norm_stderr,none': 0.015120172605483696}
+[2026-01-25 19:46:26,418][__name__][INFO] -   - winogrande: {'acc,none': 0.599, 'acc_stderr,none': 0.015506109745498368}
+[2026-01-25 19:46:26,418][__name__][INFO] -   - wikitext: {'word_perplexity,none': 21.481114881128775, 'byte_perplexity,none': 1.7782446708135065, 'bits_per_byte,none': 0.8304538399631511}
+[2026-01-25 19:46:27,565][__name__][INFO] - 📊 W&B run finished
+[2026-01-25 23:14:26,640][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-25 23:14:26,708][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-25 23:14:26,708][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-25_23-14-26
+[2026-01-25 23:14:28,542][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-25 23:14:28,542][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=1000
+[2026-01-25 23:14:28,543][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-25 23:14:28,543][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-25 23:14:28,544][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-25 23:14:28,544][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-25 23:14:28,600][lm-eval][INFO] - Using device 'cuda'
+[2026-01-25 23:14:32,294][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-25 23:14:37,721][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-25 23:14:37,721][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-25 23:14:37,721][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-25 23:14:41,036][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-25 23:14:45,520][asyncio][WARNING] - socket.send() raised exception.
+[2026-01-25 23:15:00,218][asyncio][WARNING] - socket.send() raised exception.
+[2026-01-28 15:41:13,237][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-28 15:41:13,390][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-28 15:41:13,391][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-28_15-41-13
+[2026-01-28 15:41:15,464][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-28 15:41:15,464][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=1000
+[2026-01-28 15:41:15,464][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-28 15:41:15,465][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-28 15:41:15,466][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-28 15:41:15,466][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-28 15:41:15,517][lm-eval][INFO] - Using device 'cuda'
+[2026-01-28 15:41:19,187][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-28 15:41:24,889][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-28 15:41:24,889][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-28 15:41:24,890][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-28 15:41:27,939][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-28 15:45:06,147][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-28 15:45:06,412][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-28_15-41-13/_ro_mmlu.json
+[2026-01-28 15:45:06,413][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2026-01-28 15:45:06,413][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-28 15:45:06,413][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-28 15:45:06,415][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-28 15:45:06,415][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-28 15:45:06,416][lm-eval][INFO] - Using device 'cuda'
+[2026-01-28 15:45:07,813][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-28 15:45:14,953][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_winogrande from None to 5
+[2026-01-28 15:45:14,954][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-28 15:45:14,955][lm-eval][INFO] - Building contexts for _ro_winogrande on rank 0...
+[2026-01-28 15:45:15,058][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-28 15:45:45,340][__name__][INFO] - ✅ Finished _ro_winogrande
+[2026-01-28 15:45:45,433][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-28_15-41-13/_ro_winogrande.json
+[2026-01-28 15:45:45,434][__name__][INFO] - 🚀 Running evaluation for _ro_belebele | fewshot=5 | limit=1000
+[2026-01-28 15:45:45,434][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-28 15:45:45,435][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-28 15:45:45,436][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-28 15:45:45,436][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-28 15:45:45,437][lm-eval][INFO] - Using device 'cuda'
+[2026-01-28 15:45:46,710][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-28 15:45:51,651][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_belebele from None to 5
+[2026-01-28 15:45:51,651][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-28 15:45:51,652][lm-eval][INFO] - Building contexts for _ro_belebele on rank 0...
+[2026-01-28 15:45:56,474][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-28 15:50:30,906][__name__][INFO] - ✅ Finished _ro_belebele
+[2026-01-28 15:50:31,147][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-28_15-41-13/_ro_belebele.json
+[2026-01-28 15:50:31,147][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2026-01-28 15:50:31,148][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-28 15:50:31,149][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-28 15:50:31,149][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-28 15:50:31,150][lm-eval][INFO] - Using device 'cuda'
+[2026-01-28 15:50:32,790][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-28 15:50:35,808][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-28 15:50:35,808][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-28 15:50:35,808][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-28 15:50:35,808][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-28 15:50:35,809][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-28 15:50:35,809][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-28 15:50:38,511][lm-eval][WARNING] - Overwriting default num_fewshot of ro_wiki from None to 0
+[2026-01-28 15:50:38,511][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-28 15:50:38,512][lm-eval][INFO] - Building contexts for ro_wiki on rank 0...
+[2026-01-28 15:50:38,670][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-28 15:51:17,532][__name__][INFO] - ✅ Finished ro_wiki
+[2026-01-28 15:51:17,657][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-28_15-41-13/ro_wiki.json
+[2026-01-28 15:51:17,657][__name__][INFO] - 🚀 Running evaluation for _ro_arc_challenge | fewshot=5 | limit=1000
+[2026-01-28 15:51:17,657][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-28 15:51:17,658][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-28 15:51:17,659][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-28 15:51:17,659][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-28 15:51:17,660][lm-eval][INFO] - Using device 'cuda'
+[2026-01-28 15:51:18,975][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-28 15:51:24,142][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_arc_challenge from None to 5
+[2026-01-28 15:51:24,142][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-28 15:51:24,143][lm-eval][INFO] - Building contexts for _ro_arc_challenge on rank 0...
+[2026-01-28 15:51:25,581][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-28 15:52:55,820][__name__][INFO] - ✅ Finished _ro_arc_challenge
+[2026-01-28 15:52:56,008][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-28_15-41-13/_ro_arc_challenge.json
+[2026-01-28 15:52:56,008][__name__][INFO] - 🚀 Running evaluation for arc_challenge | fewshot=5 | limit=1000
+[2026-01-28 15:52:56,009][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-28 15:52:56,009][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-28 15:52:56,010][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-28 15:52:56,010][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-28 15:52:56,011][lm-eval][INFO] - Using device 'cuda'
+[2026-01-28 15:52:57,348][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-28 15:53:02,260][lm-eval][WARNING] - Overwriting default num_fewshot of arc_challenge from None to 5
+[2026-01-28 15:53:02,260][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-28 15:53:02,261][lm-eval][INFO] - Building contexts for arc_challenge on rank 0...
+[2026-01-28 15:53:06,606][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-28 15:54:04,428][__name__][INFO] - ✅ Finished arc_challenge
+[2026-01-28 15:54:04,602][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-28_15-41-13/arc_challenge.json
+[2026-01-28 15:54:04,603][__name__][INFO] - 🚀 Running evaluation for winogrande | fewshot=5 | limit=1000
+[2026-01-28 15:54:04,603][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-28 15:54:04,603][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-28 15:54:04,605][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-28 15:54:04,605][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-28 15:54:04,606][lm-eval][INFO] - Using device 'cuda'
+[2026-01-28 15:54:06,076][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-28 15:54:09,107][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'winogrande' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-28 15:54:13,443][lm-eval][WARNING] - Overwriting default num_fewshot of winogrande from None to 5
+[2026-01-28 15:54:13,443][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-28 15:54:13,444][lm-eval][INFO] - Building contexts for winogrande on rank 0...
+[2026-01-28 15:54:13,532][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-28 15:54:38,824][__name__][INFO] - ✅ Finished winogrande
+[2026-01-28 15:54:38,922][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-28_15-41-13/winogrande.json
+[2026-01-28 15:54:38,923][__name__][INFO] - 🚀 Running evaluation for wikitext | fewshot=0 | limit=1000
+[2026-01-28 15:54:38,923][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-28 15:54:38,925][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-28 15:54:38,925][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-28 15:54:38,926][lm-eval][INFO] - Using device 'cuda'
+[2026-01-28 15:54:41,062][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-28 15:54:44,084][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-28 15:54:44,084][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-28 15:54:44,084][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-28 15:54:44,085][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-28 15:54:44,086][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-28 15:54:44,086][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-28 15:54:44,086][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'EleutherAI/wikitext_document_level' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-28 15:54:47,299][lm-eval][WARNING] - Overwriting default num_fewshot of wikitext from None to 0
+[2026-01-28 15:54:47,299][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-28 15:54:47,300][lm-eval][INFO] - Building contexts for wikitext on rank 0...
+[2026-01-28 15:54:47,825][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-28 15:57:01,885][__name__][INFO] - ✅ Finished wikitext
+[2026-01-28 15:57:02,317][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-28_15-41-13/wikitext.json
+[2026-01-28 15:57:03,580][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-28_15-41-13/eval_results.json
+[2026-01-28 15:57:03,580][__name__][INFO] - 📊 Summary:
+[2026-01-28 15:57:03,581][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.349, 'acc_stderr,none': 0.015080663991563052}
+[2026-01-28 15:57:03,581][__name__][INFO] -   - _ro_winogrande: {'acc,none': 0.52, 'acc_stderr,none': 0.015806639423035177}
+[2026-01-28 15:57:03,581][__name__][INFO] -   - _ro_belebele: {'acc_norm,none': 0.3788888888888889, 'acc_norm_stderr,none': 0.016179337636895632}
+[2026-01-28 15:57:03,581][__name__][INFO] -   - ro_wiki: {'word_perplexity,none': 126.9400707863589, 'byte_perplexity,none': 2.0444140335568415, 'bits_per_byte,none': 1.0316873996367184}
+[2026-01-28 15:57:03,581][__name__][INFO] -   - _ro_arc_challenge: {'acc_norm,none': 0.269, 'acc_norm_stderr,none': 0.014029819522568203}
+[2026-01-28 15:57:03,581][__name__][INFO] -   - arc_challenge: {'acc,none': 0.388, 'acc_stderr,none': 0.015417317979911216, 'acc_norm,none': 0.397, 'acc_norm_stderr,none': 0.015480007449307982}
+[2026-01-28 15:57:03,581][__name__][INFO] -   - winogrande: {'acc,none': 0.587, 'acc_stderr,none': 0.015577986829936457}
+[2026-01-28 15:57:03,582][__name__][INFO] -   - wikitext: {'word_perplexity,none': 18.05999098848607, 'byte_perplexity,none': 1.7212832475798572, 'bits_per_byte,none': 0.7834845211171497}
+[2026-01-28 15:57:04,733][__name__][INFO] - 📊 W&B run finished

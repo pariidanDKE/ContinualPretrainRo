@@ -1,7 +1,7 @@
 seed: 23
 dataset:
   tokenize: false
-  sample_size: null
+  sample_size: 1000
   text_field: formatted_text
   name: danp27/norobots_sft
   split: train
@@ -10,18 +10,22 @@ dataset:
 data_builder:
   enabled: true
   datasets:
-  - name: ./data/formatted_data/orca
+  - name: danp27/norobots_sft
     split: train
     proportion: 0.5
-    sample_size: 110000
-  - name: ./data/formatted_data/maggie
+    text_field: null
+    add_bos_eos: null
+    num_proc: null
+  - name: ./data/formatted_data/dolly
     split: train
     proportion: 0.5
-    sample_size: 110000
+    text_field: null
+    add_bos_eos: null
+    num_proc: null
 data_collator:
-  pack_length: 2048
   use_custom_packed: false
   packing: true
+  packing_strategy: bfd
 model:
   builder:
     model_name: meta-llama/Llama-3.2-1B-Instruct
@@ -35,11 +39,11 @@ model:
     prepare_kbit_training: true
     require_grads: true
     max_seq_length: 2048
-    use_unsloth: false
+    use_unsloth: true
     seed: 42
   lora:
-    r: 16
-    lora_alpha: 32
+    r: 128
+    lora_alpha: 256
     lora_dropout: 0.0
     bias: none
     task_type: CAUSAL_LM
@@ -52,12 +56,12 @@ model:
     - up_proj
     - down_proj
 training_args:
-  output_dir: ./outputs/train_llama
-  per_device_train_batch_size: 1
-  gradient_accumulation_steps: 4
+  output_dir: outputs/test_runs/
+  per_device_train_batch_size: 32
+  gradient_accumulation_steps: 1
   max_length: 2048
   logging_steps: 5
-  learning_rate: 0.0001
+  learning_rate: 6.0e-05
   embedding_learning_rate: 2.0e-05
   num_train_epochs: 1
   save_steps: 100
@@ -70,19 +74,17 @@ training_args:
   warmup_ratio: 0.03
   gradient_checkpointing: true
   max_grad_norm: 1
+  dataloader_drop_last: true
 wandb:
   enabled: true
   project: RoLLM
-  run_name: test1
-  group: null
+  run_name: test_run
+  group: fix_loss
 milestone:
-  target_tokens: 1000000
+  target_tokens: 25000000
   resume_from_checkpoint: null
-  merged_output_dir: null
-  total_training_tokens: null
+  merged_output_dir: outputs/test_runs//merged
+  total_training_tokens: 100000000
   do_evaluate: true
-  prebuilt_dataset_path: null
+  prebuilt_dataset_path: data/mixed_milestone_dataset
   current_milestone: 0
-  num_milestones: 5
-  tokens_per_milestone: 5000000
-output_dir: data/mixed_milestone_dataset

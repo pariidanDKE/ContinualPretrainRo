@@ -31,15 +31,16 @@ from train_utils import (
     calculate_max_steps,
     merge_lora_checkpoint,
     PT_TO_IT_TOKENIZER_MAP,
-    LinearSchedulerCallback,
+    patch_trl_packing_for_stability,
+)
+from trainer_callbacks import (
     EpochResetCallback,
     CosineSchedulerCallback,
-    OptimizerStateDiagnosticCallback,  # Remove after debugging
 )
 from token_stats_callback import create_trainer_with_token_stats, TokenStatsCallback
 from model import ModelBuilder, ModelBuilderConfig, LoraAdapterConfig
 from trl import SFTConfig, SFTTrainer
-from transformers import TrainingArguments, Trainer, AutoTokenizer
+from transformers import  AutoTokenizer
 from unsloth import UnslothTrainer, UnslothTrainingArguments
 from data_module import DataPreprocessor
 
@@ -79,8 +80,15 @@ def main(cfg: DictConfig) -> None:
         logger.info(f"  Using prebuilt dataset: {prebuilt_dataset_path}")
         logger.info(f"  Current milestone: {current_milestone}")
 
+    # Sync model.builder.max_seq_length with training_args.max_length
+    # (UnslothTrainer uses max_seq_length from model config, not max_length from training args)
+    builder_dict = to_dict(cfg.model.builder)
+    if "max_length" in to_dict(cfg.training_args):
+        max_length_override = cfg.training_args.max_length
+        builder_dict["max_seq_length"] = max_length_override
+
     # Build model and tokenizer
-    builder_cfg = ModelBuilderConfig(**to_dict(cfg.model.builder))
+    builder_cfg = ModelBuilderConfig(**builder_dict)
     lora_cfg = LoraAdapterConfig(**to_dict(cfg.model.lora))
     builder = ModelBuilder(builder_cfg, lora_cfg)
     model, tokenizer = builder.build()
@@ -94,6 +102,10 @@ def main(cfg: DictConfig) -> None:
         tokenizer.chat_template = it_tokenizer.chat_template
 
     # Prepare dataset (with validation split)
+
+    if cpt_dataset_path:
+        train_dataset, val_dataset = load_cpt_dataset(cpt_dataset_path)
+        
     if prebuilt_dataset_path and os.path.exists(prebuilt_dataset_path):
         # Use prebuilt milestone-tagged dataset
         train_dataset, val_dataset = load_milestone_shard(prebuilt_dataset_path, current_milestone)
@@ -149,19 +161,25 @@ def main(cfg: DictConfig) -> None:
     wandb_cfg = to_dict(cfg.get("wandb"), resolve=False)
     training_kwargs = apply_wandb_config(cfg, training_kwargs, wandb_cfg)
 
-    # Override max_steps and save settings for milestone training
+    
     training_kwargs['max_steps'] = max_steps
     training_kwargs['save_strategy'] = 'steps'
     training_kwargs['save_steps'] = max_steps  # Save exactly at milestone
     training_kwargs['logging_steps'] = 2  # Log frequently to monitor progress
 
-    # Add evaluation configuration
-    # training_kwargs['eval_strategy'] = 'steps'
-    # training_kwargs['eval_steps'] = max_steps # Evaluate at end of milestone
-    # training_kwargs['per_device_eval_batch_size'] = 8 #training_kwargs.get('per_device_eval_batch_size', batch_size)
-    # training_kwargs['prediction_loss_only'] = True  # Only compute loss, don't store logits/predictions (prevents OOM)
 
-    logger.info(f"Full Training kwargs : {training_kwargs}")
+    # NOTE: Uncomment training args after diagnosing
+    # Add evaluation configuration
+    training_kwargs['eval_strategy'] = 'steps'
+    training_kwargs['eval_steps'] = max_steps # Evaluate at end of milestone
+    training_kwargs['per_device_eval_batch_size'] = 8 #training_kwargs.get('per_device_eval_batch_size', batch_size)
+    training_kwargs['prediction_loss_only'] = True  # Only compute loss, don't store logits/predictions (prevents OOM)
+
+    # Patch TRL packing to prevent low-density bins that may cause sawtooth loss
+    # if cfg.data_collator.get("packing", False):
+    #     logger.info("Packing is enabled - applying TRL packing stability patch")
+        #patch_trl_packing_for_stability(min_fill_ratio=0.7)
+
     # Create trainer
     use_unsloth = cfg.model.builder.get("use_unsloth", False)
 
@@ -190,7 +208,7 @@ def main(cfg: DictConfig) -> None:
             model=model,
             args=training_args,
             train_dataset=train_dataset,
-            #eval_dataset=val_dataset,
+            eval_dataset=val_dataset,
             tokenizer=tokenizer,
         )
     elif use_sft:
@@ -211,7 +229,6 @@ def main(cfg: DictConfig) -> None:
             **training_kwargs,
             packing=cfg.data_collator.get("packing", False),
             dataset_text_field=text_field,
-            #max_length=seq_length,
         )
 
         trainer = create_trainer_with_token_stats(
@@ -219,46 +236,25 @@ def main(cfg: DictConfig) -> None:
             model=model,
             args=training_args,
             train_dataset=train_dataset,
-            #eval_dataset=val_dataset,
+            eval_dataset=val_dataset,
             processing_class=tokenizer,
         )
-    else:
-        logger.info("Using regular Trainer with custom data collator")
-        collator = build_collator(cfg, tokenizer)
-        training_args = TrainingArguments(**training_kwargs)
-
-        trainer = create_trainer_with_token_stats(
-            Trainer,
-            model=model,
-            args=training_args,
-            train_dataset=train_dataset,
-            #eval_dataset=val_dataset,
-            tokenizer=tokenizer,
-            data_collator=collator,
-        )
-    trainer.step_size = batch_size * grad_accum * seq_length * world_size
+  
+    # Use actual max_length from training_args (handles Hydra overrides correctly)
+    actual_seq_length = training_args.max_length
+    trainer.step_size = batch_size * grad_accum * actual_seq_length * world_size
+    num_train_epochs = training_kwargs.get('num_train_epochs', 1.0)
 
 
     # Add callbacks for continuous epoch and LR tracking across milestones
-    num_train_epochs = training_kwargs.get('num_train_epochs', 1.0)
-
     scheduler_callback = CosineSchedulerCallback(total_steps, warmup_ratio=0.03)
     epoch_callback = EpochResetCallback(total_steps, num_train_epochs=num_train_epochs)
-
-
     # Add token statistics callback to track packing efficiency
     token_stats_callback = TokenStatsCallback(tokenizer, log_every_n_steps=1)
+
     trainer.add_callback(token_stats_callback)
     trainer.add_callback(scheduler_callback)
     trainer.add_callback(epoch_callback)
-
-    # from torch.utils.data import SequentialSampler
-    # def _get_train_sampler_no_shuffle(dataset):
-    #     """Override to always return SequentialSampler instead of RandomSampler"""
-    #     return SequentialSampler(dataset)
-    #trainer._get_train_sampler = _get_train_sampler_no_shuffle
-
-
 
     # Start training (resume if checkpoint provided)
     logger.info("=" * 80)

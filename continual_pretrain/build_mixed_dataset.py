@@ -61,39 +61,49 @@ def add_token_counts(dataset, tokenizer):
     return dataset, total_tokens
 
 
-def calculate_milestone_boundaries(token_counts, num_milestones, tokens_per_milestone):
+def calculate_milestone_boundaries(token_counts, num_milestones, tokens_per_milestone, buffer_multiplier=1.5):
     """
     Calculate example indices where each milestone should end.
+
+    Args:
+        token_counts: Array of token counts per example
+        num_milestones: Number of milestones to create
+        tokens_per_milestone: Target training tokens per milestone
+        buffer_multiplier: Multiplier for shard size (default 1.5x for 50% buffer)
 
     Returns:
         List of boundary indices, total_target_tokens, cumulative_tokens
     """
     logger.info("Calculating milestone boundaries...")
+    logger.info(f"Using buffer multiplier: {buffer_multiplier}x")
 
     cumulative_tokens = np.cumsum(token_counts)
     total_tokens = cumulative_tokens[-1]
     total_target_tokens = num_milestones * tokens_per_milestone
 
-    # Calculate boundaries for all milestones
+    # Calculate boundaries for all milestones using buffer
     boundaries = []
     for i in range(1, num_milestones + 1):  # Include the last milestone
-        target_tokens = i * tokens_per_milestone
+        # Apply buffer to create larger shards
+        target_tokens_with_buffer = int(i * tokens_per_milestone * buffer_multiplier)
 
-        if target_tokens >= total_tokens:
+        if target_tokens_with_buffer >= total_tokens:
             logger.warning(
-                f"Milestone {i} target ({target_tokens:,} tokens) exceeds "
+                f"Milestone {i} target with buffer ({target_tokens_with_buffer:,} tokens) exceeds "
                 f"total dataset size ({total_tokens:,} tokens). "
                 f"Will create {i} milestones instead of {num_milestones}."
             )
             break
 
         # Find first index where cumulative sum >= target
-        boundary_idx = int(np.searchsorted(cumulative_tokens, target_tokens, side='left'))
+        boundary_idx = int(np.searchsorted(cumulative_tokens, target_tokens_with_buffer, side='left'))
         boundaries.append(boundary_idx)
 
     actual_num_milestones = len(boundaries)
     logger.info(f"✓ Calculated {actual_num_milestones} milestone boundaries")
-    logger.info(f"✓ Target training tokens: {total_target_tokens:,}")
+    logger.info(f"✓ Target training tokens (per milestone): {tokens_per_milestone:,}")
+    logger.info(f"✓ Actual shard size (with {buffer_multiplier}x buffer): {int(tokens_per_milestone * buffer_multiplier):,}")
+    logger.info(f"✓ Total target training tokens: {total_target_tokens:,}")
     logger.info(f"✓ Total dataset tokens: {total_tokens:,}")
 
     if total_tokens > total_target_tokens:

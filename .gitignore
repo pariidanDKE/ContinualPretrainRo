@@ -19,3 +19,17 @@ continual_pretrain/checkpoints
 unsloth_compiled_cache/
 training_logs/
 Notes/
+
+
+# Unsloth / Hugging Face outputs
+*.bin
+*.safetensors
+
+# Logs and telemetry
+runs/
+wandb/
+*.log
+
+# Python environment
+__pycache__/
+.env

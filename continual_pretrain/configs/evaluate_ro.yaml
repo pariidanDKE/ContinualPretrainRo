@@ -8,7 +8,7 @@ device : auto
 tasks_to_run: ["_ro_mmlu", "_ro_winogrande", "_ro_belebele",  "_ro_arc_challenge", "arc_challenge", "winogrande", "ro_wiki", "wikitext"] #
 #tasks_to_run: ["_ro_mmlu", "_ro_belebele"] #
 
-#preplexity_tasks: ["ro_wiki", "wikitext"] # for these do not apply chat template
+preplexity_tasks: ["ro_wiki", "wikitext"] # for these do not apply chat template
 
 output_dir: eval_results
 max_length: 2048  # Model's maximum context length
