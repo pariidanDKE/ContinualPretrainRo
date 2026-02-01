@@ -1,7 +1,8 @@
 model_path: google/gemma-3-1b-pt
 verbosity: INFO
+use_sft: true  # Set to false to disable chat template application (for PT models)
 apply_chat_template: true
-eval_batch_size: 16
+eval_batch_size: 8
 num_fewshot: 5
 device : auto
 #tasks_to_run: ["_ro_winogrande", "winogrande"] #
@@ -18,6 +19,8 @@ use_mps: false
 # W&B configuration
 use_wandb: true
 wandb_project: RoLLM
+use_separate_eval_run: true  # Set true to create additional eval-only run for clearer visibility
+global_step: null  # Will be set by run_milestone_loop.sh or can use EVAL_GLOBAL_STEP env var
 
 # List of all available tasks and their configs
 evaluation_tasks:

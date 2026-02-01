@@ -14,7 +14,6 @@ Usage:
         milestone.resume_from_checkpoint=outputs/checkpoint-6104
 """
 import os
-import unsloth
 import logging
 import hydra
 from omegaconf import DictConfig
@@ -25,24 +24,23 @@ from dotenv import load_dotenv
 from train_utils import (
     prepare_dataset,
     load_milestone_shard,
-    build_collator,
     to_dict,
     apply_wandb_config,
     calculate_max_steps,
     merge_lora_checkpoint,
     PT_TO_IT_TOKENIZER_MAP,
-    patch_trl_packing_for_stability,
+    setup_file_logging,
 )
 from trainer_callbacks import (
     EpochResetCallback,
-    CosineSchedulerCallback,
+    WSDSchedulerCallback,
+    InitialLossCallback
 )
 from token_stats_callback import create_trainer_with_token_stats, TokenStatsCallback
 from model import ModelBuilder, ModelBuilderConfig, LoraAdapterConfig
 from trl import SFTConfig, SFTTrainer
 from transformers import  AutoTokenizer
 from unsloth import UnslothTrainer, UnslothTrainingArguments
-from data_module import DataPreprocessor
 
 logger = logging.getLogger(__name__)
 
@@ -94,18 +92,22 @@ def main(cfg: DictConfig) -> None:
     model, tokenizer = builder.build()
 
     # If training a PT model with SFT, load IT tokenizer for chat template
+    # Skip this for CPT mode (use_sft=False) where we want raw text training
     model_name = builder_cfg.model_name
-    use_sft = not cfg.dataset.get("tokenize", True)
+    use_sft = cfg.dataset.get("use_sft", True)
+
     if use_sft and model_name in PT_TO_IT_TOKENIZER_MAP:
         it_tokenizer_name = PT_TO_IT_TOKENIZER_MAP[model_name]
         it_tokenizer = AutoTokenizer.from_pretrained(it_tokenizer_name, trust_remote_code=True)
         tokenizer.chat_template = it_tokenizer.chat_template
+        logger.info(f"Loaded chat template from {it_tokenizer_name} for SFT training")
+    elif not use_sft:
+        logger.info("CPT mode (use_sft=False) - skipping chat template loading")
+        # Remove chat_template if it exists (some IT models have it by default)
+        tokenizer.chat_template = None
 
-    # Prepare dataset (with validation split)
 
-    if cpt_dataset_path:
-        train_dataset, val_dataset = load_cpt_dataset(cpt_dataset_path)
-        
+
     if prebuilt_dataset_path and os.path.exists(prebuilt_dataset_path):
         # Use prebuilt milestone-tagged dataset
         train_dataset, val_dataset = load_milestone_shard(prebuilt_dataset_path, current_milestone)
@@ -161,18 +163,23 @@ def main(cfg: DictConfig) -> None:
     wandb_cfg = to_dict(cfg.get("wandb"), resolve=False)
     training_kwargs = apply_wandb_config(cfg, training_kwargs, wandb_cfg)
 
-    
+    # Set up file logging to output_dir/logs/
+    output_dir = training_kwargs.get('output_dir', './outputs')
+    run_name = training_kwargs.get('run_name', 'training')
+    run_id = os.environ.get('WANDB_RUN_ID', '')
+    setup_file_logging(output_dir, run_name=run_name, run_id=run_id)
+
     training_kwargs['max_steps'] = max_steps
     training_kwargs['save_strategy'] = 'steps'
     training_kwargs['save_steps'] = max_steps  # Save exactly at milestone
-    training_kwargs['logging_steps'] = 2  # Log frequently to monitor progress
+    training_kwargs['logging_steps'] = 1 # Log frequently to monitor progress
 
 
     # NOTE: Uncomment training args after diagnosing
     # Add evaluation configuration
     training_kwargs['eval_strategy'] = 'steps'
-    training_kwargs['eval_steps'] = max_steps # Evaluate at end of milestone
-    training_kwargs['per_device_eval_batch_size'] = 8 #training_kwargs.get('per_device_eval_batch_size', batch_size)
+    training_kwargs['eval_steps'] = max(1, max_steps - 1)  # Evaluate just before end (avoids WandB finish race)
+    training_kwargs['per_device_eval_batch_size'] = 4 #training_kwargs.get('per_device_eval_batch_size', batch_size)
     training_kwargs['prediction_loss_only'] = True  # Only compute loss, don't store logits/predictions (prevents OOM)
 
     # Patch TRL packing to prevent low-density bins that may cause sawtooth loss
@@ -185,22 +192,13 @@ def main(cfg: DictConfig) -> None:
 
     if use_unsloth:
         logger.info("Using UnslothTrainer with decoupled learning rates")
-        text_field = cfg.dataset.get("text_field", "formatted_text")
-
-        if not tokenizer.chat_template and model_name not in PT_TO_IT_TOKENIZER_MAP:
-            preprocessor = DataPreprocessor(
-                tokenizer=tokenizer,
-                text_field=text_field,
-                add_bos_eos=cfg.dataset.get("add_bos_eos", True),
-                use_sft_config=True
-            )
-            chat_template = preprocessor.get_chat_template()
-            tokenizer.chat_template = chat_template
+        # DataPreprocessor always outputs "formatted_text" when tokenize=False
+        dataset_text_field = "formatted_text"
 
         training_args = UnslothTrainingArguments(
             **training_kwargs,
             packing=cfg.data_collator.get("packing", False),
-            dataset_text_field=text_field,
+            dataset_text_field=dataset_text_field,
         )
 
         trainer = create_trainer_with_token_stats(
@@ -212,23 +210,14 @@ def main(cfg: DictConfig) -> None:
             tokenizer=tokenizer,
         )
     elif use_sft:
-        logger.info("Using SFTTrainer with chat template")
-        text_field = cfg.dataset.get("text_field", "formatted_text")
-
-        if not tokenizer.chat_template and model_name not in PT_TO_IT_TOKENIZER_MAP:
-            preprocessor = DataPreprocessor(
-                tokenizer=tokenizer,
-                text_field=text_field,
-                add_bos_eos=cfg.dataset.get("add_bos_eos", True),
-                use_sft_config=True
-            )
-            chat_template = preprocessor.get_chat_template()
-            tokenizer.chat_template = chat_template
+        logger.info("Using SFTTrainer")
+        # DataPreprocessor always outputs "formatted_text" when tokenize=False
+        dataset_text_field = "formatted_text"
 
         training_args = SFTConfig(
             **training_kwargs,
             packing=cfg.data_collator.get("packing", False),
-            dataset_text_field=text_field,
+            dataset_text_field=dataset_text_field,
         )
 
         trainer = create_trainer_with_token_stats(
@@ -242,16 +231,17 @@ def main(cfg: DictConfig) -> None:
   
     # Use actual max_length from training_args (handles Hydra overrides correctly)
     actual_seq_length = training_args.max_length
-    trainer.step_size = batch_size * grad_accum * actual_seq_length * world_size
+    trainer.step_size = batch_size * 1 * actual_seq_length * world_size # GradAccum is handled by callback aggregation logic(!)
     num_train_epochs = training_kwargs.get('num_train_epochs', 1.0)
 
 
     # Add callbacks for continuous epoch and LR tracking across milestones
-    scheduler_callback = CosineSchedulerCallback(total_steps, warmup_ratio=0.03)
+    scheduler_callback = WSDSchedulerCallback(total_steps, warmup_ratio=training_args.warmup_ratio)
     epoch_callback = EpochResetCallback(total_steps, num_train_epochs=num_train_epochs)
-    # Add token statistics callback to track packing efficiency
     token_stats_callback = TokenStatsCallback(tokenizer, log_every_n_steps=1)
+    initial_loss_callback = InitialLossCallback(num_eval_batches=1)
 
+    trainer.add_callback(initial_loss_callback)
     trainer.add_callback(token_stats_callback)
     trainer.add_callback(scheduler_callback)
     trainer.add_callback(epoch_callback)

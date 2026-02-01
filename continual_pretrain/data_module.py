@@ -41,19 +41,23 @@ class DataPreprocessor:
         "qwen": QWEN_SPECIAL_MAP,
     }
 
-    def __init__(self, tokenizer, text_field: str = "formatted_text", add_bos_eos: bool = True, use_sft_config = False):
+    def __init__(self, tokenizer, text_field: str = "formatted_text", add_bos_eos: bool = True, tokenize: bool = False, use_sft: bool = True):
         """
         tokenizer: HF tokenizer
         text_field: name of the field in the dataset that contains the formatted dialogue text
         add_bos_eos: whether to wrap the text with bos/eos tokens
+        tokenize: if True, tokenize here and return input_ids/labels; if False, return formatted_text for Trainer
+        use_sft: if True, use SFT mode (Romanian tags → model tokens, loss masking); if False, CPT mode (raw text, no masking)
         """
         self.tokenizer = tokenizer
         self.text_field = text_field
         self.add_bos_eos = add_bos_eos
-        self.use_sft_config = use_sft_config
+        self.tokenize = tokenize
+        self.use_sft = use_sft
 
         self.family = self._detect_model_family()
-        self.special_map = self.SPECIAL_MAPS.get(self.family, None)
+        # For CPT mode (use_sft=False), disable tag replacement and use fallback loss masking
+        self.special_map = None if not use_sft else self.SPECIAL_MAPS.get(self.family, None)
 
 
     # ---- Model family detection ----
@@ -281,11 +285,12 @@ class DataPreprocessor:
         else:
             text = original_local
 
-        if self.use_sft_config:
+        if not self.tokenize:
+            # Return text for SFTTrainer/UnslothTrainer to handle tokenization
             return {
                 'formatted_text' : text
             }
-        else : 
+        else: 
 
             # Tokenize
             encoded = self.tokenizer(
@@ -401,7 +406,6 @@ class PackedSequenceDataCollator:
             padded_x, self.eos_token_id
         )
 
-        #print("Created mask with shape:", mask4.shape)
         return {
             "input_ids": padded_x,
             "labels": padded_labels,

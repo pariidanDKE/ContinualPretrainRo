@@ -1,8 +1,9 @@
 seed: 23
 dataset:
   tokenize: false
+  use_sft: false
   sample_size: 1000
-  text_field: formatted_text
+  text_field: text
   name: danp27/norobots_sft
   split: train
   add_bos_eos: false
@@ -28,7 +29,7 @@ data_collator:
   packing_strategy: bfd
 model:
   builder:
-    model_name: meta-llama/Llama-3.2-1B-Instruct
+    model_name: meta-llama/Llama-3.2-1B
     tokenizer_name: null
     load_in_4bit: false
     bnb_4bit_quant_type: nf4
@@ -55,14 +56,16 @@ model:
     - gate_proj
     - up_proj
     - down_proj
+    - embed_tokens
+    - lm_head
 training_args:
-  output_dir: outputs/test_runs/
+  output_dir: outputs/test_runs/cpt-llama-CPTSignalEstablishment_maxgrad1_lr1e4-ms10-800M
   per_device_train_batch_size: 32
-  gradient_accumulation_steps: 1
-  max_length: 2048
+  gradient_accumulation_steps: 4
+  max_length: 4096
   logging_steps: 5
-  learning_rate: 6.0e-05
-  embedding_learning_rate: 2.0e-05
+  learning_rate: 0.0001
+  embedding_learning_rate: 0.02
   num_train_epochs: 1
   save_steps: 100
   save_total_limit: 1
@@ -70,21 +73,21 @@ training_args:
   bf16: true
   fp16: false
   optim: paged_adamw_8bit
-  lr_scheduler_type: constant
-  warmup_ratio: 0.03
+  lr_scheduler_type: cosine
+  warmup_ratio: 0.06
   gradient_checkpointing: true
   max_grad_norm: 1
   dataloader_drop_last: true
 wandb:
   enabled: true
   project: RoLLM
-  run_name: test_run
-  group: fix_loss
+  run_name: cpt-llama-CPTSignalEstablishment_maxgrad1_lr1e4-ms10-800M
+  group: TestCPT
 milestone:
-  target_tokens: 25000000
-  resume_from_checkpoint: null
-  merged_output_dir: outputs/test_runs//merged
-  total_training_tokens: 100000000
-  do_evaluate: true
+  target_tokens: 160000000
+  resume_from_checkpoint: outputs/test_runs/cpt-llama-CPTSignalEstablishment_maxgrad1_lr1e4-ms10-800M/checkpoint-152
+  merged_output_dir: outputs/test_runs/cpt-llama-CPTSignalEstablishment_maxgrad1_lr1e4-ms10-800M/merged
+  total_training_tokens: 800000000
+  do_evaluate: false
   prebuilt_dataset_path: data/mixed_milestone_dataset
-  current_milestone: 0
+  current_milestone: 1

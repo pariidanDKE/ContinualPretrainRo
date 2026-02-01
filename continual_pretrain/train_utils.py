@@ -12,7 +12,7 @@ from pathlib import Path
 
 from typing import Optional
 from omegaconf import DictConfig, OmegaConf
-from datasets import load_dataset, load_from_disk, DatasetDict, interleave_datasets
+from datasets import load_dataset, load_from_disk, DatasetDict, concatenate_datasets
 from data_module import DataPreprocessor, SimplePaddingCollator, PackedSequenceDataCollator
 
 logger = logging.getLogger(__name__)
@@ -77,11 +77,15 @@ def load_single_dataset(
     ds = ds.add_column("ds_source", [name] * len(ds))
 
     # Preprocess
+    tokenize = default_cfg.get("tokenize", False)
+    use_sft = default_cfg.get("use_sft", True)
+
     preprocessor = DataPreprocessor(
         tokenizer=tokenizer,
         text_field=text_field,
         add_bos_eos=add_bos_eos,
-        use_sft_config= not default_cfg.get("tokenize", True)
+        tokenize=tokenize,
+        use_sft=use_sft,
     )
 
     # Remove all columns except ds_source
@@ -139,6 +143,7 @@ def prepare_dataset(cfg, tokenizer, return_validation=False, validation_split=0.
                 adjusted_sample_size = int(total_sample_size * proportion / total_proportion)
                 entry_dict["sample_size"] = adjusted_sample_size
 
+
             ds = load_single_dataset(entry_dict, dataset_defaults, tokenizer)
 
             if return_validation:
@@ -151,12 +156,12 @@ def prepare_dataset(cfg, tokenizer, return_validation=False, validation_split=0.
 
             proportions.append(proportion)
 
-        probabilities = [p / total_proportion for p in proportions]
-
-        train_dataset = interleave_datasets(processed_train, probabilities=probabilities, seed=seed)
+        # Concatenate all datasets and shuffle for random distribution
+        logger.info(f"Concatenating {len(processed_train)} datasets with {len(processed_train[0]) if processed_train else 0} total examples")
+        train_dataset = concatenate_datasets(processed_train).shuffle(seed=seed)
 
         if return_validation:
-            val_dataset = interleave_datasets(processed_val, probabilities=probabilities, seed=seed)
+            val_dataset = concatenate_datasets(processed_val).shuffle(seed=seed)
             return train_dataset, val_dataset
         else:
             return train_dataset
@@ -381,6 +386,57 @@ def patch_trl_packing_for_stability(min_fill_ratio: float = 0.7):
 
 
 # =============================================================================
+# Logging Configuration
+# =============================================================================
+
+def setup_file_logging(output_dir: str, run_name: str = None, run_id: str = None, log_filename: str = None) -> None:
+    """
+    Set up file logging to save logs in the output directory.
+
+    Creates a logs subdirectory in the output_dir and configures a FileHandler
+    that writes all logs (INFO level and above) to a file.
+
+    Args:
+        output_dir: The training output directory (e.g., "./outputs/train_llama")
+        run_name: WandB run name (optional, used to generate filename)
+        run_id: WandB run ID (optional, used to generate filename)
+        log_filename: Name of the log file (optional, overrides auto-generated name)
+    """
+    from pathlib import Path
+
+    # Create logs directory
+    logs_dir = Path(output_dir) / "logs"
+    logs_dir.mkdir(parents=True, exist_ok=True)
+
+    # Generate log filename if not provided
+    if log_filename is None:
+        if run_name and run_id:
+            # Use first 8 characters of run_id
+            short_run_id = run_id[:8]
+            log_filename = f"{run_name}-{short_run_id}.log"
+        elif run_name:
+            log_filename = f"{run_name}.log"
+        else:
+            log_filename = "training.log"
+
+    log_file_path = logs_dir / log_filename
+
+    # Create file handler with same format as console
+    file_handler = logging.FileHandler(log_file_path, mode='a', encoding='utf-8')
+    file_handler.setLevel(logging.INFO)
+
+    # Use same format as console logging
+    formatter = logging.Formatter("[%(asctime)s][%(name)s][%(levelname)s] - %(message)s")
+    file_handler.setFormatter(formatter)
+
+    # Add handler to root logger (captures all loggers in the project)
+    root_logger = logging.getLogger()
+    root_logger.addHandler(file_handler)
+
+    logger.info(f"File logging enabled: {log_file_path}")
+
+
+# =============================================================================
 # W&B Configuration
 # =============================================================================
 
@@ -393,34 +449,51 @@ def slugify(text: Any) -> str:
 
 
 def compose_run_name(cfg: DictConfig, training_kwargs: Dict[str, Any], wandb_cfg: Dict[str, Any]) -> str:
-    """Compose a descriptive W&B run name."""
+    """
+    Compose W&B run name with format:
+    {run_type}-{model}-{custom_name}-ms{num_milestones}-{tokens}M
+
+    Example: cpt-llama-myexp-ms10-900M or sft-qwen-ms5-100M
+    """
     parts = []
-    user_prefix = wandb_cfg.get("run_name")
-    if user_prefix:
-        parts.append(slugify(user_prefix))
 
-    model_name = cfg.model.builder.get("model_name")
+    use_sft = cfg.dataset.get("use_sft", True)
+    run_type = "sft" if use_sft else "cpt"
+    parts.append(run_type)
+
+    model_name = cfg.model.builder.get("model_name", "")
     if model_name:
-        parts.append(slugify(model_name.split("/")[-1]))
 
-    dataset_name = cfg.dataset.get("name")
-    if dataset_name:
-        parts.append(f"ds-{slugify(dataset_name.split('/')[-1])}")
+        model_base = model_name.split("/")[-1].lower()
+        for family in ["llama", "qwen", "gemma", "mistral", "phi"]:
+            if family in model_base:
+                parts.append(family)
+                break
+        else:
+            parts.append(slugify(model_base.split("-")[0].split(".")[0]))
 
-    sample_size = cfg.dataset.get("sample_size")
-    parts.append(f"sample-{slugify(sample_size or 'full')}")
+    custom_name = os.environ.get("CUSTOM_NAME", "").strip()
+    if custom_name:
+        parts.append(slugify(custom_name))
 
-    for label, key in [
-        ("bs", "per_device_train_batch_size"),
-        ("ga", "gradient_accumulation_steps"),
-        ("ep", "num_train_epochs"),
-        ("lr", "learning_rate"),
-    ]:
-        value = training_kwargs.get(key)
-        if value is not None:
-            parts.append(f"{label}-{slugify(value)}")
 
-    return "__".join(parts)
+    num_milestones = os.environ.get("NUM_MILESTONES")
+    if num_milestones:
+        parts.append(f"ms{num_milestones}")
+
+
+    milestone_tokens = os.environ.get("MILESTONE_TOKENS")
+    if milestone_tokens:
+        tokens = int(milestone_tokens)
+        if tokens >= 1_000_000_000:
+            formatted = f"{tokens // 1_000_000_000}B"
+        elif tokens >= 1_000_000:
+            formatted = f"{tokens // 1_000_000}M"
+        else:
+            formatted = f"{tokens // 1_000}K"
+        parts.append(formatted)
+
+    return "-".join(parts)
 
 
 def apply_wandb_config(
@@ -432,7 +505,6 @@ def apply_wandb_config(
     wandb_cfg = wandb_cfg or {}
     project = wandb_cfg.get("project")
     group = wandb_cfg.get("group")
-    run_name = wandb_cfg.get("run_name")
 
     if project:
         os.environ["WANDB_PROJECT"] = str(project)
@@ -442,12 +514,15 @@ def apply_wandb_config(
 
     training_kwargs["report_to"] = "wandb"
 
-    # Only set run_name if WANDB_RUN_ID not set (new run), otherwise reuse existing
-    if "WANDB_RUN_ID" not in os.environ:
-        if run_name:
-            training_kwargs["run_name"] = run_name
-        else:
-            training_kwargs["run_name"] = compose_run_name(cfg, training_kwargs, wandb_cfg)
+    # Get run_name from environment (set by run_milestone_loop.sh)
+    # WANDB_RUN_NAME must be set by the shell script for consistent naming
+    run_name = os.environ.get("WANDB_RUN_NAME")
+    if not run_name:
+        logger.warning("⚠️  WANDB_RUN_NAME not set! Run name should be provided by run_milestone_loop.sh")
+        logger.warning("    Continuing without run name - WandB logging may be inconsistent")
+    else:
+        logger.info(f"Using run name: {run_name}")
+        training_kwargs["run_name"] = run_name
 
     return training_kwargs
 
@@ -497,6 +572,7 @@ def merge_lora_checkpoint(trainer, output_path: Path, tokenizer):
     tokenizer.save_pretrained(str(output_path))
 
     logger.info("✅ Merged model saved")
+
 
 
 # =============================================================================

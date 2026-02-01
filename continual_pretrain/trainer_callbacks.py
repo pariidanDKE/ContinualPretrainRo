@@ -8,10 +8,110 @@ training boundaries.
 
 import math
 import logging
+import torch
 from typing import Optional
 from transformers import TrainerCallback
 
 logger = logging.getLogger(__name__)
+
+
+# =============================================================================
+# Initial Loss Logging
+# =============================================================================
+
+class InitialLossCallback(TrainerCallback):
+    """
+    Logs the initial loss before any gradient updates (step 0).
+
+    This callback computes and logs the model's loss on the first training batch
+    before any optimizer steps are taken. Useful for tracking how much the model
+    improves from its initial state.
+    """
+
+    def __init__(self, num_eval_batches: int = 1):
+        """
+        Args:
+            num_eval_batches: Number of batches to average loss over (default: 1)
+        """
+        self.num_eval_batches = num_eval_batches
+        self.logged = False
+
+    def on_train_begin(self, args, state, control, **kwargs):
+        """Compute and log initial loss before training starts"""
+        if self.logged:
+            return  # Already logged (e.g., on resume)
+
+        model = kwargs.get("model")
+        train_dataloader = kwargs.get("train_dataloader")
+
+        if model is None or train_dataloader is None:
+            logger.warning("[InitialLoss] Model or dataloader not available, skipping initial loss logging")
+            return
+
+        logger.info(f"[InitialLoss] Computing initial loss on {self.num_eval_batches} batch(es)...")
+
+        # Set model to eval mode temporarily
+        model.eval()
+        total_loss = 0.0
+        num_batches = 0
+
+        with torch.no_grad():
+            dataloader_iter = iter(train_dataloader)
+            for _ in range(self.num_eval_batches):
+                try:
+                    batch = next(dataloader_iter)
+
+                    # Move batch to device
+                    if isinstance(batch, dict):
+                        batch = {k: v.to(model.device) if isinstance(v, torch.Tensor) else v
+                                for k, v in batch.items()}
+                    else:
+                        batch = tuple(t.to(model.device) if isinstance(t, torch.Tensor) else t
+                                     for t in batch)
+
+                    # Forward pass
+                    if isinstance(batch, dict):
+                        outputs = model(**batch)
+                    else:
+                        outputs = model(*batch)
+
+                    # Extract loss
+                    loss = outputs.loss if hasattr(outputs, 'loss') else outputs[0]
+                    total_loss += loss.item()
+                    num_batches += 1
+
+                except StopIteration:
+                    logger.warning(f"[InitialLoss] Dataloader exhausted after {num_batches} batches")
+                    break
+
+        # Restore model to train mode
+        model.train()
+
+        # Calculate average loss
+        initial_loss = total_loss / max(num_batches, 1)
+
+        logger.info(f"[InitialLoss] Initial loss (step 0): {initial_loss:.4f}")
+
+        # Log to trainer's log history (will be picked up by WandB)
+        log_dict = {
+            "train/initial_loss": initial_loss,
+            "train/loss": initial_loss,  # Also log as regular loss for step 0
+            "step": 0,
+            "epoch": 0.0
+        }
+        state.log_history.append(log_dict)
+
+        # Also log to WandB directly if available
+        if hasattr(state, "is_world_process_zero") and state.is_world_process_zero():
+            try:
+                import wandb
+                if wandb.run is not None:
+                    wandb.log(log_dict, step=0)
+                    logger.info("[InitialLoss] Logged to WandB")
+            except ImportError:
+                pass
+
+        self.logged = True
 
 
 # =============================================================================
@@ -239,6 +339,11 @@ class WSDSchedulerCallback(TrainerCallback):
         num_param_groups = len(lr_scheduler.lr_lambdas)
         for i in range(num_param_groups):
             lr_scheduler.lr_lambdas[i] = self.lr_lambda_func
+
+        # CRITICAL: Force scheduler to recompute current LR with new lambda
+        # Without this, step 1 uses LR computed with old lambda (before our fix)
+        current_step = lr_scheduler.last_epoch
+        lr_scheduler.step(current_step)
 
         return num_param_groups
 

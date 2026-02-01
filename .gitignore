@@ -17,7 +17,7 @@ continual_pretrain/eval_results/
 .python-version
 continual_pretrain/checkpoints
 unsloth_compiled_cache/
-training_logs/
+sawtooh_loss_training_logs/
 Notes/
 
 

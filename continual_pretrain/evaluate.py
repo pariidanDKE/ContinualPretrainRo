@@ -1,5 +1,5 @@
 import hydra
-from omegaconf import DictConfig
+from omegaconf import DictConfig, OmegaConf
 import logging
 from lm_eval import evaluator
 import os
@@ -9,6 +9,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import torch
 import wandb
+from train_utils import compose_run_name
 
 logger = logging.getLogger("__name__")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -30,6 +31,16 @@ def main(cfg: DictConfig):
 
     hf_token = os.getenv("HF_TOKEN", "")
     os.environ["HF_TOKEN"] = hf_token
+
+    # Get global_step for proper x-axis alignment with training logs
+    # Can be passed via config override or environment variable
+    global_step = cfg.get("global_step", None)
+    if global_step is None:
+        global_step = int(os.getenv("EVAL_GLOBAL_STEP", 0))
+    else:
+        global_step = int(global_step)
+
+    logger.info(f"Evaluation global_step: {global_step} (for WandB x-axis alignment)")
 
     # ---- Check CUDA availability and set device ----
     if torch.cuda.is_available():
@@ -54,9 +65,10 @@ def main(cfg: DictConfig):
         "Qwen/Qwen2.5-1.5B": "Qwen/Qwen2.5-1.5B-Instruct",
     }
 
-    # Determine tokenizer path: use IT tokenizer for PT models when chat template is enabled
+    # Determine tokenizer path: use IT tokenizer for PT models when chat template is enabled AND use_sft is true
+    use_sft = cfg.get("use_sft", True)  # Default to True for backwards compatibility
     tokenizer_path = cfg.model_path
-    if cfg.apply_chat_template and cfg.model_path in PT_TO_IT_TOKENIZER_MAP:
+    if use_sft and cfg.apply_chat_template and cfg.model_path in PT_TO_IT_TOKENIZER_MAP:
         tokenizer_path = PT_TO_IT_TOKENIZER_MAP[cfg.model_path]
         logger.info(f"Using IT tokenizer {tokenizer_path} for PT model {cfg.model_path}")
 
@@ -75,17 +87,27 @@ def main(cfg: DictConfig):
 
     logger.info(f"📁 Results will be saved in: {run_dir.resolve()}")
 
+    # ---- Get run name from environment ----
+    # WANDB_RUN_NAME must be set by the shell script (run_milestone_loop.sh)
+    run_name = os.environ.get("WANDB_RUN_NAME")
+    if not run_name:
+        logger.warning("⚠️  WANDB_RUN_NAME not set! Run name should be provided by run_milestone_loop.sh")
+        logger.warning("    Continuing without run name - WandB logging may be inconsistent")
+    else:
+        logger.info(f"Using run name: {run_name}")
+
     # ---- Initialize W&B with GPU monitoring ----
     if cfg.get("use_wandb", False):
         wandb.init(
             project=cfg.get("wandb_project", "romanian-llm-eval"),
-            name=f"{model_name}_{timestamp}",
+            name=run_name,
             config={
                 "model_path": cfg.model_path,
                 "tasks": list(cfg.get("tasks_to_run", [])),
                 "eval_batch_size": cfg.eval_batch_size,
                 "max_length": max_length,
                 "eval_max_length": eval_max_length,
+                "use_sft": use_sft,
                 "apply_chat_template": cfg.apply_chat_template,
                 "device": device,
                 "dtype": dtype,
@@ -108,7 +130,8 @@ def main(cfg: DictConfig):
     # ---- Iterate through evaluation tasks ----
     for task_cfg in cfg.evaluation_tasks:
         task_name = task_cfg.name
-        apply_chat_template = (task_name not in preplexity_tasks) and cfg.apply_chat_template # exclude perplexity tasks
+        # Only apply chat template if: (1) not a perplexity task, (2) apply_chat_template is true, AND (3) use_sft is true
+        apply_chat_template = (task_name not in preplexity_tasks) and cfg.apply_chat_template and use_sft
 
         if selected_tasks and task_name not in selected_tasks:
             logger.info(f"Skipping {task_name} (not in tasks_to_run)")
@@ -120,7 +143,7 @@ def main(cfg: DictConfig):
             batch_size = task_cfg.task_batch_size
 
             logger.info(f"🚀 Running evaluation for {task_name} | fewshot={fewshot} | limit={limit}")
-            logger.info(f"Running {cfg.model_path} with apply_chat_template {cfg.apply_chat_template}")
+            logger.info(f"Running {cfg.model_path} | use_sft={use_sft} | apply_chat_template={apply_chat_template}")
 
             # Prepare evaluation kwargs
             eval_kwargs = {
@@ -145,7 +168,7 @@ def main(cfg: DictConfig):
             if apply_chat_template and fewshot > 0:
                 eval_kwargs["fewshot_as_multiturn"] = True
                 #eval_kwargs["system_instruction"] = "Answer the following questions accurately."
-                logger.info("📝 Using fewshot_as_multiturn=True and custom system instruction")
+                logger.info("📝 Using fewshot_as_multiturn=True")
 
             res = evaluator.simple_evaluate(**eval_kwargs)
 

@@ -112,29 +112,32 @@ hydra:
     hydra:
     - hydra.mode=RUN
     task:
-    - model.builder.model_name=meta-llama/Llama-3.2-1B-Instruct
+    - model.builder.model_name=meta-llama/Llama-3.2-1B
     - model.builder.use_unsloth=true
     - data_collator.packing=true
     - model.lora.r=128
     - model.lora.lora_alpha=256
     - training_args.per_device_train_batch_size=32
-    - training_args.gradient_accumulation_steps=1
-    - training_args.output_dir=outputs/test_runs/
-    - training_args.max_length=2048
-    - milestone.target_tokens=25000000
-    - milestone.total_training_tokens=100000000
-    - milestone.merged_output_dir=outputs/test_runs//merged
-    - milestone.do_evaluate=true
+    - training_args.gradient_accumulation_steps=4
+    - training_args.output_dir=outputs/test_runs/cpt-llama-CPTSignalEstablishment_maxgrad1_lr1e4-ms10-800M
+    - training_args.max_length=4096
+    - milestone.target_tokens=160000000
+    - milestone.total_training_tokens=800000000
+    - milestone.merged_output_dir=outputs/test_runs/cpt-llama-CPTSignalEstablishment_maxgrad1_lr1e4-ms10-800M/merged
+    - milestone.do_evaluate=false
     - milestone.prebuilt_dataset_path=data/mixed_milestone_dataset
-    - milestone.current_milestone=0
-    - wandb.group=fix_loss
-    - training_args.learning_rate=6e-5
-    - training_args.embedding_learning_rate=2e-5
-    - wandb.run_name=test_run
+    - milestone.current_milestone=1
+    - dataset.use_sft=false
+    - dataset.text_field=text
+    - wandb.group=TestCPT
+    - training_args.learning_rate=1e-4
+    - training_args.embedding_learning_rate=2e-2
+    - wandb.run_name=cpt-llama-CPTSignalEstablishment_maxgrad1_lr1e4-ms10-800M
+    - milestone.resume_from_checkpoint=outputs/test_runs/cpt-llama-CPTSignalEstablishment_maxgrad1_lr1e4-ms10-800M/checkpoint-152
   job:
     name: train_milestone_segment
     chdir: null
-    override_dirname: data_collator.packing=true,milestone.current_milestone=0,milestone.do_evaluate=true,milestone.merged_output_dir=outputs/test_runs//merged,milestone.prebuilt_dataset_path=data/mixed_milestone_dataset,milestone.target_tokens=25000000,milestone.total_training_tokens=100000000,model.builder.model_name=meta-llama/Llama-3.2-1B-Instruct,model.builder.use_unsloth=true,model.lora.lora_alpha=256,model.lora.r=128,training_args.embedding_learning_rate=2e-5,training_args.gradient_accumulation_steps=1,training_args.learning_rate=6e-5,training_args.max_length=2048,training_args.output_dir=outputs/test_runs/,training_args.per_device_train_batch_size=32,wandb.group=fix_loss,wandb.run_name=test_run
+    override_dirname: data_collator.packing=true,dataset.text_field=text,dataset.use_sft=false,milestone.current_milestone=1,milestone.do_evaluate=false,milestone.merged_output_dir=outputs/test_runs/cpt-llama-CPTSignalEstablishment_maxgrad1_lr1e4-ms10-800M/merged,milestone.prebuilt_dataset_path=data/mixed_milestone_dataset,milestone.resume_from_checkpoint=outputs/test_runs/cpt-llama-CPTSignalEstablishment_maxgrad1_lr1e4-ms10-800M/checkpoint-152,milestone.target_tokens=160000000,milestone.total_training_tokens=800000000,model.builder.model_name=meta-llama/Llama-3.2-1B,model.builder.use_unsloth=true,model.lora.lora_alpha=256,model.lora.r=128,training_args.embedding_learning_rate=2e-2,training_args.gradient_accumulation_steps=4,training_args.learning_rate=1e-4,training_args.max_length=4096,training_args.output_dir=outputs/test_runs/cpt-llama-CPTSignalEstablishment_maxgrad1_lr1e4-ms10-800M,training_args.per_device_train_batch_size=32,wandb.group=TestCPT,wandb.run_name=cpt-llama-CPTSignalEstablishment_maxgrad1_lr1e4-ms10-800M
     id: ???
     num: ???
     config_name: train_model.yaml

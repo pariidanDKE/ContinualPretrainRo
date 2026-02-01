@@ -22024,3 +22024,1160 @@ If the dataset is based on a loading script, please ask the dataset author to re
 [2026-01-28 15:57:03,581][__name__][INFO] -   - winogrande: {'acc,none': 0.587, 'acc_stderr,none': 0.015577986829936457}
 [2026-01-28 15:57:03,582][__name__][INFO] -   - wikitext: {'word_perplexity,none': 18.05999098848607, 'byte_perplexity,none': 1.7212832475798572, 'bits_per_byte,none': 0.7834845211171497}
 [2026-01-28 15:57:04,733][__name__][INFO] - 📊 W&B run finished
+[2026-01-28 21:07:42,719][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-28 21:07:43,005][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-28 21:07:43,006][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-28_21-07-43
+[2026-01-28 21:07:44,953][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-28 21:07:44,953][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=1000
+[2026-01-28 21:07:44,953][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-28 21:07:44,954][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-28 21:07:44,955][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-28 21:07:44,956][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-28 21:07:45,006][lm-eval][INFO] - Using device 'cuda'
+[2026-01-28 21:07:48,979][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-28 21:07:55,195][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-28 21:07:55,196][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-28 21:07:55,196][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-28 21:07:58,272][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-28 21:08:36,341][asyncio][WARNING] - socket.send() raised exception.
+[2026-01-28 21:08:36,600][asyncio][WARNING] - socket.send() raised exception.
+[2026-01-28 23:22:19,096][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-28 23:22:19,284][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-28 23:22:19,284][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B-Instruct/2026-01-28_23-22-19
+[2026-01-28 23:22:21,224][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-28 23:22:21,224][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=1000
+[2026-01-28 23:22:21,224][__name__][INFO] - Running meta-llama/Llama-3.2-1B-Instruct with apply_chat_template True
+[2026-01-28 23:22:21,225][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-28 23:22:21,226][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-28 23:22:21,226][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B-Instruct', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-28 23:22:21,284][lm-eval][INFO] - Using device 'cuda'
+[2026-01-28 23:22:22,844][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-28 23:22:28,530][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-28 23:22:28,530][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-28 23:22:28,530][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-28 23:22:31,591][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-28 23:22:36,468][asyncio][WARNING] - socket.send() raised exception.
+[2026-01-28 23:22:44,232][asyncio][WARNING] - socket.send() raised exception.
+[2026-01-29 23:26:31,078][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-29 23:26:31,232][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-29 23:26:31,232][__name__][INFO] - Using IT tokenizer meta-llama/Llama-3.2-1B-Instruct for PT model meta-llama/Llama-3.2-1B
+[2026-01-29 23:26:31,232][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-29_23-26-31
+[2026-01-29 23:26:33,025][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-29 23:26:33,026][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=1000
+[2026-01-29 23:26:33,026][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-29 23:26:33,026][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-29 23:26:33,028][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-29 23:26:33,028][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-29 23:26:33,072][lm-eval][INFO] - Using device 'cuda'
+[2026-01-29 23:26:36,737][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-29 23:26:43,434][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-29 23:26:43,435][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-29 23:26:43,435][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-29 23:26:46,485][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-29 23:30:24,890][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-29 23:30:25,157][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-29_23-26-31/_ro_mmlu.json
+[2026-01-29 23:30:25,157][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2026-01-29 23:30:25,158][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-29 23:30:25,158][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-29 23:30:25,159][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-29 23:30:25,160][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-29 23:30:25,160][lm-eval][INFO] - Using device 'cuda'
+[2026-01-29 23:30:26,452][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-29 23:30:35,734][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_winogrande from None to 5
+[2026-01-29 23:30:35,734][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-29 23:30:35,735][lm-eval][INFO] - Building contexts for _ro_winogrande on rank 0...
+[2026-01-29 23:30:35,836][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-29 23:31:06,087][__name__][INFO] - ✅ Finished _ro_winogrande
+[2026-01-29 23:31:06,180][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-29_23-26-31/_ro_winogrande.json
+[2026-01-29 23:31:06,181][__name__][INFO] - 🚀 Running evaluation for _ro_belebele | fewshot=5 | limit=1000
+[2026-01-29 23:31:06,181][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-29 23:31:06,181][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-29 23:31:06,182][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-29 23:31:06,182][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-29 23:31:06,183][lm-eval][INFO] - Using device 'cuda'
+[2026-01-29 23:31:07,463][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-29 23:31:12,463][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_belebele from None to 5
+[2026-01-29 23:31:12,463][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-29 23:31:12,464][lm-eval][INFO] - Building contexts for _ro_belebele on rank 0...
+[2026-01-29 23:31:17,297][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-29 23:31:31,204][asyncio][WARNING] - socket.send() raised exception.
+[2026-01-29 23:31:49,047][asyncio][WARNING] - socket.send() raised exception.
+[2026-01-29 23:46:22,245][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-29 23:46:22,394][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-29 23:46:22,394][__name__][INFO] - Using IT tokenizer meta-llama/Llama-3.2-1B-Instruct for PT model meta-llama/Llama-3.2-1B
+[2026-01-29 23:46:22,394][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-29_23-46-22
+[2026-01-29 23:46:24,290][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-29 23:46:24,291][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=1000
+[2026-01-29 23:46:24,291][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-29 23:46:24,291][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-29 23:46:24,293][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-29 23:46:24,293][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-29 23:46:24,340][lm-eval][INFO] - Using device 'cuda'
+[2026-01-29 23:46:25,828][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-29 23:46:31,714][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-29 23:46:31,714][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-29 23:46:31,715][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-29 23:46:34,785][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-29 23:50:12,818][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-29 23:50:13,083][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-29_23-46-22/_ro_mmlu.json
+[2026-01-29 23:50:13,084][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2026-01-29 23:50:13,084][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-29 23:50:13,084][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-29 23:50:13,085][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-29 23:50:13,085][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-29 23:50:13,086][lm-eval][INFO] - Using device 'cuda'
+[2026-01-29 23:50:14,384][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-29 23:50:20,305][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_winogrande from None to 5
+[2026-01-29 23:50:20,305][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-29 23:50:20,306][lm-eval][INFO] - Building contexts for _ro_winogrande on rank 0...
+[2026-01-29 23:50:20,407][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-29 23:50:50,692][__name__][INFO] - ✅ Finished _ro_winogrande
+[2026-01-29 23:50:50,788][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-29_23-46-22/_ro_winogrande.json
+[2026-01-29 23:50:50,789][__name__][INFO] - 🚀 Running evaluation for _ro_belebele | fewshot=5 | limit=1000
+[2026-01-29 23:50:50,789][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-29 23:50:50,789][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-29 23:50:50,790][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-29 23:50:50,790][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-29 23:50:50,791][lm-eval][INFO] - Using device 'cuda'
+[2026-01-29 23:50:52,070][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-29 23:50:57,490][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_belebele from None to 5
+[2026-01-29 23:50:57,490][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-29 23:50:57,491][lm-eval][INFO] - Building contexts for _ro_belebele on rank 0...
+[2026-01-29 23:51:02,342][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-29 23:55:35,938][__name__][INFO] - ✅ Finished _ro_belebele
+[2026-01-29 23:55:36,160][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-29_23-46-22/_ro_belebele.json
+[2026-01-29 23:55:36,160][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2026-01-29 23:55:36,161][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-29 23:55:36,162][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-29 23:55:36,162][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-29 23:55:36,163][lm-eval][INFO] - Using device 'cuda'
+[2026-01-29 23:55:37,409][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-29 23:55:40,270][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-29 23:55:40,271][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-29 23:55:40,271][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-29 23:55:40,271][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-29 23:55:40,271][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-29 23:55:40,272][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-29 23:55:43,172][lm-eval][WARNING] - Overwriting default num_fewshot of ro_wiki from None to 0
+[2026-01-29 23:55:43,172][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-29 23:55:43,173][lm-eval][INFO] - Building contexts for ro_wiki on rank 0...
+[2026-01-29 23:55:43,331][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-29 23:56:22,184][__name__][INFO] - ✅ Finished ro_wiki
+[2026-01-29 23:56:22,308][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-29_23-46-22/ro_wiki.json
+[2026-01-29 23:56:22,308][__name__][INFO] - 🚀 Running evaluation for _ro_arc_challenge | fewshot=5 | limit=1000
+[2026-01-29 23:56:22,308][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-29 23:56:22,309][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-29 23:56:22,310][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-29 23:56:22,310][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-29 23:56:22,311][lm-eval][INFO] - Using device 'cuda'
+[2026-01-29 23:56:23,612][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-29 23:56:29,981][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_arc_challenge from None to 5
+[2026-01-29 23:56:29,982][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-29 23:56:29,983][lm-eval][INFO] - Building contexts for _ro_arc_challenge on rank 0...
+[2026-01-29 23:56:31,434][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-29 23:58:01,471][__name__][INFO] - ✅ Finished _ro_arc_challenge
+[2026-01-29 23:58:01,656][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-29_23-46-22/_ro_arc_challenge.json
+[2026-01-29 23:58:01,657][__name__][INFO] - 🚀 Running evaluation for arc_challenge | fewshot=5 | limit=1000
+[2026-01-29 23:58:01,657][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-29 23:58:01,657][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-29 23:58:01,658][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-29 23:58:01,659][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-29 23:58:01,660][lm-eval][INFO] - Using device 'cuda'
+[2026-01-29 23:58:03,122][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-29 23:58:07,903][lm-eval][WARNING] - Overwriting default num_fewshot of arc_challenge from None to 5
+[2026-01-29 23:58:07,903][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-29 23:58:07,904][lm-eval][INFO] - Building contexts for arc_challenge on rank 0...
+[2026-01-29 23:58:12,260][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-29 23:59:09,964][__name__][INFO] - ✅ Finished arc_challenge
+[2026-01-29 23:59:10,136][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-29_23-46-22/arc_challenge.json
+[2026-01-29 23:59:10,137][__name__][INFO] - 🚀 Running evaluation for winogrande | fewshot=5 | limit=1000
+[2026-01-29 23:59:10,137][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-29 23:59:10,137][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-29 23:59:10,138][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-29 23:59:10,138][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-29 23:59:10,139][lm-eval][INFO] - Using device 'cuda'
+[2026-01-29 23:59:11,430][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-29 23:59:14,304][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'winogrande' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-29 23:59:18,275][lm-eval][WARNING] - Overwriting default num_fewshot of winogrande from None to 5
+[2026-01-29 23:59:18,275][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-29 23:59:18,276][lm-eval][INFO] - Building contexts for winogrande on rank 0...
+[2026-01-29 23:59:18,368][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-29 23:59:39,692][__name__][INFO] - ✅ Finished winogrande
+[2026-01-29 23:59:39,790][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-29_23-46-22/winogrande.json
+[2026-01-29 23:59:39,790][__name__][INFO] - 🚀 Running evaluation for wikitext | fewshot=0 | limit=1000
+[2026-01-29 23:59:39,791][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-29 23:59:39,792][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-29 23:59:39,792][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-29 23:59:39,793][lm-eval][INFO] - Using device 'cuda'
+[2026-01-29 23:59:41,236][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-29 23:59:44,070][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-29 23:59:44,070][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-29 23:59:44,070][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-29 23:59:44,070][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-29 23:59:44,071][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-29 23:59:44,071][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-29 23:59:44,071][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'EleutherAI/wikitext_document_level' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-29 23:59:46,513][lm-eval][WARNING] - Overwriting default num_fewshot of wikitext from None to 0
+[2026-01-29 23:59:46,514][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-29 23:59:46,515][lm-eval][INFO] - Building contexts for wikitext on rank 0...
+[2026-01-29 23:59:47,035][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-30 00:02:00,851][__name__][INFO] - ✅ Finished wikitext
+[2026-01-30 00:02:01,285][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-29_23-46-22/wikitext.json
+[2026-01-30 00:02:02,546][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-29_23-46-22/eval_results.json
+[2026-01-30 00:02:02,546][__name__][INFO] - 📊 Summary:
+[2026-01-30 00:02:02,547][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.284, 'acc_stderr,none': 0.014267009061031241}
+[2026-01-30 00:02:02,547][__name__][INFO] -   - _ro_winogrande: {'acc,none': 0.518, 'acc_stderr,none': 0.01580904569940659}
+[2026-01-30 00:02:02,547][__name__][INFO] -   - _ro_belebele: {'acc_norm,none': 0.2722222222222222, 'acc_norm_stderr,none': 0.014845038794434004}
+[2026-01-30 00:02:02,547][__name__][INFO] -   - ro_wiki: {'word_perplexity,none': 60.237291899731765, 'byte_perplexity,none': 1.831360590300865, 'bits_per_byte,none': 0.8729158821348689}
+[2026-01-30 00:02:02,547][__name__][INFO] -   - _ro_arc_challenge: {'acc_norm,none': 0.285, 'acc_norm_stderr,none': 0.014282120955200562}
+[2026-01-30 00:02:02,548][__name__][INFO] -   - arc_challenge: {'acc,none': 0.294, 'acc_stderr,none': 0.014414290540008265, 'acc_norm,none': 0.314, 'acc_norm_stderr,none': 0.014683991951088084}
+[2026-01-30 00:02:02,548][__name__][INFO] -   - winogrande: {'acc,none': 0.588, 'acc_stderr,none': 0.015572363292015072}
+[2026-01-30 00:02:02,548][__name__][INFO] -   - wikitext: {'word_perplexity,none': 13.18347656256458, 'byte_perplexity,none': 1.6225561371581123, 'bits_per_byte,none': 0.6982683934161412}
+[2026-01-30 00:02:04,084][__name__][INFO] - 📊 W&B run finished
+[2026-01-30 09:02:36,007][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-30 09:02:36,007][__name__][INFO] - Evaluation global_step: 0 (for WandB x-axis alignment)
+[2026-01-30 09:02:36,176][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-30 09:02:36,176][__name__][INFO] - Using IT tokenizer meta-llama/Llama-3.2-1B-Instruct for PT model meta-llama/Llama-3.2-1B
+[2026-01-30 09:02:36,176][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-30_09-02-36
+[2026-01-30 09:02:38,157][__name__][INFO] - 📊 W&B logging enabled (training run: c89qab2k)
+[2026-01-30 09:02:38,157][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=1000
+[2026-01-30 09:02:38,158][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-30 09:02:38,158][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-30 09:02:38,159][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-30 09:02:38,160][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-30 09:02:38,205][lm-eval][INFO] - Using device 'cuda'
+[2026-01-30 09:02:39,733][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-30 09:03:11,614][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-30 09:03:11,614][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-30 09:03:11,614][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-30 09:03:14,659][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-30 09:06:52,440][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-30 09:06:52,441][__name__][INFO] - 📊 Logged _ro_mmlu metrics to training run at step 0
+[2026-01-30 09:06:52,705][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-30_09-02-36/_ro_mmlu.json
+[2026-01-30 09:06:52,706][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2026-01-30 09:06:52,706][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-30 09:06:52,706][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-30 09:06:52,707][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-30 09:06:52,707][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-30 09:06:52,708][lm-eval][INFO] - Using device 'cuda'
+[2026-01-30 09:06:53,984][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-30 09:07:04,983][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_winogrande from None to 5
+[2026-01-30 09:07:04,983][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-30 09:07:04,984][lm-eval][INFO] - Building contexts for _ro_winogrande on rank 0...
+[2026-01-30 09:07:05,089][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-30 09:07:35,325][__name__][INFO] - ✅ Finished _ro_winogrande
+[2026-01-30 09:07:35,326][__name__][INFO] - 📊 Logged _ro_winogrande metrics to training run at step 0
+[2026-01-30 09:07:35,416][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-30_09-02-36/_ro_winogrande.json
+[2026-01-30 09:07:35,417][__name__][INFO] - 🚀 Running evaluation for _ro_belebele | fewshot=5 | limit=1000
+[2026-01-30 09:07:35,417][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-30 09:07:35,417][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-30 09:07:35,419][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-30 09:07:35,419][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-30 09:07:35,420][lm-eval][INFO] - Using device 'cuda'
+[2026-01-30 09:07:36,725][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-30 09:07:41,696][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_belebele from None to 5
+[2026-01-30 09:07:41,696][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-30 09:07:41,696][lm-eval][INFO] - Building contexts for _ro_belebele on rank 0...
+[2026-01-30 09:07:46,534][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-30 09:12:20,024][__name__][INFO] - ✅ Finished _ro_belebele
+[2026-01-30 09:12:20,025][__name__][INFO] - 📊 Logged _ro_belebele metrics to training run at step 0
+[2026-01-30 09:12:20,242][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-30_09-02-36/_ro_belebele.json
+[2026-01-30 09:12:20,242][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2026-01-30 09:12:20,243][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-30 09:12:20,244][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-30 09:12:20,244][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-30 09:12:20,245][lm-eval][INFO] - Using device 'cuda'
+[2026-01-30 09:12:21,525][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-30 09:12:24,406][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-30 09:12:24,406][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-30 09:12:24,406][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-30 09:12:24,406][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-30 09:12:24,407][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-30 09:12:24,407][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-30 09:12:26,810][lm-eval][WARNING] - Overwriting default num_fewshot of ro_wiki from None to 0
+[2026-01-30 09:12:26,811][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-30 09:12:26,812][lm-eval][INFO] - Building contexts for ro_wiki on rank 0...
+[2026-01-30 09:12:26,968][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-30 09:13:05,667][__name__][INFO] - ✅ Finished ro_wiki
+[2026-01-30 09:13:05,668][__name__][INFO] - 📊 Logged ro_wiki metrics to training run at step 0
+[2026-01-30 09:13:05,792][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-30_09-02-36/ro_wiki.json
+[2026-01-30 09:13:05,792][__name__][INFO] - 🚀 Running evaluation for _ro_arc_challenge | fewshot=5 | limit=1000
+[2026-01-30 09:13:05,792][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-30 09:13:05,793][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-30 09:13:05,794][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-30 09:13:05,794][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-30 09:13:05,795][lm-eval][INFO] - Using device 'cuda'
+[2026-01-30 09:13:07,069][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-30 09:13:25,092][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_arc_challenge from None to 5
+[2026-01-30 09:13:25,093][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-30 09:13:25,093][lm-eval][INFO] - Building contexts for _ro_arc_challenge on rank 0...
+[2026-01-30 09:13:26,560][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-30 09:14:56,463][__name__][INFO] - ✅ Finished _ro_arc_challenge
+[2026-01-30 09:14:56,465][__name__][INFO] - 📊 Logged _ro_arc_challenge metrics to training run at step 0
+[2026-01-30 09:14:56,648][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-30_09-02-36/_ro_arc_challenge.json
+[2026-01-30 09:14:56,649][__name__][INFO] - 🚀 Running evaluation for arc_challenge | fewshot=5 | limit=1000
+[2026-01-30 09:14:56,649][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-30 09:14:56,649][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-30 09:14:56,650][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-30 09:14:56,650][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-30 09:14:56,651][lm-eval][INFO] - Using device 'cuda'
+[2026-01-30 09:14:57,943][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-30 09:15:02,727][lm-eval][WARNING] - Overwriting default num_fewshot of arc_challenge from None to 5
+[2026-01-30 09:15:02,727][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-30 09:15:02,728][lm-eval][INFO] - Building contexts for arc_challenge on rank 0...
+[2026-01-30 09:15:07,053][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-30 09:16:04,628][__name__][INFO] - ✅ Finished arc_challenge
+[2026-01-30 09:16:04,630][__name__][INFO] - 📊 Logged arc_challenge metrics to training run at step 0
+[2026-01-30 09:16:04,800][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-30_09-02-36/arc_challenge.json
+[2026-01-30 09:16:04,800][__name__][INFO] - 🚀 Running evaluation for winogrande | fewshot=5 | limit=1000
+[2026-01-30 09:16:04,801][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-30 09:16:04,801][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-30 09:16:04,802][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-30 09:16:04,802][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-30 09:16:04,803][lm-eval][INFO] - Using device 'cuda'
+[2026-01-30 09:16:06,096][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-30 09:16:09,009][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'winogrande' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-30 09:16:13,829][lm-eval][WARNING] - Overwriting default num_fewshot of winogrande from None to 5
+[2026-01-30 09:16:13,830][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-30 09:16:13,830][lm-eval][INFO] - Building contexts for winogrande on rank 0...
+[2026-01-30 09:16:13,923][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-30 09:16:35,196][__name__][INFO] - ✅ Finished winogrande
+[2026-01-30 09:16:35,198][__name__][INFO] - 📊 Logged winogrande metrics to training run at step 0
+[2026-01-30 09:16:35,290][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-30_09-02-36/winogrande.json
+[2026-01-30 09:16:35,291][__name__][INFO] - 🚀 Running evaluation for wikitext | fewshot=0 | limit=1000
+[2026-01-30 09:16:35,291][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-30 09:16:35,293][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-30 09:16:35,293][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-30 09:16:35,294][lm-eval][INFO] - Using device 'cuda'
+[2026-01-30 09:16:36,676][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-30 09:16:39,559][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-30 09:16:39,560][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-30 09:16:39,560][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-30 09:16:39,560][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-30 09:16:39,560][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-30 09:16:39,560][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-30 09:16:39,560][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'EleutherAI/wikitext_document_level' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-30 09:16:41,554][lm-eval][WARNING] - Overwriting default num_fewshot of wikitext from None to 0
+[2026-01-30 09:16:41,554][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-30 09:16:41,555][lm-eval][INFO] - Building contexts for wikitext on rank 0...
+[2026-01-30 09:16:42,077][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-30 09:18:55,573][__name__][INFO] - ✅ Finished wikitext
+[2026-01-30 09:18:55,574][__name__][INFO] - 📊 Logged wikitext metrics to training run at step 0
+[2026-01-30 09:18:56,015][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-30_09-02-36/wikitext.json
+[2026-01-30 09:18:57,310][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-30_09-02-36/eval_results.json
+[2026-01-30 09:18:57,310][__name__][INFO] - 📊 Summary:
+[2026-01-30 09:18:57,310][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.266, 'acc_stderr,none': 0.013979965645145179}
+[2026-01-30 09:18:57,310][__name__][INFO] -   - _ro_winogrande: {'acc,none': 0.526, 'acc_stderr,none': 0.015797897758042797}
+[2026-01-30 09:18:57,311][__name__][INFO] -   - _ro_belebele: {'acc_norm,none': 0.26222222222222225, 'acc_norm_stderr,none': 0.014669580202217824}
+[2026-01-30 09:18:57,311][__name__][INFO] -   - ro_wiki: {'word_perplexity,none': 60.237291899731765, 'byte_perplexity,none': 1.831360590300865, 'bits_per_byte,none': 0.8729158821348689}
+[2026-01-30 09:18:57,311][__name__][INFO] -   - _ro_arc_challenge: {'acc_norm,none': 0.287, 'acc_norm_stderr,none': 0.014312087053810001}
+[2026-01-30 09:18:57,311][__name__][INFO] -   - arc_challenge: {'acc,none': 0.294, 'acc_stderr,none': 0.014414290540008265, 'acc_norm,none': 0.311, 'acc_norm_stderr,none': 0.014645596385722692}
+[2026-01-30 09:18:57,311][__name__][INFO] -   - winogrande: {'acc,none': 0.585, 'acc_stderr,none': 0.015589035185604594}
+[2026-01-30 09:18:57,311][__name__][INFO] -   - wikitext: {'word_perplexity,none': 13.18347656256458, 'byte_perplexity,none': 1.6225561371581123, 'bits_per_byte,none': 0.6982683934161412}
+[2026-01-30 09:18:58,656][__name__][INFO] - 📊 Training W&B run finished
+[2026-01-31 00:17:47,298][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 00:17:47,298][__name__][INFO] - Evaluation global_step: 0 (for WandB x-axis alignment)
+[2026-01-31 00:17:47,490][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 00:17:47,490][__name__][INFO] - Using IT tokenizer meta-llama/Llama-3.2-1B-Instruct for PT model meta-llama/Llama-3.2-1B
+[2026-01-31 00:17:47,490][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_00-17-47
+[2026-01-31 00:17:49,458][__name__][INFO] - 📊 W&B logging enabled (training run: 1l0cu6ec)
+[2026-01-31 00:17:49,459][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 00:17:49,459][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-31 00:17:49,459][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-31 00:17:49,461][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 00:17:49,461][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 00:17:49,516][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 00:17:51,078][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 00:17:56,326][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 00:17:56,326][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 00:17:56,327][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 00:17:56,680][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 00:18:19,972][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 00:18:19,973][__name__][INFO] - 📊 Logged _ro_mmlu metrics to training run at step 0
+[2026-01-31 00:18:19,998][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_00-17-47/_ro_mmlu.json
+[2026-01-31 00:18:20,020][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_00-17-47/eval_results.json
+[2026-01-31 00:18:20,020][__name__][INFO] - 📊 Summary:
+[2026-01-31 00:18:20,021][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.23, 'acc_stderr,none': 0.04229525846816507}
+[2026-01-31 00:18:21,128][__name__][INFO] - 📊 Training W&B run finished
+[2026-01-31 00:21:26,819][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 00:21:26,819][__name__][INFO] - Evaluation global_step: 0 (for WandB x-axis alignment)
+[2026-01-31 00:21:27,085][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 00:21:27,085][__name__][INFO] - Using IT tokenizer meta-llama/Llama-3.2-1B-Instruct for PT model meta-llama/Llama-3.2-1B
+[2026-01-31 00:21:27,091][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_00-21-27
+[2026-01-31 00:21:28,845][__name__][INFO] - 📊 W&B logging enabled (training run: rshz19y9)
+[2026-01-31 00:21:28,846][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 00:21:28,846][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-31 00:21:28,846][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-31 00:21:28,848][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 00:21:28,848][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 00:21:28,905][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 00:21:30,498][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 00:21:35,617][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 00:21:35,618][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 00:21:35,618][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 00:21:35,973][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 00:21:59,298][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 00:21:59,299][__name__][INFO] - 📊 Logged _ro_mmlu metrics to training run at step 0
+[2026-01-31 00:21:59,325][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_00-21-27/_ro_mmlu.json
+[2026-01-31 00:21:59,347][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_00-21-27/eval_results.json
+[2026-01-31 00:21:59,347][__name__][INFO] - 📊 Summary:
+[2026-01-31 00:21:59,347][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.23, 'acc_stderr,none': 0.04229525846816507}
+[2026-01-31 00:22:00,495][__name__][INFO] - 📊 Training W&B run finished
+[2026-01-31 00:44:00,368][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 00:44:00,368][__name__][INFO] - Evaluation global_step: 0 (for WandB x-axis alignment)
+[2026-01-31 00:44:00,570][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 00:44:00,570][__name__][INFO] - Using IT tokenizer meta-llama/Llama-3.2-1B-Instruct for PT model meta-llama/Llama-3.2-1B
+[2026-01-31 00:44:00,570][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_00-44-00
+[2026-01-31 00:44:02,469][__name__][INFO] - 📊 W&B logging enabled (training run: pi6p1muw)
+[2026-01-31 00:44:02,470][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 00:44:02,470][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-31 00:44:02,470][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-31 00:44:02,472][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 00:44:02,472][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 00:44:02,537][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 00:44:04,448][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 00:44:09,479][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 00:44:09,479][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 00:44:09,480][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 00:44:09,834][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 00:44:33,081][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 00:44:33,082][__name__][INFO] - 📊 Logged _ro_mmlu metrics to training run at step 0
+[2026-01-31 00:44:33,107][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_00-44-00/_ro_mmlu.json
+[2026-01-31 00:44:33,129][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_00-44-00/eval_results.json
+[2026-01-31 00:44:33,129][__name__][INFO] - 📊 Summary:
+[2026-01-31 00:44:33,130][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.23, 'acc_stderr,none': 0.04229525846816507}
+[2026-01-31 00:44:34,164][__name__][INFO] - 📊 Training W&B run finished
+[2026-01-31 01:03:06,605][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 01:03:06,605][__name__][INFO] - Evaluation global_step: 0 (for WandB x-axis alignment)
+[2026-01-31 01:03:06,796][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 01:03:06,796][__name__][INFO] - Using IT tokenizer meta-llama/Llama-3.2-1B-Instruct for PT model meta-llama/Llama-3.2-1B
+[2026-01-31 01:03:06,803][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_01-03-06
+[2026-01-31 01:03:08,608][__name__][INFO] - 📊 W&B logging enabled (training run: b0wcbpcw)
+[2026-01-31 01:03:11,152][__name__][INFO] - 📊 Separate eval run created: b0wcbpcw
+[2026-01-31 01:03:11,152][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 01:03:11,152][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-31 01:03:11,153][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-31 01:03:11,154][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 01:03:11,155][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 01:03:11,210][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 01:03:12,773][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 01:03:17,975][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 01:03:17,976][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 01:03:17,976][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 01:03:18,328][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 01:03:41,337][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 01:03:41,338][__name__][ERROR] - ❌ Error running _ro_mmlu: Run (b0wcbpcw) is finished. The call to `log` will be ignored. Please make sure that you are using an active run.
+[2026-01-31 01:03:41,339][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_01-03-06/eval_results.json
+[2026-01-31 01:03:41,339][__name__][INFO] - 📊 Summary:
+[2026-01-31 01:03:41,339][__name__][INFO] -   - _ro_mmlu: No metrics found
+[2026-01-31 01:03:41,340][__name__][INFO] - 📊 Training W&B run finished
+[2026-01-31 01:03:42,608][__name__][INFO] - 📊 Separate eval W&B run finished
+[2026-01-31 01:14:36,829][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 01:14:36,830][__name__][INFO] - Evaluation global_step: 0 (for WandB x-axis alignment)
+[2026-01-31 01:14:37,034][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 01:14:37,034][__name__][INFO] - Using IT tokenizer meta-llama/Llama-3.2-1B-Instruct for PT model meta-llama/Llama-3.2-1B
+[2026-01-31 01:14:37,034][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_01-14-37
+[2026-01-31 01:18:04,647][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 01:18:04,648][__name__][INFO] - Evaluation global_step: 0 (for WandB x-axis alignment)
+[2026-01-31 01:18:04,826][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 01:18:04,826][__name__][INFO] - Using IT tokenizer meta-llama/Llama-3.2-1B-Instruct for PT model meta-llama/Llama-3.2-1B
+[2026-01-31 01:18:04,826][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_01-18-04
+[2026-01-31 01:18:06,367][__name__][INFO] - 📊 W&B logging enabled (training run: hwekiudx, resumed: True)
+[2026-01-31 01:18:08,878][__name__][INFO] - 📊 Separate eval run created: hwekiudx
+[2026-01-31 01:18:08,879][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 01:18:08,879][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-31 01:18:08,879][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-31 01:18:08,881][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 01:18:08,881][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 01:18:08,938][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 01:18:11,486][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 01:18:16,650][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 01:18:16,651][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 01:18:16,651][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 01:18:17,005][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 01:18:40,601][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 01:18:40,602][__name__][INFO] - 📊 Preparing to log 2 metrics for _ro_mmlu at step 0
+[2026-01-31 01:18:40,602][__name__][INFO] -    Metrics: ['eval/_ro_mmlu/acc,none', 'eval/_ro_mmlu/acc_stderr,none']
+[2026-01-31 01:18:40,602][__name__][ERROR] - ❌ Failed to log _ro_mmlu metrics to WandB: Run (hwekiudx) is finished. The call to `log` will be ignored. Please make sure that you are using an active run.
+[2026-01-31 01:18:40,603][__name__][INFO] - 📊 Logged _ro_mmlu metrics to separate eval run
+[2026-01-31 01:18:40,628][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_01-18-04/_ro_mmlu.json
+[2026-01-31 01:18:40,649][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_01-18-04/eval_results.json
+[2026-01-31 01:18:40,649][__name__][INFO] - 📊 Summary:
+[2026-01-31 01:18:40,650][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.23, 'acc_stderr,none': 0.04229525846816507}
+[2026-01-31 01:18:40,650][__name__][INFO] - 📊 Training W&B run finished
+[2026-01-31 01:18:42,002][__name__][INFO] - 📊 Separate eval W&B run finished
+[2026-01-31 10:15:00,126][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 10:15:00,131][__name__][INFO] - Evaluation global_step: 0 (for WandB x-axis alignment)
+[2026-01-31 10:15:00,440][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 10:15:00,440][__name__][INFO] - Using IT tokenizer meta-llama/Llama-3.2-1B-Instruct for PT model meta-llama/Llama-3.2-1B
+[2026-01-31 10:15:00,453][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_10-15-00
+[2026-01-31 10:15:02,959][__name__][INFO] - 📊 W&B logging enabled (training run: hftc2398, resumed: True)
+[2026-01-31 10:15:05,250][__name__][INFO] - 📊 Separate eval run created: hftc2398
+[2026-01-31 10:15:05,250][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 10:15:05,250][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-31 10:15:05,251][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-31 10:15:05,252][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 10:15:05,252][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 10:15:05,315][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 10:15:09,117][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 10:15:14,640][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 10:15:14,640][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 10:15:14,641][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 10:15:14,992][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 10:15:38,363][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 10:15:38,364][__name__][INFO] - 📊 Preparing to log 2 metrics for _ro_mmlu at step 0
+[2026-01-31 10:15:38,365][__name__][INFO] -    Metrics: ['eval/_ro_mmlu/acc,none', 'eval/_ro_mmlu/acc_stderr,none']
+[2026-01-31 10:15:38,365][__name__][ERROR] - ❌ Failed to log _ro_mmlu metrics to WandB: Run (hftc2398) is finished. The call to `log` will be ignored. Please make sure that you are using an active run.
+[2026-01-31 10:15:38,366][__name__][INFO] - 📊 Logged _ro_mmlu metrics to separate eval run
+[2026-01-31 10:15:38,392][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_10-15-00/_ro_mmlu.json
+[2026-01-31 10:15:38,413][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_10-15-00/eval_results.json
+[2026-01-31 10:15:38,414][__name__][INFO] - 📊 Summary:
+[2026-01-31 10:15:38,414][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.23, 'acc_stderr,none': 0.04229525846816507}
+[2026-01-31 10:15:38,414][__name__][INFO] - 📊 Training W&B run finished
+[2026-01-31 10:15:39,667][__name__][INFO] - 📊 Separate eval W&B run finished
+[2026-01-31 10:18:08,281][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 10:18:08,281][__name__][INFO] - Evaluation global_step: 0 (for WandB x-axis alignment)
+[2026-01-31 10:18:08,456][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 10:18:08,456][__name__][INFO] - Using IT tokenizer meta-llama/Llama-3.2-1B-Instruct for PT model meta-llama/Llama-3.2-1B
+[2026-01-31 10:18:08,456][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_10-18-08
+[2026-01-31 10:18:10,318][__name__][INFO] - 📊 W&B logging enabled (training run: cpqc2tbe, resumed: True)
+[2026-01-31 10:18:12,603][__name__][INFO] - 📊 Separate eval run created: cpqc2tbe
+[2026-01-31 10:18:12,603][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 10:18:12,603][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-31 10:18:12,603][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-31 10:18:12,611][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 10:18:12,611][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 10:18:12,669][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 10:18:14,378][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 10:18:20,528][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 10:18:20,528][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 10:18:20,529][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 10:18:20,880][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 10:18:44,339][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 10:18:44,340][__name__][INFO] - 📊 Preparing to log 2 metrics for _ro_mmlu at step 0
+[2026-01-31 10:18:44,340][__name__][INFO] -    Metrics: ['eval/_ro_mmlu/acc,none', 'eval/_ro_mmlu/acc_stderr,none']
+[2026-01-31 10:18:44,341][__name__][ERROR] - ❌ Failed to log _ro_mmlu metrics to WandB: Run (cpqc2tbe) is finished. The call to `log` will be ignored. Please make sure that you are using an active run.
+[2026-01-31 10:18:44,341][__name__][INFO] - 📊 Logged _ro_mmlu metrics to separate eval run
+[2026-01-31 10:18:44,367][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_10-18-08/_ro_mmlu.json
+[2026-01-31 10:18:44,390][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_10-18-08/eval_results.json
+[2026-01-31 10:18:44,390][__name__][INFO] - 📊 Summary:
+[2026-01-31 10:18:44,390][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.23, 'acc_stderr,none': 0.04229525846816507}
+[2026-01-31 10:18:44,390][__name__][INFO] - 📊 Training W&B run finished
+[2026-01-31 10:18:45,472][__name__][INFO] - 📊 Separate eval W&B run finished
+[2026-01-31 10:28:08,029][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 10:28:08,030][__name__][INFO] - Evaluation global_step: 0 (for WandB x-axis alignment)
+[2026-01-31 10:28:08,238][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 10:28:08,239][__name__][INFO] - Using IT tokenizer meta-llama/Llama-3.2-1B-Instruct for PT model meta-llama/Llama-3.2-1B
+[2026-01-31 10:28:08,239][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_10-28-08
+[2026-01-31 10:28:10,004][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 10:28:10,005][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 10:28:10,005][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-31 10:28:10,005][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-31 10:28:10,007][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 10:28:10,007][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 10:28:10,055][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 10:28:11,649][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 10:28:16,923][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 10:28:16,924][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 10:28:16,924][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 10:28:17,275][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 10:28:40,427][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 10:28:40,454][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_10-28-08/_ro_mmlu.json
+[2026-01-31 10:28:40,477][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_10-28-08/eval_results.json
+[2026-01-31 10:28:40,478][__name__][INFO] - 📊 Summary:
+[2026-01-31 10:28:40,478][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.23, 'acc_stderr,none': 0.04229525846816507}
+[2026-01-31 10:28:41,486][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 10:58:31,711][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 10:58:31,712][__name__][INFO] - Evaluation global_step: 0 (for WandB x-axis alignment)
+[2026-01-31 10:58:31,882][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 10:58:31,883][__name__][INFO] - Using IT tokenizer meta-llama/Llama-3.2-1B-Instruct for PT model meta-llama/Llama-3.2-1B
+[2026-01-31 10:58:31,895][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_10-58-31
+[2026-01-31 10:58:33,835][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 10:58:33,835][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 10:58:33,836][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-31 10:58:33,836][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-31 10:58:33,837][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 10:58:33,838][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 10:58:33,893][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 10:58:35,515][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 10:58:40,801][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 10:58:40,801][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 10:58:40,802][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 10:58:41,149][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 10:59:04,029][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 10:59:04,055][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_10-58-31/_ro_mmlu.json
+[2026-01-31 10:59:04,077][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_10-58-31/eval_results.json
+[2026-01-31 10:59:04,078][__name__][INFO] - 📊 Summary:
+[2026-01-31 10:59:04,078][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.23, 'acc_stderr,none': 0.04229525846816507}
+[2026-01-31 10:59:05,286][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 11:06:01,802][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 11:06:01,803][__name__][INFO] - Evaluation global_step: 3 (for WandB x-axis alignment)
+[2026-01-31 11:06:01,959][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 11:06:01,962][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-3/2026-01-31_11-06-01
+[2026-01-31 11:06:03,756][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 11:06:03,757][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 11:06:03,757][__name__][INFO] - Running outputs/test_runs//merged/checkpoint-3 with apply_chat_template True
+[2026-01-31 11:06:03,757][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-31 11:06:03,760][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 11:06:03,761][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/test_runs//merged/checkpoint-3', 'tokenizer': 'outputs/test_runs//merged/checkpoint-3', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 11:06:03,815][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 11:06:04,536][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 11:06:10,041][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 11:06:10,041][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 11:06:10,041][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 11:06:10,049][__name__][ERROR] - ❌ Error running _ro_mmlu: Cannot use chat template functions because tokenizer.chat_template is not set and no template argument was passed! For information about writing templates and setting the tokenizer.chat_template attribute, please see the documentation at https://huggingface.co/docs/transformers/main/en/chat_templating
+[2026-01-31 11:06:10,064][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-3/2026-01-31_11-06-01/eval_results.json
+[2026-01-31 11:06:10,065][__name__][INFO] - 📊 Summary:
+[2026-01-31 11:06:10,065][__name__][INFO] -   - _ro_mmlu: No metrics found
+[2026-01-31 11:06:11,288][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 11:19:11,533][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 11:19:11,533][__name__][INFO] - Evaluation global_step: 7 (for WandB x-axis alignment)
+[2026-01-31 11:19:11,708][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 11:19:11,708][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-7/2026-01-31_11-19-11
+[2026-01-31 11:19:13,289][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 11:19:13,289][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 11:19:13,289][__name__][INFO] - Running outputs/test_runs//merged/checkpoint-7 with apply_chat_template True
+[2026-01-31 11:19:13,289][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-31 11:19:13,295][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 11:19:13,295][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/test_runs//merged/checkpoint-7', 'tokenizer': 'outputs/test_runs//merged/checkpoint-7', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 11:19:13,349][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 11:19:14,060][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 11:19:19,441][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 11:19:19,441][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 11:19:19,442][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 11:19:19,450][__name__][ERROR] - ❌ Error running _ro_mmlu: Cannot use chat template functions because tokenizer.chat_template is not set and no template argument was passed! For information about writing templates and setting the tokenizer.chat_template attribute, please see the documentation at https://huggingface.co/docs/transformers/main/en/chat_templating
+[2026-01-31 11:19:19,464][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-7/2026-01-31_11-19-11/eval_results.json
+[2026-01-31 11:19:19,465][__name__][INFO] - 📊 Summary:
+[2026-01-31 11:19:19,465][__name__][INFO] -   - _ro_mmlu: No metrics found
+[2026-01-31 11:19:20,868][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 11:51:24,238][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 11:51:24,238][__name__][INFO] - Evaluation global_step: 0 (for WandB x-axis alignment)
+[2026-01-31 11:51:24,425][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 11:51:24,426][__name__][INFO] - Using IT tokenizer meta-llama/Llama-3.2-1B-Instruct for PT model meta-llama/Llama-3.2-1B
+[2026-01-31 11:51:24,426][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_11-51-24
+[2026-01-31 11:51:26,305][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 11:51:26,305][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 11:51:26,305][__name__][INFO] - Running meta-llama/Llama-3.2-1B with apply_chat_template True
+[2026-01-31 11:51:26,305][__name__][INFO] - 📝 Using fewshot_as_multiturn=True and custom system instruction
+[2026-01-31 11:51:26,307][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 11:51:26,307][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B-Instruct', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 11:51:26,357][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 11:51:30,147][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 11:51:35,146][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 11:51:35,146][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 11:51:35,146][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 11:51:35,496][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 11:51:58,581][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 11:51:58,607][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_11-51-24/_ro_mmlu.json
+[2026-01-31 11:51:58,629][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_11-51-24/eval_results.json
+[2026-01-31 11:51:58,629][__name__][INFO] - 📊 Summary:
+[2026-01-31 11:51:58,629][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.23, 'acc_stderr,none': 0.04229525846816507}
+[2026-01-31 11:51:59,941][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 11:59:18,160][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 11:59:18,161][__name__][INFO] - Evaluation global_step: 3 (for WandB x-axis alignment)
+[2026-01-31 11:59:18,350][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 11:59:18,351][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-3/2026-01-31_11-59-18
+[2026-01-31 11:59:20,037][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 11:59:20,037][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 11:59:20,038][__name__][INFO] - Running outputs/test_runs//merged/checkpoint-3 with apply_chat_template True
+[2026-01-31 11:59:20,038][__name__][INFO] - 📝 Using fewshot_as_multiturn=True
+[2026-01-31 11:59:20,040][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 11:59:20,040][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/test_runs//merged/checkpoint-3', 'tokenizer': 'outputs/test_runs//merged/checkpoint-3', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 11:59:20,093][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 11:59:20,810][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 11:59:26,573][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 11:59:26,573][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 11:59:26,573][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 11:59:26,581][__name__][ERROR] - ❌ Error running _ro_mmlu: Cannot use chat template functions because tokenizer.chat_template is not set and no template argument was passed! For information about writing templates and setting the tokenizer.chat_template attribute, please see the documentation at https://huggingface.co/docs/transformers/main/en/chat_templating
+[2026-01-31 11:59:26,596][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-3/2026-01-31_11-59-18/eval_results.json
+[2026-01-31 11:59:26,597][__name__][INFO] - 📊 Summary:
+[2026-01-31 11:59:26,597][__name__][INFO] -   - _ro_mmlu: No metrics found
+[2026-01-31 11:59:27,810][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 12:12:06,363][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 12:12:06,364][__name__][INFO] - Evaluation global_step: 7 (for WandB x-axis alignment)
+[2026-01-31 12:12:06,516][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 12:12:06,525][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-7/2026-01-31_12-12-06
+[2026-01-31 12:12:06,526][__name__][INFO] - Generated run name: sft-checkpoint-CPTSignalEstablishment-ms2-1M
+[2026-01-31 12:12:08,307][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 12:12:08,307][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 12:12:08,307][__name__][INFO] - Running outputs/test_runs//merged/checkpoint-7 | use_sft=True | apply_chat_template=True
+[2026-01-31 12:12:08,308][__name__][INFO] - 📝 Using fewshot_as_multiturn=True
+[2026-01-31 12:12:08,310][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 12:12:08,310][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/test_runs//merged/checkpoint-7', 'tokenizer': 'outputs/test_runs//merged/checkpoint-7', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 12:12:08,362][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 12:12:09,625][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 12:12:15,008][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 12:12:15,009][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 12:12:15,009][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 12:12:15,017][__name__][ERROR] - ❌ Error running _ro_mmlu: Cannot use chat template functions because tokenizer.chat_template is not set and no template argument was passed! For information about writing templates and setting the tokenizer.chat_template attribute, please see the documentation at https://huggingface.co/docs/transformers/main/en/chat_templating
+[2026-01-31 12:12:15,030][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-7/2026-01-31_12-12-06/eval_results.json
+[2026-01-31 12:12:15,031][__name__][INFO] - 📊 Summary:
+[2026-01-31 12:12:15,031][__name__][INFO] -   - _ro_mmlu: No metrics found
+[2026-01-31 12:12:16,442][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 12:20:50,355][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 12:20:50,355][__name__][INFO] - Evaluation global_step: 0 (for WandB x-axis alignment)
+[2026-01-31 12:20:50,534][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 12:20:50,534][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_12-20-50
+[2026-01-31 12:20:50,535][__name__][INFO] - Generated run name: cpt-llama-CPTSignalEstablishment-ms2-1M
+[2026-01-31 12:20:52,338][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 12:20:52,338][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 12:20:52,339][__name__][INFO] - Running meta-llama/Llama-3.2-1B | use_sft=False | apply_chat_template=False
+[2026-01-31 12:20:52,340][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 12:20:52,341][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 12:20:52,394][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 12:20:55,625][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 12:21:00,741][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 12:21:00,741][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 12:21:00,741][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 12:21:01,069][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 12:21:22,737][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 12:21:22,761][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_12-20-50/_ro_mmlu.json
+[2026-01-31 12:21:22,781][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_12-20-50/eval_results.json
+[2026-01-31 12:21:22,781][__name__][INFO] - 📊 Summary:
+[2026-01-31 12:21:22,781][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.22, 'acc_stderr,none': 0.041633319989322654}
+[2026-01-31 12:21:23,894][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 12:28:31,623][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 12:28:31,624][__name__][INFO] - Evaluation global_step: 3 (for WandB x-axis alignment)
+[2026-01-31 12:28:31,811][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 12:28:31,811][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-3/2026-01-31_12-28-31
+[2026-01-31 12:28:31,811][__name__][INFO] - Generated run name: cpt-checkpoint-CPTSignalEstablishment-ms2-1M
+[2026-01-31 12:28:33,739][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 12:28:33,739][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 12:28:33,739][__name__][INFO] - Running outputs/test_runs//merged/checkpoint-3 | use_sft=False | apply_chat_template=False
+[2026-01-31 12:28:33,741][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 12:28:33,741][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/test_runs//merged/checkpoint-3', 'tokenizer': 'outputs/test_runs//merged/checkpoint-3', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 12:28:33,795][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 12:28:34,548][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 12:28:41,467][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 12:28:41,467][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 12:28:41,468][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 12:28:41,795][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 12:29:02,282][lm-eval][WARNING] - Failed to get model SHA for outputs/test_runs//merged/checkpoint-3 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/test_runs//merged/checkpoint-3'. Use `repo_type` argument if needed.
+[2026-01-31 12:29:03,331][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 12:29:03,355][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-3/2026-01-31_12-28-31/_ro_mmlu.json
+[2026-01-31 12:29:03,374][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-3/2026-01-31_12-28-31/eval_results.json
+[2026-01-31 12:29:03,374][__name__][INFO] - 📊 Summary:
+[2026-01-31 12:29:03,374][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.25, 'acc_stderr,none': 0.04351941398892446}
+[2026-01-31 12:29:04,551][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 12:41:34,156][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 12:41:34,156][__name__][INFO] - Evaluation global_step: 7 (for WandB x-axis alignment)
+[2026-01-31 12:41:34,331][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 12:41:34,339][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-7/2026-01-31_12-41-34
+[2026-01-31 12:41:34,340][__name__][INFO] - Generated run name: cpt-checkpoint-CPTSignalEstablishment-ms2-1M
+[2026-01-31 12:41:36,201][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 12:41:36,201][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 12:41:36,201][__name__][INFO] - Running outputs/test_runs//merged/checkpoint-7 | use_sft=False | apply_chat_template=False
+[2026-01-31 12:41:36,207][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 12:41:36,207][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/test_runs//merged/checkpoint-7', 'tokenizer': 'outputs/test_runs//merged/checkpoint-7', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 12:41:36,276][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 12:41:37,026][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 12:41:42,480][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 12:41:42,480][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 12:41:42,481][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 12:41:42,809][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 12:42:03,332][lm-eval][WARNING] - Failed to get model SHA for outputs/test_runs//merged/checkpoint-7 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/test_runs//merged/checkpoint-7'. Use `repo_type` argument if needed.
+[2026-01-31 12:42:04,481][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 12:42:04,505][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-7/2026-01-31_12-41-34/_ro_mmlu.json
+[2026-01-31 12:42:04,524][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-7/2026-01-31_12-41-34/eval_results.json
+[2026-01-31 12:42:04,524][__name__][INFO] - 📊 Summary:
+[2026-01-31 12:42:04,525][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.25, 'acc_stderr,none': 0.04351941398892446}
+[2026-01-31 12:42:05,720][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 13:23:14,628][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 13:23:14,628][__name__][INFO] - Evaluation global_step: 0 (for WandB x-axis alignment)
+[2026-01-31 13:23:14,804][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 13:23:14,804][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_13-23-14
+[2026-01-31 13:23:14,805][__name__][INFO] - Generated run name: cpt-llama-CPTSignalEstablishment-ms2-1M
+[2026-01-31 13:23:16,523][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 13:23:16,523][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 13:23:16,523][__name__][INFO] - Running meta-llama/Llama-3.2-1B | use_sft=False | apply_chat_template=False
+[2026-01-31 13:23:16,525][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 13:23:16,525][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 13:23:16,576][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 13:23:20,092][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 13:23:25,402][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 13:23:25,402][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 13:23:25,403][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 13:23:25,731][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 13:23:47,329][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 13:23:47,353][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_13-23-14/_ro_mmlu.json
+[2026-01-31 13:23:47,373][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_13-23-14/eval_results.json
+[2026-01-31 13:23:47,374][__name__][INFO] - 📊 Summary:
+[2026-01-31 13:23:47,374][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.22, 'acc_stderr,none': 0.041633319989322654}
+[2026-01-31 13:23:48,471][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 13:26:41,470][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 13:26:41,470][__name__][INFO] - Evaluation global_step: 3 (for WandB x-axis alignment)
+[2026-01-31 13:26:41,658][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 13:26:41,658][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-3/2026-01-31_13-26-41
+[2026-01-31 13:26:41,658][__name__][INFO] - Generated run name: cpt-checkpoint-CPTSignalEstablishment-ms2-1M
+[2026-01-31 13:26:43,459][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 13:26:43,459][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 13:26:43,459][__name__][INFO] - Running outputs/test_runs//merged/checkpoint-3 | use_sft=False | apply_chat_template=False
+[2026-01-31 13:26:43,461][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 13:26:43,461][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/test_runs//merged/checkpoint-3', 'tokenizer': 'outputs/test_runs//merged/checkpoint-3', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 13:26:43,522][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 13:26:44,278][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 13:26:49,613][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 13:26:49,613][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 13:26:49,614][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 13:26:49,941][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 13:27:31,663][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 13:27:31,663][__name__][INFO] - Evaluation global_step: 0 (for WandB x-axis alignment)
+[2026-01-31 13:27:31,839][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 13:27:31,839][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_13-27-31
+[2026-01-31 13:27:31,840][__name__][INFO] - Generated run name: cpt-llama-CPTSignalEstablishment-ms2-1M
+[2026-01-31 13:27:33,541][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 13:27:33,542][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 13:27:33,542][__name__][INFO] - Running meta-llama/Llama-3.2-1B | use_sft=False | apply_chat_template=False
+[2026-01-31 13:27:33,544][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 13:27:33,544][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 13:27:33,596][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 13:27:36,960][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 13:27:42,345][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 13:27:42,345][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 13:27:42,346][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 13:27:42,673][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 13:28:04,505][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 13:28:04,529][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_13-27-31/_ro_mmlu.json
+[2026-01-31 13:28:04,549][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_13-27-31/eval_results.json
+[2026-01-31 13:28:04,550][__name__][INFO] - 📊 Summary:
+[2026-01-31 13:28:04,550][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.22, 'acc_stderr,none': 0.041633319989322654}
+[2026-01-31 13:28:05,726][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 13:30:41,429][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 13:30:41,429][__name__][INFO] - Evaluation global_step: 7 (for WandB x-axis alignment)
+[2026-01-31 13:30:41,687][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 13:30:41,701][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-7/2026-01-31_13-30-41
+[2026-01-31 13:30:41,701][__name__][INFO] - Generated run name: cpt-checkpoint-CPTSignalEstablishment-ms2-1M
+[2026-01-31 13:30:43,370][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 13:30:43,370][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 13:30:43,370][__name__][INFO] - Running outputs/test_runs//merged/checkpoint-7 | use_sft=False | apply_chat_template=False
+[2026-01-31 13:30:43,372][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 13:30:43,372][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/test_runs//merged/checkpoint-7', 'tokenizer': 'outputs/test_runs//merged/checkpoint-7', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 13:30:43,425][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 13:30:44,166][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 13:30:49,581][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 13:30:49,581][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 13:30:49,582][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 13:30:49,912][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 13:31:10,716][lm-eval][WARNING] - Failed to get model SHA for outputs/test_runs//merged/checkpoint-7 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/test_runs//merged/checkpoint-7'. Use `repo_type` argument if needed.
+[2026-01-31 13:31:11,757][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 13:31:11,780][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-7/2026-01-31_13-30-41/_ro_mmlu.json
+[2026-01-31 13:31:11,800][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-7/2026-01-31_13-30-41/eval_results.json
+[2026-01-31 13:31:11,800][__name__][INFO] - 📊 Summary:
+[2026-01-31 13:31:11,800][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.19, 'acc_stderr,none': 0.039427724440366255}
+[2026-01-31 13:31:13,241][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 13:34:36,001][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 13:34:36,002][__name__][INFO] - Evaluation global_step: 15 (for WandB x-axis alignment)
+[2026-01-31 13:34:36,178][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 13:34:36,182][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-15/2026-01-31_13-34-36
+[2026-01-31 13:34:36,183][__name__][INFO] - Generated run name: cpt-checkpoint-CPTSignalEstablishment-ms2-1M
+[2026-01-31 13:34:37,855][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 13:34:37,855][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 13:34:37,856][__name__][INFO] - Running outputs/test_runs//merged/checkpoint-15 | use_sft=False | apply_chat_template=False
+[2026-01-31 13:34:37,857][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 13:34:37,858][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/test_runs//merged/checkpoint-15', 'tokenizer': 'outputs/test_runs//merged/checkpoint-15', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 13:34:37,910][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 13:34:38,893][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 13:34:44,266][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 13:34:44,266][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 13:34:44,266][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 13:34:44,594][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 13:35:05,072][lm-eval][WARNING] - Failed to get model SHA for outputs/test_runs//merged/checkpoint-15 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/test_runs//merged/checkpoint-15'. Use `repo_type` argument if needed.
+[2026-01-31 13:35:06,081][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 13:35:06,105][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-15/2026-01-31_13-34-36/_ro_mmlu.json
+[2026-01-31 13:35:06,124][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs__merged_checkpoint-15/2026-01-31_13-34-36/eval_results.json
+[2026-01-31 13:35:06,125][__name__][INFO] - 📊 Summary:
+[2026-01-31 13:35:06,125][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.25, 'acc_stderr,none': 0.04351941398892446}
+[2026-01-31 13:35:07,346][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 14:29:29,389][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 14:29:29,390][__name__][INFO] - Evaluation global_step: 0 (for WandB x-axis alignment)
+[2026-01-31 14:29:29,582][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 14:29:29,583][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_14-29-29
+[2026-01-31 14:29:29,583][__name__][INFO] - Using run name: cpt-llama-CPTSignalEstablishment-ms2-2M
+[2026-01-31 14:29:31,379][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 14:29:31,380][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 14:29:31,380][__name__][INFO] - Running meta-llama/Llama-3.2-1B | use_sft=False | apply_chat_template=False
+[2026-01-31 14:29:31,382][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 14:29:31,382][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 14:29:31,435][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 14:29:34,016][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 14:29:39,281][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 14:29:39,281][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 14:29:39,282][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 14:29:39,612][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 14:30:01,112][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 14:30:01,135][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_14-29-29/_ro_mmlu.json
+[2026-01-31 14:30:01,155][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_14-29-29/eval_results.json
+[2026-01-31 14:30:01,155][__name__][INFO] - 📊 Summary:
+[2026-01-31 14:30:01,155][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.22, 'acc_stderr,none': 0.041633319989322654}
+[2026-01-31 14:30:02,283][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 14:32:42,399][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 14:32:42,399][__name__][INFO] - Evaluation global_step: 7 (for WandB x-axis alignment)
+[2026-01-31 14:32:42,588][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 14:32:42,588][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs_cpt-llama-CPTSignalEstablishment-ms2-2M_merged_checkpoint-7/2026-01-31_14-32-42
+[2026-01-31 14:32:42,588][__name__][INFO] - Using run name: cpt-llama-CPTSignalEstablishment-ms2-2M
+[2026-01-31 14:32:44,238][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 14:32:44,238][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 14:32:44,238][__name__][INFO] - Running outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-7 | use_sft=False | apply_chat_template=False
+[2026-01-31 14:32:44,240][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 14:32:44,240][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-7', 'tokenizer': 'outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-7', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 14:32:44,297][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 14:32:45,041][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 14:32:50,083][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 14:32:50,083][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 14:32:50,084][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 14:32:50,414][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 14:33:10,923][lm-eval][WARNING] - Failed to get model SHA for outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-7 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-7'. Use `repo_type` argument if needed.
+[2026-01-31 14:33:11,910][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 14:33:11,933][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs_cpt-llama-CPTSignalEstablishment-ms2-2M_merged_checkpoint-7/2026-01-31_14-32-42/_ro_mmlu.json
+[2026-01-31 14:33:11,953][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs_cpt-llama-CPTSignalEstablishment-ms2-2M_merged_checkpoint-7/2026-01-31_14-32-42/eval_results.json
+[2026-01-31 14:33:11,953][__name__][INFO] - 📊 Summary:
+[2026-01-31 14:33:11,953][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.25, 'acc_stderr,none': 0.04351941398892446}
+[2026-01-31 14:33:13,075][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 14:36:12,738][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 14:36:12,738][__name__][INFO] - Evaluation global_step: 15 (for WandB x-axis alignment)
+[2026-01-31 14:36:12,952][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 14:36:12,952][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs_cpt-llama-CPTSignalEstablishment-ms2-2M_merged_checkpoint-15/2026-01-31_14-36-12
+[2026-01-31 14:36:12,952][__name__][INFO] - Using run name: cpt-llama-CPTSignalEstablishment-ms2-2M
+[2026-01-31 14:36:14,664][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 14:36:14,664][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 14:36:14,665][__name__][INFO] - Running outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-15 | use_sft=False | apply_chat_template=False
+[2026-01-31 14:36:14,666][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 14:36:14,666][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-15', 'tokenizer': 'outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-15', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 14:36:14,721][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 14:36:15,727][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 14:36:21,270][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 14:36:21,270][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 14:36:21,270][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 14:36:21,565][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 14:36:42,843][lm-eval][WARNING] - Failed to get model SHA for outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-15 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-15'. Use `repo_type` argument if needed.
+[2026-01-31 14:36:43,912][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 14:36:43,936][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs_cpt-llama-CPTSignalEstablishment-ms2-2M_merged_checkpoint-15/2026-01-31_14-36-12/_ro_mmlu.json
+[2026-01-31 14:36:43,957][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs_cpt-llama-CPTSignalEstablishment-ms2-2M_merged_checkpoint-15/2026-01-31_14-36-12/eval_results.json
+[2026-01-31 14:36:43,957][__name__][INFO] - 📊 Summary:
+[2026-01-31 14:36:43,957][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.23, 'acc_stderr,none': 0.04229525846816507}
+[2026-01-31 14:36:45,204][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 14:39:45,235][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 14:39:45,235][__name__][INFO] - Evaluation global_step: 0 (for WandB x-axis alignment)
+[2026-01-31 14:39:45,431][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 14:39:45,431][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_14-39-45
+[2026-01-31 14:39:45,431][__name__][INFO] - Using run name: cpt-llama-CPTSignalEstablishment-ms2-2M
+[2026-01-31 14:39:47,209][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 14:39:47,209][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 14:39:47,209][__name__][INFO] - Running meta-llama/Llama-3.2-1B | use_sft=False | apply_chat_template=False
+[2026-01-31 14:39:47,211][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 14:39:47,211][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 14:39:47,263][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 14:39:50,503][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 14:39:55,609][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 14:39:55,610][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 14:39:55,610][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 14:39:55,939][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 14:40:17,475][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 14:40:17,499][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_14-39-45/_ro_mmlu.json
+[2026-01-31 14:40:17,518][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_14-39-45/eval_results.json
+[2026-01-31 14:40:17,518][__name__][INFO] - 📊 Summary:
+[2026-01-31 14:40:17,518][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.22, 'acc_stderr,none': 0.041633319989322654}
+[2026-01-31 14:40:18,618][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 14:43:00,917][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 14:43:00,920][__name__][INFO] - Evaluation global_step: 7 (for WandB x-axis alignment)
+[2026-01-31 14:43:01,111][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 14:43:01,112][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs_cpt-llama-CPTSignalEstablishment-ms2-2M_merged_checkpoint-7/2026-01-31_14-43-01
+[2026-01-31 14:43:01,112][__name__][INFO] - Using run name: cpt-llama-CPTSignalEstablishment-ms2-2M
+[2026-01-31 14:43:03,021][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 14:43:03,021][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 14:43:03,022][__name__][INFO] - Running outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-7 | use_sft=False | apply_chat_template=False
+[2026-01-31 14:43:03,023][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 14:43:03,024][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-7', 'tokenizer': 'outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-7', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 14:43:03,090][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 14:43:03,856][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 14:43:08,906][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 14:43:08,906][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 14:43:08,907][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 14:43:09,228][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 14:43:29,801][lm-eval][WARNING] - Failed to get model SHA for outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-7 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-7'. Use `repo_type` argument if needed.
+[2026-01-31 14:43:30,833][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 14:43:30,858][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs_cpt-llama-CPTSignalEstablishment-ms2-2M_merged_checkpoint-7/2026-01-31_14-43-01/_ro_mmlu.json
+[2026-01-31 14:43:30,877][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs_cpt-llama-CPTSignalEstablishment-ms2-2M_merged_checkpoint-7/2026-01-31_14-43-01/eval_results.json
+[2026-01-31 14:43:30,878][__name__][INFO] - 📊 Summary:
+[2026-01-31 14:43:30,878][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.25, 'acc_stderr,none': 0.04351941398892446}
+[2026-01-31 14:43:32,169][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 14:46:30,274][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 14:46:30,275][__name__][INFO] - Evaluation global_step: 15 (for WandB x-axis alignment)
+[2026-01-31 14:46:30,449][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 14:46:30,449][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs_cpt-llama-CPTSignalEstablishment-ms2-2M_merged_checkpoint-15/2026-01-31_14-46-30
+[2026-01-31 14:46:30,449][__name__][INFO] - Using run name: cpt-llama-CPTSignalEstablishment-ms2-2M
+[2026-01-31 14:46:32,086][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 14:46:32,086][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=100
+[2026-01-31 14:46:32,086][__name__][INFO] - Running outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-15 | use_sft=False | apply_chat_template=False
+[2026-01-31 14:46:32,088][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 14:46:32,088][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-15', 'tokenizer': 'outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-15', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 14:46:32,142][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 14:46:32,894][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 14:46:38,366][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 14:46:38,366][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 14:46:38,367][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 14:46:38,695][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 14:46:59,168][lm-eval][WARNING] - Failed to get model SHA for outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-15 at revision main. Error: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'outputs/test_runs/cpt-llama-CPTSignalEstablishment-ms2-2M/merged/checkpoint-15'. Use `repo_type` argument if needed.
+[2026-01-31 14:47:00,169][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 14:47:00,193][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs_cpt-llama-CPTSignalEstablishment-ms2-2M_merged_checkpoint-15/2026-01-31_14-46-30/_ro_mmlu.json
+[2026-01-31 14:47:00,211][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/outputs_test_runs_cpt-llama-CPTSignalEstablishment-ms2-2M_merged_checkpoint-15/2026-01-31_14-46-30/eval_results.json
+[2026-01-31 14:47:00,211][__name__][INFO] - 📊 Summary:
+[2026-01-31 14:47:00,211][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.25, 'acc_stderr,none': 0.04351941398892446}
+[2026-01-31 14:47:01,740][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 15:30:08,673][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 15:30:08,673][__name__][INFO] - Evaluation global_step: 0 (for WandB x-axis alignment)
+[2026-01-31 15:30:08,849][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 15:30:08,849][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_15-30-08
+[2026-01-31 15:30:08,850][__name__][INFO] - Using run name: cpt-llama-CPTSignalEstablishment-ms10-800M
+[2026-01-31 15:30:10,590][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 15:30:10,590][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=1000
+[2026-01-31 15:30:10,590][__name__][INFO] - Running meta-llama/Llama-3.2-1B | use_sft=False | apply_chat_template=False
+[2026-01-31 15:30:10,592][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 15:30:10,592][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 15:30:10,646][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 15:30:14,628][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 15:30:20,009][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 15:30:20,009][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 15:30:20,010][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 15:30:22,973][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 15:33:49,638][__name__][INFO] - ✅ Finished _ro_mmlu
+[2026-01-31 15:33:49,881][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_15-30-08/_ro_mmlu.json
+[2026-01-31 15:33:49,881][__name__][INFO] - 🚀 Running evaluation for _ro_winogrande | fewshot=5 | limit=1000
+[2026-01-31 15:33:49,881][__name__][INFO] - Running meta-llama/Llama-3.2-1B | use_sft=False | apply_chat_template=False
+[2026-01-31 15:33:49,883][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 15:33:49,883][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 15:33:49,884][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 15:33:51,173][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 15:33:56,552][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_winogrande from None to 5
+[2026-01-31 15:33:56,552][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 15:33:56,553][lm-eval][INFO] - Building contexts for _ro_winogrande on rank 0...
+[2026-01-31 15:33:56,597][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 15:34:20,618][__name__][INFO] - ✅ Finished _ro_winogrande
+[2026-01-31 15:34:20,698][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_15-30-08/_ro_winogrande.json
+[2026-01-31 15:34:20,699][__name__][INFO] - 🚀 Running evaluation for _ro_belebele | fewshot=5 | limit=1000
+[2026-01-31 15:34:20,699][__name__][INFO] - Running meta-llama/Llama-3.2-1B | use_sft=False | apply_chat_template=False
+[2026-01-31 15:34:20,700][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 15:34:20,700][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 15:34:20,701][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 15:34:21,998][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 15:34:26,819][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_belebele from None to 5
+[2026-01-31 15:34:26,820][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 15:34:26,820][lm-eval][INFO] - Building contexts for _ro_belebele on rank 0...
+[2026-01-31 15:34:31,506][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 15:38:57,199][__name__][INFO] - ✅ Finished _ro_belebele
+[2026-01-31 15:38:57,401][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_15-30-08/_ro_belebele.json
+[2026-01-31 15:38:57,402][__name__][INFO] - 🚀 Running evaluation for ro_wiki | fewshot=0 | limit=1000
+[2026-01-31 15:38:57,402][__name__][INFO] - Running meta-llama/Llama-3.2-1B | use_sft=False | apply_chat_template=False
+[2026-01-31 15:38:57,403][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 15:38:57,403][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 15:38:57,405][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 15:38:58,792][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 15:39:01,697][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-31 15:39:01,698][lm-eval][WARNING] - [Task: ro_wiki] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-31 15:39:01,698][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-31 15:39:01,698][lm-eval][WARNING] - [Task: ro_wiki] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-31 15:39:01,698][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-31 15:39:01,698][lm-eval][WARNING] - [Task: ro_wiki] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-31 15:39:04,204][lm-eval][WARNING] - Overwriting default num_fewshot of ro_wiki from None to 0
+[2026-01-31 15:39:04,204][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 15:39:04,205][lm-eval][INFO] - Building contexts for ro_wiki on rank 0...
+[2026-01-31 15:39:04,368][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-31 15:39:44,487][__name__][INFO] - ✅ Finished ro_wiki
+[2026-01-31 15:39:44,612][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_15-30-08/ro_wiki.json
+[2026-01-31 15:39:44,613][__name__][INFO] - 🚀 Running evaluation for _ro_arc_challenge | fewshot=5 | limit=1000
+[2026-01-31 15:39:44,613][__name__][INFO] - Running meta-llama/Llama-3.2-1B | use_sft=False | apply_chat_template=False
+[2026-01-31 15:39:44,614][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 15:39:44,614][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 15:39:44,615][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 15:39:45,934][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 15:39:52,018][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_arc_challenge from None to 5
+[2026-01-31 15:39:52,018][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 15:39:52,019][lm-eval][INFO] - Building contexts for _ro_arc_challenge on rank 0...
+[2026-01-31 15:39:53,362][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 15:41:10,260][__name__][INFO] - ✅ Finished _ro_arc_challenge
+[2026-01-31 15:41:10,419][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_15-30-08/_ro_arc_challenge.json
+[2026-01-31 15:41:10,419][__name__][INFO] - 🚀 Running evaluation for arc_challenge | fewshot=5 | limit=1000
+[2026-01-31 15:41:10,419][__name__][INFO] - Running meta-llama/Llama-3.2-1B | use_sft=False | apply_chat_template=False
+[2026-01-31 15:41:10,420][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 15:41:10,421][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 15:41:10,422][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 15:41:12,283][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 15:41:17,151][lm-eval][WARNING] - Overwriting default num_fewshot of arc_challenge from None to 5
+[2026-01-31 15:41:17,151][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 15:41:17,152][lm-eval][INFO] - Building contexts for arc_challenge on rank 0...
+[2026-01-31 15:41:21,427][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 15:42:06,028][__name__][INFO] - ✅ Finished arc_challenge
+[2026-01-31 15:42:06,173][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_15-30-08/arc_challenge.json
+[2026-01-31 15:42:06,173][__name__][INFO] - 🚀 Running evaluation for winogrande | fewshot=5 | limit=1000
+[2026-01-31 15:42:06,173][__name__][INFO] - Running meta-llama/Llama-3.2-1B | use_sft=False | apply_chat_template=False
+[2026-01-31 15:42:06,175][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 15:42:06,175][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 15:42:06,176][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 15:42:07,490][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 15:42:10,438][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'winogrande' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-31 15:42:14,621][lm-eval][WARNING] - Overwriting default num_fewshot of winogrande from None to 5
+[2026-01-31 15:42:14,621][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 15:42:14,622][lm-eval][INFO] - Building contexts for winogrande on rank 0...
+[2026-01-31 15:42:14,658][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 15:42:29,562][__name__][INFO] - ✅ Finished winogrande
+[2026-01-31 15:42:29,641][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_15-30-08/winogrande.json
+[2026-01-31 15:42:29,642][__name__][INFO] - 🚀 Running evaluation for wikitext | fewshot=0 | limit=1000
+[2026-01-31 15:42:29,642][__name__][INFO] - Running meta-llama/Llama-3.2-1B | use_sft=False | apply_chat_template=False
+[2026-01-31 15:42:29,643][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 15:42:29,643][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 15:42:29,645][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 15:42:30,974][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 15:42:33,869][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-31 15:42:33,869][lm-eval][WARNING] - [Task: wikitext] metric word_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-31 15:42:33,869][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but aggregation is not. using default aggregation=weighted_perplexity
+[2026-01-31 15:42:33,870][lm-eval][WARNING] - [Task: wikitext] metric byte_perplexity is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-31 15:42:33,870][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but aggregation is not. using default aggregation=bits_per_byte
+[2026-01-31 15:42:33,870][lm-eval][WARNING] - [Task: wikitext] metric bits_per_byte is defined, but higher_is_better is not. using default higher_is_better=False
+[2026-01-31 15:42:33,870][datasets.load][ERROR] - `trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'EleutherAI/wikitext_document_level' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+[2026-01-31 15:42:35,937][lm-eval][WARNING] - Overwriting default num_fewshot of wikitext from None to 0
+[2026-01-31 15:42:35,937][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 15:42:35,938][lm-eval][INFO] - Building contexts for wikitext on rank 0...
+[2026-01-31 15:42:36,474][lm-eval][INFO] - Running loglikelihood_rolling requests
+[2026-01-31 15:44:53,434][__name__][INFO] - ✅ Finished wikitext
+[2026-01-31 15:44:53,866][__name__][INFO] - 💾 Saved partial results: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_15-30-08/wikitext.json
+[2026-01-31 15:44:55,010][__name__][INFO] - 📁 Combined results saved to: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_15-30-08/eval_results.json
+[2026-01-31 15:44:55,011][__name__][INFO] - 📊 Summary:
+[2026-01-31 15:44:55,011][__name__][INFO] -   - _ro_mmlu: {'acc,none': 0.218, 'acc_stderr,none': 0.013063179040595235}
+[2026-01-31 15:44:55,011][__name__][INFO] -   - _ro_winogrande: {'acc,none': 0.523, 'acc_stderr,none': 0.015802554246726087}
+[2026-01-31 15:44:55,011][__name__][INFO] -   - _ro_belebele: {'acc_norm,none': 0.2588888888888889, 'acc_norm_stderr,none': 0.014608933836168536}
+[2026-01-31 15:44:55,011][__name__][INFO] -   - ro_wiki: {'word_perplexity,none': 60.237291899731765, 'byte_perplexity,none': 1.831360590300865, 'bits_per_byte,none': 0.8729158821348689}
+[2026-01-31 15:44:55,012][__name__][INFO] -   - _ro_arc_challenge: {'acc_norm,none': 0.31, 'acc_norm_stderr,none': 0.014632638658632765}
+[2026-01-31 15:44:55,012][__name__][INFO] -   - arc_challenge: {'acc,none': 0.356, 'acc_stderr,none': 0.015149042659306678, 'acc_norm,none': 0.342, 'acc_norm_stderr,none': 0.015008706182121804}
+[2026-01-31 15:44:55,012][__name__][INFO] -   - winogrande: {'acc,none': 0.617, 'acc_stderr,none': 0.0153801023256527}
+[2026-01-31 15:44:55,012][__name__][INFO] -   - wikitext: {'word_perplexity,none': 13.18347656256458, 'byte_perplexity,none': 1.6225561371581123, 'bits_per_byte,none': 0.6982683934161412}
+[2026-01-31 15:44:56,037][__name__][INFO] - 📊 W&B run finished
+[2026-01-31 17:11:02,531][__name__][INFO] - Starting Romanian evaluation run
+[2026-01-31 17:11:02,532][__name__][INFO] - Evaluation global_step: 0 (for WandB x-axis alignment)
+[2026-01-31 17:11:02,713][__name__][INFO] - 🚀 CUDA is available. Using GPU: NVIDIA GeForce RTX 3090
+[2026-01-31 17:11:02,720][__name__][INFO] - 📁 Results will be saved in: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/eval_results/meta-llama_Llama-3.2-1B/2026-01-31_17-11-02
+[2026-01-31 17:11:02,720][__name__][INFO] - Using run name: cpt-llama-CPTSignalEstablishment-ms10-800M
+[2026-01-31 17:11:04,789][__name__][INFO] - 📊 W&B logging enabled with GPU monitoring
+[2026-01-31 17:11:04,790][__name__][INFO] - 🚀 Running evaluation for _ro_mmlu | fewshot=5 | limit=1000
+[2026-01-31 17:11:04,790][__name__][INFO] - Running meta-llama/Llama-3.2-1B | use_sft=False | apply_chat_template=False
+[2026-01-31 17:11:04,792][lm-eval][INFO] - Setting random seed to 23 | Setting numpy seed to 23 | Setting torch manual seed to 23
+[2026-01-31 17:11:04,792][lm-eval][INFO] - Initializing hf model, with arguments: {'pretrained': 'meta-llama/Llama-3.2-1B', 'tokenizer': 'meta-llama/Llama-3.2-1B', 'max_length': 2048, 'eval_max_length': 16384, 'truncation': True, 'dtype': 'bfloat16'}
+[2026-01-31 17:11:04,859][lm-eval][INFO] - Using device 'cuda'
+[2026-01-31 17:11:06,428][lm-eval][INFO] - `group` and `group_alias` keys in tasks' configs will no longer be used in the next release of lm-eval. `tag` will be used to allow to call a collection of tasks just like `group`. `group` will be removed in order to not cause confusion with the new ConfigurableGroup which will be the offical way to create groups with addition of group-wide configuations.
+[2026-01-31 17:11:11,711][lm-eval][WARNING] - Overwriting default num_fewshot of _ro_mmlu from None to 5
+[2026-01-31 17:11:11,712][lm-eval][INFO] - Setting fewshot random generator seed to 23
+[2026-01-31 17:11:11,712][lm-eval][INFO] - Building contexts for _ro_mmlu on rank 0...
+[2026-01-31 17:11:14,663][lm-eval][INFO] - Running loglikelihood requests
+[2026-01-31 17:12:56,921][asyncio][WARNING] - socket.send() raised exception.
+[2026-01-31 17:12:57,114][asyncio][WARNING] - socket.send() raised exception.

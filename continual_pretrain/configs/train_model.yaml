@@ -4,16 +4,14 @@ defaults:
 seed: 23 # the default seed is 42(!)
 
 dataset:
-  tokenize: false
+  tokenize: false  # Let trainer handle tokenization (almost always false)
+  use_sft: true    # SFT mode (Romanian tags → model tokens). Set to false for CPT (raw text, no formatting)
   sample_size: 1000  # set to an int for quick smoke tests
-  text_field: "formatted_text"
+  text_field: "text"  # Input column name (DataPreprocessor reads from this)
   name: "danp27/norobots_sft"
   split: "train"
- 
   add_bos_eos: false
   num_proc: 4
-
-  
 
 data_builder:
   enabled: true
@@ -26,6 +24,7 @@ data_builder:
       text_field: null
       add_bos_eos: null
       num_proc: null
+      
     - name: "./data/formatted_data/dolly"
       split: "train"
       proportion: 0.5
@@ -70,12 +69,12 @@ model:
       - gate_proj
       - up_proj
       - down_proj
-      # - embed_tokens
-      # - lm_head
+      - embed_tokens
+      - lm_head
 
 training_args:
   output_dir: "./outputs/train_llama"
-  per_device_train_batch_size: 1
+  per_device_train_batch_size: 32
   gradient_accumulation_steps: 4
   max_length: 2048
   logging_steps: 5
@@ -88,8 +87,8 @@ training_args:
   bf16: true
   fp16: false
   optim: "paged_adamw_8bit"
-  lr_scheduler_type: "constant"
-  warmup_ratio: 0.03
+  lr_scheduler_type: "cosine"
+  warmup_ratio: 0.06
   gradient_checkpointing: true
   max_grad_norm: 1
   dataloader_drop_last: true  # Drop incomplete batches to prevent low-density training steps
@@ -97,7 +96,7 @@ training_args:
 wandb:
   enabled: true
   project: "RoLLM"
-  run_name: "test1"
+  run_name: null  # Set to null to use auto-composed name: {cpt/sft}-{model}-{custom_name}-ms{milestones}-{tokens}M
   group: null
 
 milestone:

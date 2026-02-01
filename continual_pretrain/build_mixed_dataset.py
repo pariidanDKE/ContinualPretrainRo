@@ -39,7 +39,7 @@ from train_utils import prepare_dataset, to_dict
 logger = logging.getLogger(__name__)
 
 
-def add_token_counts(dataset, tokenizer):
+def add_token_counts(dataset, tokenizer, max_length):
     """Add token count column to dataset by tokenizing formatted_text."""
     logger.info("Adding token counts to dataset...")
 
@@ -47,7 +47,7 @@ def add_token_counts(dataset, tokenizer):
         """Count tokens by tokenizing the formatted_text field."""
         text = example['formatted_text']
         # Tokenize to count (don't save the tokens, just the count)
-        token_ids = tokenizer.encode(text, add_special_tokens=False)
+        token_ids = tokenizer(text, add_special_tokens=False, max_length = max_length, truncation = True, padding=False)['input_ids']
         return {'num_tokens': len(token_ids)}
 
     dataset = dataset.map(
@@ -263,8 +263,9 @@ def main(cfg: DictConfig) -> None:
     # Extract configuration
     output_dir = cfg.output_dir
     num_milestones = int(cfg.milestone.num_milestones)
-    tokens_per_milestone = int(cfg.milestone.tokens_per_milestone)
+    max_length = int(cfg.data_builder.max_length)
 
+    tokens_per_milestone = int(cfg.milestone.tokens_per_milestone)
     logger.info(f"Output directory: {output_dir}")
 
 
@@ -275,21 +276,18 @@ def main(cfg: DictConfig) -> None:
     # Load and mix datasets with train/validation split
     logger.info("\n" + "-" * 80)
     train_dataset, val_dataset = prepare_dataset(cfg, tokenizer, return_validation=True, validation_split=0.005)
-    logger.info(f"✓ Mixed training dataset created: {len(train_dataset):,} examples")
-    logger.info(f"✓ Mixed validation dataset created: {len(val_dataset):,} examples")
-
     # Shuffle with fixed seed for reproducibility
     train_dataset = train_dataset.shuffle(seed=dataset_seed)
     val_dataset = val_dataset.shuffle(seed=dataset_seed)
 
     # Add token counts to training data
     logger.info("\n" + "-" * 80)
-    train_dataset, total_train_tokens = add_token_counts(train_dataset, tokenizer)
+    train_dataset, total_train_tokens = add_token_counts(train_dataset, tokenizer, max_length)
 
     # Calculate milestone boundaries (only for training data)
     logger.info("\n" + "-" * 80)
     token_counts = np.array(train_dataset['num_tokens'])
-    boundaries, total_target_tokens, cumulative_tokens = calculate_milestone_boundaries(
+    boundaries, _, _ = calculate_milestone_boundaries(
         token_counts,
         num_milestones,
         tokens_per_milestone
@@ -297,30 +295,26 @@ def main(cfg: DictConfig) -> None:
 
     # Actual number of milestones (may be less if dataset is too small)
     actual_num_milestones = len(boundaries)
+    
+    print(f"Set Max length of sequence to be {max_length} to reflect truncation during training!")
 
     # Assign milestone numbers to training data
     logger.info("\n" + "-" * 80)
     train_dataset = assign_milestone_numbers(train_dataset, boundaries)
 
     # Add token counts to validation data
-    logger.info("\n" + "-" * 80)
-    val_dataset, total_val_tokens = add_token_counts(val_dataset, tokenizer)
+    val_dataset, total_val_tokens = add_token_counts(val_dataset, tokenizer, max_length)
 
     # Assign milestone_num=99 to all validation examples
-    logger.info("Assigning milestone_num=99 to validation examples...")
     val_dataset = val_dataset.map(
         lambda x: {'milestone_num': 99},
         num_proc=4,
         desc="Assigning validation milestone"
     )
-    logger.info(f"✓ Assigned {len(val_dataset):,} examples to validation (milestone_num=99)")
 
     # Combine train and validation datasets
     from datasets import concatenate_datasets
-    logger.info("\n" + "-" * 80)
-    logger.info("Combining training and validation datasets...")
     dataset = concatenate_datasets([train_dataset, val_dataset])
-    logger.info(f"✓ Combined dataset: {len(dataset):,} examples")
     total_tokens = total_train_tokens + total_val_tokens
 
     # Print statistics

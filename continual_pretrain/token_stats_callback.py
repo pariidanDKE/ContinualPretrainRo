@@ -9,15 +9,18 @@ With gradient accumulation, we aggregate stats across all micro-batches within a
 """
 
 import logging
+import time
 import torch
 from typing import Dict, Any, Optional
 from transformers import TrainerCallback
+from transformers.integrations import WandbCallback
 from collections import defaultdict
+import wandb
 
 logger = logging.getLogger(__name__)
 
 
-class TokenStatsCallback(TrainerCallback):
+class TokenStatsCallback(WandbCallback):
     """
     Callback to log token statistics (real vs padding vs EOS tokens) during training.
 
@@ -41,83 +44,83 @@ class TokenStatsCallback(TrainerCallback):
             tokenizer: The tokenizer containing pad_token_id and eos_token_id
             log_every_n_steps: How often to log aggregated statistics (default: 10)
         """
+        super().__init__()  # Initialize parent WandbCallback
         self.tokenizer = tokenizer
         self.log_every_n_steps = log_every_n_steps
         self.pad_token_id = tokenizer.pad_token_id
         self.eos_token_id = tokenizer.eos_token_id
+        self.step_start_time = None
+
+    def on_step_begin(self, args, state, control, **kwargs):
+        """Called at the beginning of each optimizer step. Start timing."""
+        self.step_start_time = time.time()
 
     def on_step_end(self, args, state, control, **kwargs):
         """
         Called at the end of each OPTIMIZER step (after gradient accumulation).
         Logs aggregated token statistics from all micro-batches in this step.
         """
+        # Calculate throughput (tokens per second) for this step
+        tokens_per_second = None
+        elapsed_time = None
+
+        if self.step_start_time is not None:
+            elapsed_time = time.time() - self.step_start_time
+            # Get total tokens from accumulated stats if available
+            if hasattr(state, 'accumulated_batch_stats') and state.accumulated_batch_stats:
+                total_tokens = state.accumulated_batch_stats.get('total_tokens', 0)
+                if elapsed_time > 0 and total_tokens > 0:
+                    tokens_per_second = total_tokens / elapsed_time
+
+        # Check if we should log this step
+        should_log = state.global_step % self.log_every_n_steps == 0
+
         # Only log at specified intervals
-        if state.global_step % self.log_every_n_steps != 0:
-            return
+        if should_log:
+            # Check if trainer has stored batch statistics for us
+            if not hasattr(state, 'accumulated_batch_stats') or not state.accumulated_batch_stats:
+                if state.global_step == self.log_every_n_steps:
+                    logger.warning(
+                        "TokenStatsCallback: No batch statistics found in trainer state. "
+                        "Make sure you're using a trainer with TokenStatsTrainerMixin!"
+                    )
+            else:
+                stats = state.accumulated_batch_stats
 
-        # Check if trainer has stored batch statistics for us
-        if not hasattr(state, 'accumulated_batch_stats') or not state.accumulated_batch_stats:
-            if state.global_step == self.log_every_n_steps:
-                logger.warning(
-                    "TokenStatsCallback: No batch statistics found in trainer state. "
-                    "Make sure you're using a trainer with TokenStatsTrainerMixin!"
+                # Prepare throughput info for logging
+                throughput_info = ""
+                if tokens_per_second is not None:
+                    throughput_info = f"\n  Throughput: {tokens_per_second:,.0f} tok/s (elapsed: {elapsed_time:.2f}s)"
+
+                # Log to console with detailed breakdown
+                logger.info(
+                    f"[Step {state.global_step}] Token Statistics across {stats['num_batches']} batches:\n"
+                    f"  Padding tokens: {stats['padding_tokens']:,} ({stats['padding_ratio']:.2%})\n"
+                    f"  EOS tokens:     {stats['eos_count']:,} (distinct sequences)\n"
+                    f"  Token density:  {stats['token_density']:.2%}"
+                    f"{throughput_info}"
                 )
-            return
 
-        stats = state.accumulated_batch_stats
+                # Log to WandB via WandbCallback integration
+                if state.is_world_process_zero:
+                    logs = {
+                        "token_stats/padding_ratio": stats['padding_ratio'],
+                        "token_stats/eos_count": stats['eos_count'],
+                        "token_stats/total_tokens": stats['real_tokens'],
+                        "token_stats/tokens_per_second" : tokens_per_second if tokens_per_second else 0,
+                        "token_stats/elapsed_time" : elapsed_time if elapsed_time else 0
+                    }
 
-        # Prepare dataset source proportion info
-        source_info = ""
-        if stats.get('source_counts'):
-            total_examples = sum(stats['source_counts'].values())
-            source_lines = []
-            for source, count in sorted(stats['source_counts'].items(), key=lambda x: x[1], reverse=True):
-                proportion = count / total_examples if total_examples > 0 else 0.0
-                source_lines.append(f"    {source}: {count} examples ({proportion:.2%})")
-            if source_lines:
-                source_info = "\n  Dataset sources:\n" + "\n".join(source_lines)
+                    # Log directly to WandB using the WandbCallback's _wandb attribute
+                    if hasattr(self, '_wandb') and self._wandb is not None:
+                        self._wandb.log(logs) #, step=state.global_step)
 
-        # Log to console with detailed breakdown
-        logger.info(
-            f"[Step {state.global_step}] Token Statistics across {stats['num_batches']} batches:\n"
-            f"  Real tokens:    {stats['real_tokens']:,} / {stats['total_tokens']:,} ({stats['real_token_ratio']:.2%})\n"
-            f"  Padding tokens: {stats['padding_tokens']:,} ({stats['padding_ratio']:.2%})\n"
-            f"  EOS tokens:     {stats['eos_count']:,} (distinct sequences)\n"
-            f"  Token density:  {stats['token_density']:.2%}"
-            f"{source_info}"
-        )
-
-        # Log to WandB/TensorBoard via trainer's logging system
-        if state.is_world_process_zero:
-            logs = {
-                "token_stats/real_token_ratio": stats['real_token_ratio'],
-                "token_stats/padding_ratio": stats['padding_ratio'],
-                "token_stats/eos_count": stats['eos_count'],
-                "token_stats/token_density": stats['token_density'],
-                "token_stats/total_tokens": stats['total_tokens'],
-                "token_stats/real_tokens": stats['real_tokens'],
-                "token_stats/num_batches": stats['num_batches'],
-            }
-            # Store for next on_log call
-            if not hasattr(state, 'token_stats_logs'):
-                state.token_stats_logs = {}
-            state.token_stats_logs.update(logs)
-
-        # Clear accumulated stats for next step
+        # CRITICAL: Clear accumulated stats after EVERY step, not just when logging
+        # This prevents accumulation across multiple logging intervals
         state.accumulated_batch_stats = None
 
-    def on_log(self, args, state, control, logs=None, **kwargs):
-        """
-        Called when trainer logs metrics. Add our token stats to the logs.
-        """
-        if hasattr(state, 'token_stats_logs') and state.token_stats_logs:
-            if logs is not None:
-                logs.update(state.token_stats_logs)
-            # Clear after logging
-            state.token_stats_logs = {}
 
-
-def compute_token_statistics(input_ids: torch.Tensor, step_size: int, pad_token_id: int, eos_token_id: int, ds_source=None) -> Dict[str, int]:
+def compute_token_statistics(input_ids: torch.Tensor, step_size: int, pad_token_id: int, eos_token_id: int) -> Dict[str, int]:
     """
     Compute raw token counts from a batch of input_ids.
 
@@ -129,7 +132,6 @@ def compute_token_statistics(input_ids: torch.Tensor, step_size: int, pad_token_
         step_size: Total number of token positions in this batch
         pad_token_id: ID of the padding token
         eos_token_id: ID of the EOS token
-        ds_source: Optional list of dataset sources for each example in the batch
 
     Returns:
         Dictionary containing raw counts:
@@ -137,7 +139,6 @@ def compute_token_statistics(input_ids: torch.Tensor, step_size: int, pad_token_
         - real_tokens: Number of non-padding tokens (including EOS)
         - padding_tokens: Number of padding tokens
         - eos_count: Number of EOS tokens (= number of distinct sequences)
-        - source_counts: Dict mapping dataset source -> count of examples
     """
     # Flatten input_ids for easier counting
     input_ids_flat = input_ids.view(-1)
@@ -149,18 +150,11 @@ def compute_token_statistics(input_ids: torch.Tensor, step_size: int, pad_token_
     # Real tokens = total - padding (EOS counts as a real token)
     padding_tokens = step_size - real_tokens
 
-    # Count dataset sources if provided
-    source_counts = {}
-    if ds_source is not None:
-        for source in ds_source:
-            source_counts[source] = source_counts.get(source, 0) + 1
-
     return {
         'total_tokens': step_size,
         'real_tokens': real_tokens,
         'padding_tokens': padding_tokens,
         'eos_count': eos_count,
-        'source_counts': source_counts,
     }
 
 
@@ -182,7 +176,6 @@ def aggregate_token_statistics(accumulated_stats: Optional[Dict], new_stats: Dic
             'padding_tokens': 0,
             'eos_count': 0,
             'num_batches': 0,
-            'source_counts': defaultdict(int),
         }
 
     # Accumulate raw counts
@@ -192,11 +185,7 @@ def aggregate_token_statistics(accumulated_stats: Optional[Dict], new_stats: Dic
     accumulated_stats['eos_count'] += new_stats['eos_count']
     accumulated_stats['num_batches'] += 1
 
-    # Accumulate source counts
-    if 'source_counts' not in accumulated_stats:
-        accumulated_stats['source_counts'] = defaultdict(int)
-    for source, count in new_stats.get('source_counts', {}).items():
-        accumulated_stats['source_counts'][source] += count
+   
 
     # Compute ratios from accumulated totals
     total = accumulated_stats['total_tokens']
@@ -234,10 +223,6 @@ class TokenStatsTrainerMixin:
 
         We accumulate statistics across all micro-batches within each optimizer step.
         """
-        # Only track statistics during TRAINING, not evaluation
-
-      
-
 
         if model.training:
             output_parent = super().compute_loss(model, inputs, return_outputs = return_outputs, **kwargs)
@@ -247,15 +232,11 @@ class TokenStatsTrainerMixin:
             batch_size, seq_len = inputs['input_ids'].shape
             logger.info(f"Batch shape: ({batch_size}, {seq_len})")
 
-            # Extract ds_source if available in the batch
-            ds_source = inputs.get('ds_source', None)
-
             batch_stats = compute_token_statistics(
                 inputs['input_ids'],
                 step_size = self.step_size,
                 pad_token_id=self.tokenizer.pad_token_id,
                 eos_token_id=self.tokenizer.eos_token_id,
-                ds_source=ds_source
             )
 
             # Aggregate with other micro-batches in this optimizer step
@@ -266,27 +247,7 @@ class TokenStatsTrainerMixin:
                 self.state.accumulated_batch_stats,
                 batch_stats
             )
-
-            real = batch_stats['real_tokens']
-            total = batch_stats['total_tokens']
-            
-            # original_loss = loss
-            # fill_ratio = real / total
-            # scale_factor = torch.tensor(fill_ratio, device = loss.device, dtype = loss.dtype)
-            
-            
-            # #loss = scale_factor * loss
-
-            # # Try different approach of skipping steps which have different values
-            # if fill_ratio < 0.9:
-            #     loss = loss * 0.0 
-            #     # Optional: Add a flag to your stats so you know you skipped it
-            #     batch_stats['skipped_step'] = True
-            #     print(f"\n[CRITICAL SKIP] Rogue batch detected ({real} tokens). Zeroing gradients for this step.")
-
-
-            # logging.info(f"[TOKEN CALLBACK] Altered loss form {original_loss} to {loss}")
-
+     
             return (loss, output_parent[1]) if return_outputs else loss
         else:
             return super().compute_loss(model, inputs, return_outputs=return_outputs, **kwargs)
