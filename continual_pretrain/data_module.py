@@ -2,6 +2,9 @@ from torch.nn.utils.rnn import pad_sequence
 from dataclasses import dataclass
 import torch
 from torch.utils.data import Dataset
+import logging
+
+logger = logging.getLogger(__name__)
 
 class DataPreprocessor:
     # ---- Special token maps ----
@@ -282,6 +285,7 @@ class DataPreprocessor:
             bos = self.tokenizer.bos_token or ""
             eos = self.tokenizer.eos_token or ""
             text = bos + original_local + eos
+            
         else:
             text = original_local
 
@@ -316,8 +320,6 @@ class DataPreprocessor:
                 "labels": labels,
             
                 "attention_mask": encoded["attention_mask"],
-                # uncomment if you want these:
-                # "loss_mask": loss_mask,
             }
 
 ################## DATA COLLATOR ###########################

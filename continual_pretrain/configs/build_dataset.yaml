@@ -44,7 +44,7 @@ data_builder:
       split: "train"
       proportion: 1
       sample_size : null
-      #sample_size: 10000
+      #sample_size: 100000
 
 
     # - name: "danp27/norobots_sft"

@@ -101,15 +101,6 @@ class InitialLossCallback(TrainerCallback):
         }
         state.log_history.append(log_dict)
 
-        # Also log to WandB directly if available
-        if hasattr(state, "is_world_process_zero") and state.is_world_process_zero():
-            try:
-                import wandb
-                if wandb.run is not None:
-                    wandb.log(log_dict, step=0)
-                    logger.info("[InitialLoss] Logged to WandB")
-            except ImportError:
-                pass
 
         self.logged = True
 

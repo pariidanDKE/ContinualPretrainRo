@@ -13,6 +13,7 @@ Usage:
         milestone.target_tokens=200000000 \
         milestone.resume_from_checkpoint=outputs/checkpoint-6104
 """
+from unsloth import unsloth_train
 import os
 import logging
 import hydra
@@ -39,11 +40,97 @@ from trainer_callbacks import (
 from token_stats_callback import create_trainer_with_token_stats, TokenStatsCallback
 from model import ModelBuilder, ModelBuilderConfig, LoraAdapterConfig
 from trl import SFTConfig, SFTTrainer
-from transformers import  AutoTokenizer
+from transformers import  AutoTokenizer, Trainer
 from unsloth import UnslothTrainer, UnslothTrainingArguments
+from train_utils import DebugUnslothTrainer
+
+
+
 
 logger = logging.getLogger(__name__)
 
+
+
+# Save original method
+original_get_batch_samples = Trainer.get_batch_samples
+
+def debug_get_batch_samples(self, epoch_iterator, num_batches, device):
+    logging.info(f"\n{'='*80}")
+    logging.info(f"[get_batch_samples] CALLED")
+    logging.info(f"{'='*80}")
+    logging.info(f"  num_batches requested: {num_batches}")
+    logging.info(f"  model_accepts_loss_kwargs: {self.model_accepts_loss_kwargs}")
+    logging.info(f"  compute_loss_func: {self.compute_loss_func}")
+    
+    # Collect batches
+    batch_samples = []
+    for i in range(num_batches):
+        try:
+            batch = next(epoch_iterator)
+            batch_samples.append(batch)
+            logging.info(f"  ✓ Collected batch {i+1}/{num_batches}")
+        except StopIteration:
+            logging.info(f"  ✗ StopIteration at batch {i+1}/{num_batches}")
+            break
+    
+    logging.info(f"  → Total batches collected: {len(batch_samples)}")
+    
+    # Check if we should count items
+    count_num_items_in_batch = (
+        len(batch_samples) > 0
+        and "labels" in batch_samples[0]
+        and (self.model_accepts_loss_kwargs or self.compute_loss_func is not None)
+    )
+    
+    logging.info(f"\n  Condition checks:")
+    logging.info(f"    len(batch_samples) > 0: {len(batch_samples) > 0}")
+    if len(batch_samples) > 0:
+        logging.info(f"    'labels' in batch_samples[0]: {'labels' in batch_samples[0]}")
+    logging.info(f"    model_accepts_loss_kwargs: {self.model_accepts_loss_kwargs}")
+    logging.info(f"    compute_loss_func is not None: {self.compute_loss_func is not None}")
+    logging.info(f"  → count_num_items_in_batch: {count_num_items_in_batch}")
+    
+    num_items_in_batch = None
+    
+    if count_num_items_in_batch:
+        logging.info(f"\n  Counting items in batch...")
+        try:
+            num_items_in_batch = sum([(batch["labels"].ne(-100)).sum() for batch in batch_samples])
+            logging.info(f"    Sum of non-padding tokens: {num_items_in_batch}")
+        except (TypeError, AttributeError) as e:
+            logging.info(f"    Failed to count: {e}")
+            pass
+        
+        if num_items_in_batch is not None:
+            logging.info(f"    Before device operations: {num_items_in_batch}")
+            
+            if self.args.average_tokens_across_devices:
+                num_items_in_batch = self.accelerator.gather(num_items_in_batch).sum()
+                logging.info(f"    After gather across devices: {num_items_in_batch}")
+            
+            import torch
+            if torch.is_tensor(num_items_in_batch):
+                num_items_in_batch = num_items_in_batch.to(device)
+                logging.info(f"    After .to(device): {num_items_in_batch}")
+            
+            if self.args.n_gpu > 1 and num_items_in_batch.dim() == 0:
+                num_items_in_batch = num_items_in_batch.unsqueeze(0)
+                logging.info(f"    After unsqueeze (multi-GPU): {num_items_in_batch}")
+            
+            # Divide by number of devices with the same batch
+            if pc := getattr(self.accelerator, "parallelism_config", None):
+                num_items_in_batch = num_items_in_batch // pc.non_data_parallel_size
+                logging.info(f"    After parallel division: {num_items_in_batch}")
+    
+    logging.info(f"\n  RETURN:")
+    logging.info(f"    batch_samples length: {len(batch_samples)}")
+    logging.info(f"    num_items_in_batch: {num_items_in_batch}")
+    logging.info(f"{'='*80}\n")
+    
+    return batch_samples, num_items_in_batch
+
+# Apply monkey patch
+Trainer.get_batch_samples = debug_get_batch_samples
 
 @hydra.main(config_path="configs", config_name="train_model.yaml", version_base=None)
 def main(cfg: DictConfig) -> None:
@@ -71,7 +158,7 @@ def main(cfg: DictConfig) -> None:
     current_milestone = milestone_cfg.get("current_milestone", 0)
 
     logger.info(f"Milestone configuration:")
-    logger.info(f"  Target tokens: {target_tokens:,}")
+    logger.info(f"  Target tokens: {target_tokens:,} (minus remainder)")
     logger.info(f"  Total training tokens (for LR schedule): {total_training_tokens:,}")
     logger.info(f"  Resume from: {resume_checkpoint if resume_checkpoint else 'scratch'}")
     if prebuilt_dataset_path:
@@ -118,6 +205,7 @@ def main(cfg: DictConfig) -> None:
             logger.warning("Falling back to on-the-fly dataset preparation")
         train_dataset, val_dataset = prepare_dataset(cfg, tokenizer, return_validation=True, validation_split=0.1)
 
+
     # Calculate max_steps for this milestone
     batch_size = cfg.training_args.per_device_train_batch_size
     grad_accum = cfg.training_args.gradient_accumulation_steps
@@ -141,6 +229,18 @@ def main(cfg: DictConfig) -> None:
         seq_length=seq_length,
         world_size=world_size
     )
+
+    # tokens_per_step =  batch_size * grad_accum * world_size
+    # samples_needed = max_steps * tokens_per_step 
+    # samples_needed = samples_needed + (5 * tokens_per_step)
+    # if len(train_dataset) > samples_needed:
+    #     logger.info(f"Subsetting train_dataset from {len(train_dataset)} to {samples_needed} samples")
+    #     train_dataset = train_dataset.select(range(samples_needed))
+    # else:
+    #     logger.warning(f"Train dataset has {len(train_dataset)} samples, but need {samples_needed}")
+    #     logger.warning("Using full dataset - training may end early")
+
+
     logger.info(
         f"Step Calculation Details:\n"
         f"  - Target Tokens: {total_training_tokens}\n"
@@ -177,10 +277,10 @@ def main(cfg: DictConfig) -> None:
 
     # NOTE: Uncomment training args after diagnosing
     # Add evaluation configuration
-    training_kwargs['eval_strategy'] = 'steps'
-    training_kwargs['eval_steps'] = max(1, max_steps - 1)  # Evaluate just before end (avoids WandB finish race)
-    training_kwargs['per_device_eval_batch_size'] = 4 #training_kwargs.get('per_device_eval_batch_size', batch_size)
-    training_kwargs['prediction_loss_only'] = True  # Only compute loss, don't store logits/predictions (prevents OOM)
+    # training_kwargs['eval_strategy'] = 'steps'
+    # training_kwargs['eval_steps'] = max(1, max_steps - 1)  # Evaluate just before end (avoids WandB finish race)
+    # training_kwargs['per_device_eval_batch_size'] = 4 #training_kwargs.get('per_device_eval_batch_size', batch_size)
+    # training_kwargs['prediction_loss_only'] = True  # Only compute loss, don't store logits/predictions (prevents OOM)
 
     # Patch TRL packing to prevent low-density bins that may cause sawtooth loss
     # if cfg.data_collator.get("packing", False):
@@ -202,12 +302,12 @@ def main(cfg: DictConfig) -> None:
         )
 
         trainer = create_trainer_with_token_stats(
-            UnslothTrainer,
+            DebugUnslothTrainer,
             model=model,
             args=training_args,
             train_dataset=train_dataset,
-            eval_dataset=val_dataset,
-            tokenizer=tokenizer,
+            #eval_dataset=val_dataset,
+            processing_class=tokenizer,
         )
     elif use_sft:
         logger.info("Using SFTTrainer")
@@ -225,7 +325,7 @@ def main(cfg: DictConfig) -> None:
             model=model,
             args=training_args,
             train_dataset=train_dataset,
-            eval_dataset=val_dataset,
+            #eval_dataset=val_dataset,
             processing_class=tokenizer,
         )
   
@@ -239,9 +339,9 @@ def main(cfg: DictConfig) -> None:
     scheduler_callback = WSDSchedulerCallback(total_steps, warmup_ratio=training_args.warmup_ratio)
     epoch_callback = EpochResetCallback(total_steps, num_train_epochs=num_train_epochs)
     token_stats_callback = TokenStatsCallback(tokenizer, log_every_n_steps=1)
-    initial_loss_callback = InitialLossCallback(num_eval_batches=1)
+    #initial_loss_callback = InitialLossCallback(num_eval_batches=1)
 
-    trainer.add_callback(initial_loss_callback)
+    #trainer.add_callback(initial_loss_callback)
     trainer.add_callback(token_stats_callback)
     trainer.add_callback(scheduler_callback)
     trainer.add_callback(epoch_callback)
@@ -252,6 +352,7 @@ def main(cfg: DictConfig) -> None:
         logger.info(f"Resuming training from: {resume_checkpoint}")
 
     trainer.train(resume_from_checkpoint=resume_checkpoint)
+    #unsloth_train(trainer,resume_from_checkpoint=resume_checkpoint)
 
     logger.info("=" * 80)
     logger.info("Milestone segment training complete!")

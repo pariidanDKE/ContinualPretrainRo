@@ -804,10 +804,6 @@ class HFLM(TemplateLM):
                 :, -left_truncate_len:
             ]
         self.tokenizer.padding_side = old_padding_side
-        # print(encoding["input_ids"])
-        # print(encoding["attention_mask"])
-        # import sys
-        # sys.exit()
 
         return encoding["input_ids"], encoding["attention_mask"]
 
@@ -901,11 +897,15 @@ class HFLM(TemplateLM):
             adaptive_batch_size = batch_size
 
         import sys
-        for idx, (string,) in enumerate(tqdm(
+        for idx, req_args in enumerate(tqdm(
             [req.args for req in requests], disable=(disable_tqdm or (self.rank != 0))
         )):
-            # Use print to bypass any logging filters - force output to stdout
+            # Safety check: skip if req_args is None
+            if req_args is None:
+                print(f"[WARNING] Request {idx} has None args, skipping")
+                continue
 
+            string, = req_args
 
             # Encode the string - will be truncated if too long
             # Use eval_max_length for truncation (can be different from model's max_length)
@@ -979,9 +979,10 @@ class HFLM(TemplateLM):
         disable_tqdm: bool = False,
         override_bs: int = None,
     ) -> List[Tuple[float, bool]]:
+        # Print first 3 examples to verify formatting
+
         # TODO: implement some kind of efficient-request-middleware that lumps together requests with the same context
         res = []
-
         def _collate(req: Tuple[Tuple[str, str], List[int], List[int]]):
             """Defines the key for the sorted method"""
             # the negative sign on len(toks) sorts descending - this has a few advantages:

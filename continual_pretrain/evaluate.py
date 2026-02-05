@@ -4,6 +4,7 @@ import logging
 from lm_eval import evaluator
 import os
 import json
+import shutil
 from datetime import datetime
 from pathlib import Path
 from dotenv import load_dotenv
@@ -127,6 +128,18 @@ def main(cfg: DictConfig):
         except TypeError:
             return json.dumps(json.loads(json.dumps(obj, default=str)), indent=2, ensure_ascii=False)
 
+    # ---- Print configuration summary ----
+    logger.info("=" * 80)
+    logger.info("EVALUATION CONFIGURATION")
+    logger.info("=" * 80)
+    logger.info(f"Model: {cfg.model_path}")
+    logger.info(f"Tokenizer: {tokenizer_path}")
+    logger.info(f"use_sft: {use_sft}")
+    logger.info(f"apply_chat_template (global): {cfg.apply_chat_template}")
+    logger.info(f"Tasks to run: {list(selected_tasks)}")
+    logger.info(f"Perplexity tasks (no chat template): {list(preplexity_tasks)}")
+    logger.info("=" * 80 + "\n")
+
     # ---- Iterate through evaluation tasks ----
     for task_cfg in cfg.evaluation_tasks:
         task_name = task_cfg.name
@@ -210,6 +223,15 @@ def main(cfg: DictConfig):
             logger.info(f"  - {task_name}: {metrics}")
         else:
             logger.info(f"  - {task_name}: No metrics found")
+
+    # ---- Delete merged checkpoint after evaluation (saves disk on many-milestone runs) ----
+    if cfg.get("delete_checkpoint", False):
+        checkpoint_path = Path(cfg.model_path)
+        if checkpoint_path.is_dir():
+            shutil.rmtree(checkpoint_path)
+            logger.info(f"🗑️  Deleted merged checkpoint: {checkpoint_path}")
+        else:
+            logger.info(f"⚠️  delete_checkpoint=true but '{cfg.model_path}' is not a local directory — skipped")
 
     # ---- Finish W&B run ----
     if cfg.get("use_wandb", False):

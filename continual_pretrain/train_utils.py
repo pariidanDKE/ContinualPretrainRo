@@ -8,7 +8,7 @@ import math
 import logging
 from typing import Any, Dict
 from pathlib import Path
-
+from unsloth.trainer import UnslothTrainer
 
 from typing import Optional
 from omegaconf import DictConfig, OmegaConf
@@ -17,6 +17,38 @@ from data_module import DataPreprocessor, SimplePaddingCollator, PackedSequenceD
 
 logger = logging.getLogger(__name__)
 
+# ####################################################################################
+# Debug Trainer
+# ####################################################################################
+
+class DebugUnslothTrainer(UnslothTrainer):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args,**kwargs)
+        self.micro_batch_losses = []
+        self._call_counter = 0
+    
+    def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
+        result = super().compute_loss(model, inputs, return_outputs, num_items_in_batch)
+
+        if model.training:
+            self._call_counter += 1
+            logging.info(f">>> compute_loss call #{self._call_counter} | global_step={self.state.global_step}")
+
+        loss = result[0] if return_outputs else result
+        logging.info(f"[COMPUTE_LOSS] Loss per micro-batch = {loss.item():.4f}")
+        logging.info(f"[DEBUG] model_accepts_loss_kwargs = {self.model_accepts_loss_kwargs}")
+        logging.info(f"[DEBUG] num_items_in_batch = {num_items_in_batch}")
+        logging.info(f"[DEBUG] compute_loss_func = {self.compute_loss_func}")
+
+        return result
+    
+    def training_step(self, model, inputs, num_items_in_batch=None):
+        """This is called once per micro-batch"""
+        print(f"\n=== training_step START: global_step={self.state.global_step}, num_items={num_items_in_batch} ===")
+        result = super().training_step(model, inputs, num_items_in_batch)
+        print(f"=== training_step END: loss={result.item():.4f} ===\n")
+        return result
 
 # =============================================================================
 # Configuration Utilities
@@ -531,20 +563,60 @@ def apply_wandb_config(
 # Milestone Training Utilities
 # =============================================================================
 
+def align_tokens_to_step(tokens_per_milestone: int, tokens_per_step: int) -> int:
+    """
+    Snap tokens_per_milestone down to the nearest multiple of tokens_per_step.
+
+    This ensures max_steps = aligned // tokens_per_step has zero remainder,
+    so the trainer consumes the shard exactly without a partial trailing step.
+
+    Args:
+        tokens_per_milestone: Raw target tokens for one milestone
+        tokens_per_step: batch_size * grad_accum * world_size * seq_length
+
+    Returns:
+        aligned token count (multiple of tokens_per_step)
+    """
+    aligned = (tokens_per_milestone // tokens_per_step) * tokens_per_step
+    remainder = tokens_per_milestone - aligned
+
+    if remainder > 0:
+        logger.info(f"Step-alignment: {tokens_per_milestone:,} → {aligned:,} (trimmed {remainder:,} tokens)")
+
+    return aligned
+
+
 def calculate_max_steps(
     target_tokens: int,
     batch_size: int,
     grad_accum: int,
     seq_length: int,
-    world_size: int = 1
+    world_size: int = 1,
+    align_to_steps: bool = True
 ) -> int:
     """
     Calculate max_steps needed to process target_tokens.
 
     tokens_per_step = batch_size × grad_accum × seq_length × world_size
     max_steps = target_tokens / tokens_per_step
+
+    Args:
+        target_tokens: Target token count
+        batch_size: Per-device batch size
+        grad_accum: Gradient accumulation steps
+        seq_length: Sequence length
+        world_size: Number of GPUs/devices
+        align_to_steps: If True, snap target_tokens to a multiple of tokens_per_step first
+
+    Returns:
+        Number of optimizer steps
     """
     tokens_per_step = batch_size * grad_accum * seq_length * world_size
+
+    # Align target_tokens to avoid partial trailing steps
+    if align_to_steps:
+        target_tokens = align_tokens_to_step(target_tokens, tokens_per_step)
+
     max_steps = target_tokens // tokens_per_step
     return max_steps
 

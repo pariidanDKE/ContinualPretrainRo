@@ -7,10 +7,11 @@ num_fewshot: 5
 device : auto
 #tasks_to_run: ["_ro_winogrande", "winogrande"] #
 tasks_to_run: ["_ro_mmlu", "_ro_winogrande", "_ro_belebele",  "_ro_arc_challenge", "arc_challenge", "winogrande", "ro_wiki", "wikitext"] #
-#tasks_to_run: ["_ro_mmlu", "_ro_belebele"] #
+
 
 preplexity_tasks: ["ro_wiki", "wikitext"] # for these do not apply chat template
 
+delete_checkpoint: false  # If true, delete model_path after evaluation (only for local merged checkpoints)
 output_dir: eval_results
 max_length: 2048  # Model's maximum context length
 eval_max_length: 16384
@@ -18,44 +19,45 @@ use_mps: false
 
 # W&B configuration
 use_wandb: true
+use_separate_wandb: true
 wandb_project: RoLLM
-use_separate_eval_run: true  # Set true to create additional eval-only run for clearer visibility
 global_step: null  # Will be set by run_milestone_loop.sh or can use EVAL_GLOBAL_STEP env var
 
 # List of all available tasks and their configs
 evaluation_tasks:
-  - name: _ro_mmlu
-    fewshot: 5
-    task_batch_size: 8
-    limit: 1000
-  - name: _ro_winogrande
-    fewshot: 5
-    task_batch_size: 16
-    limit: 1000
-  - name: _ro_belebele
-    fewshot: 5
-    task_batch_size: 8
-    limit: 1000
   - name: ro_wiki
     fewshot: 0
-    task_batch_size: 16
+    task_batch_size: 32
     limit: 1000
-  - name: _ro_arc_challenge
-    fewshot: 5
-    task_batch_size: 16
-    limit: 1000
-  - name: arc_challenge
-    fewshot: 5
-    task_batch_size: 16
-    limit: 1000
-  - name: winogrande
-    fewshot: 5
-    task_batch_size: 16
-    limit: 1000
-  - name: wikitext
-    fewshot: 0
-    task_batch_size: 16
-    limit: 1000
+
+  # - name: _ro_mmlu
+  #   fewshot: 5
+  #   task_batch_size: 8
+  #   limit: 1000
+  # - name: _ro_winogrande
+  #   fewshot: 5
+  #   task_batch_size: 16
+  #   limit: 1000
+  # - name: _ro_belebele
+  #   fewshot: 5
+  #   task_batch_size: 8
+  #   limit: 1000
+  # - name: _ro_arc_challenge
+  #   fewshot: 5
+  #   task_batch_size: 16
+  #   limit: 1000
+  # - name: arc_challenge
+  #   fewshot: 5
+  #   task_batch_size: 16
+  #   limit: 1000
+  # - name: winogrande
+  #   fewshot: 5
+  #   task_batch_size: 16
+  #   limit: 1000
+  # - name: wikitext
+  #   fewshot: 0
+  #   task_batch_size: 16
+  #   limit: 1000
 
 
 hydra:

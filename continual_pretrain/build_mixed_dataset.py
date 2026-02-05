@@ -34,7 +34,7 @@ from omegaconf import DictConfig, OmegaConf
 from transformers import set_seed
 
 from transformers import AutoTokenizer
-from train_utils import prepare_dataset, to_dict
+from train_utils import prepare_dataset, to_dict, align_tokens_to_step
 
 logger = logging.getLogger(__name__)
 
@@ -61,7 +61,7 @@ def add_token_counts(dataset, tokenizer, max_length):
     return dataset, total_tokens
 
 
-def calculate_milestone_boundaries(token_counts, num_milestones, tokens_per_milestone, buffer_multiplier=1.5):
+def calculate_milestone_boundaries(token_counts, num_milestones, tokens_per_milestone, buffer_multiplier=1.5, tokens_per_step=None):
     """
     Calculate example indices where each milestone should end.
 
@@ -70,12 +70,19 @@ def calculate_milestone_boundaries(token_counts, num_milestones, tokens_per_mile
         num_milestones: Number of milestones to create
         tokens_per_milestone: Target training tokens per milestone
         buffer_multiplier: Multiplier for shard size (default 1.5x for 50% buffer)
+        tokens_per_step: If provided, snap tokens_per_milestone down to a clean
+                         multiple so max_steps has no remainder.
+                         = batch_size * grad_accum * world_size * seq_length
 
     Returns:
         List of boundary indices, total_target_tokens, cumulative_tokens
     """
     logger.info("Calculating milestone boundaries...")
     logger.info(f"Using buffer multiplier: {buffer_multiplier}x")
+
+    # Align tokens_per_milestone to step size if training params provided
+    if tokens_per_step is not None and tokens_per_step > 0:
+        tokens_per_milestone = align_tokens_to_step(tokens_per_milestone, tokens_per_step)
 
     cumulative_tokens = np.cumsum(token_counts)
     total_tokens = cumulative_tokens[-1]
@@ -266,6 +273,14 @@ def main(cfg: DictConfig) -> None:
     max_length = int(cfg.data_builder.max_length)
 
     tokens_per_milestone = int(cfg.milestone.tokens_per_milestone)
+
+    # Derive tokens_per_step from training_args so shards align to max_steps
+    batch_size  = int(cfg.training_args.per_device_train_batch_size)
+    grad_accum  = int(cfg.training_args.gradient_accumulation_steps)
+    seq_length  = max_length  # same max_length used for truncation above
+    world_size  = int(cfg.training_args.get("world_size", 1))
+    tokens_per_step = batch_size * grad_accum * world_size * seq_length
+
     logger.info(f"Output directory: {output_dir}")
 
 
@@ -290,7 +305,8 @@ def main(cfg: DictConfig) -> None:
     boundaries, _, _ = calculate_milestone_boundaries(
         token_counts,
         num_milestones,
-        tokens_per_milestone
+        tokens_per_milestone,
+        tokens_per_step=tokens_per_step,
     )
 
     # Actual number of milestones (may be less if dataset is too small)

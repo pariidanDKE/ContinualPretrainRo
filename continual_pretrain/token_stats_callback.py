@@ -225,7 +225,7 @@ class TokenStatsTrainerMixin:
         """
 
         if model.training:
-            output_parent = super().compute_loss(model, inputs, return_outputs = return_outputs, **kwargs)
+            output_parent = super().compute_loss(model, inputs, return_outputs = return_outputs, num_items_in_batch = num_items_in_batch, **kwargs)
             loss = output_parent[0] if return_outputs else output_parent
 
             # Log batch shape
@@ -235,8 +235,8 @@ class TokenStatsTrainerMixin:
             batch_stats = compute_token_statistics(
                 inputs['input_ids'],
                 step_size = self.step_size,
-                pad_token_id=self.tokenizer.pad_token_id,
-                eos_token_id=self.tokenizer.eos_token_id,
+                pad_token_id=self.processing_class.pad_token_id,
+                eos_token_id=self.processing_class.eos_token_id,
             )
 
             # Aggregate with other micro-batches in this optimizer step
@@ -277,7 +277,7 @@ def create_trainer_with_token_stats(trainer_class, *args, **kwargs):
             model=model,
             args=training_args,
             train_dataset=train_dataset,
-            tokenizer=tokenizer,
+            processing_class=tokenizer,
             ...
         )
 
