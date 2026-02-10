@@ -36,3 +36,13 @@ __pycache__/
 
 
 ./vscode
+outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/README.md
+outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/adapter_config.json
+outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/optimizer.pt
+outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/README.md
+outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/rng_state.pth
+outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/scheduler.pt
+outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/special_tokens_map.json
+outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/tokenizer_config.json
+outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/tokenizer.json
+outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/trainer_state.json

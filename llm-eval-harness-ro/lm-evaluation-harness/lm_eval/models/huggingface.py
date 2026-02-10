@@ -236,7 +236,11 @@ class HFLM(TemplateLM):
         # access self._model through self.model property outside this method
         if isinstance(self.model, torch.nn.Module):
             self.model.eval()
-            self.model.tie_weights()
+            # Attempt to tie weights, but skip if already tied (e.g., for pre-trained models passed directly)
+            try:
+                self.model.tie_weights()
+            except (KeyError, RuntimeError) as e:
+                eval_logger.debug(f"Skipping tie_weights() - weights may already be tied: {e}")
 
         if isinstance(pretrained, str) and (gpus >= 1 or str(self.device) == "mps"):
             # TODO: can remove this whole snippet except in the mps case, perhaps?
@@ -757,10 +761,7 @@ class HFLM(TemplateLM):
                 **special_tokens_kwargs
             )
         else:
-            print(f"[DEBUG] Encoding string: {string[:200]}{'...' if len(string) > 200 else ''}", flush=True)
-            print(f"[DEBUG] Special tokens kwargs: {special_tokens_kwargs}", flush=True)
             encoding = self.tokenizer.encode(string, **special_tokens_kwargs)
-            print(f"[DEBUG] Encoded to {len(encoding)} tokens, first 10: {encoding[:10]}", flush=True)
             sys.stdout.flush()
 
             # left-truncate the encoded context to be at most `left_truncate_len` tokens long
@@ -784,12 +785,12 @@ class HFLM(TemplateLM):
         if self.AUTO_MODEL_CLASS == transformers.AutoModelForCausalLM:
             add_special_tokens = {"add_special_tokens": False or self.add_bos_token}
 
-        import sys
-        print(f"\n[DEBUG tok_batch_encode] Encoding {len(strings)} strings", flush=True)
-        for i, s in enumerate(strings[:3]):  # Show first 3 strings only
-            preview = s[:200] + ('...' if len(s) > 200 else '')
-            print(f"  String [{i}]: {preview}", flush=True)
-        sys.stdout.flush()
+        # import sys
+        # print(f"\n[DEBUG tok_batch_encode] Encoding {len(strings)} strings", flush=True)
+        # for i, s in enumerate(strings[:3]):  # Show first 3 strings only
+        #     preview = s[:200] + ('...' if len(s) > 200 else '')
+        #     print(f"  String [{i}]: {preview}", flush=True)
+        # sys.stdout.flush()
 
         encoding = self.tokenizer(
             strings,
@@ -1385,7 +1386,8 @@ class HFLM(TemplateLM):
             "model_num_parameters": get_model_num_params(self._model),
             "model_dtype": get_model_dtype(self._model),
             "model_revision": self.revision,
-            "model_sha": get_model_sha(self.pretrained, self.revision),
+            # Only get SHA if pretrained is a string path (not a model object)
+            "model_sha": get_model_sha(self.pretrained, self.revision) if isinstance(self.pretrained, str) else "",
         }
         if self.peft:
             model_info["peft_sha"] = get_model_sha(self.peft, self.revision)

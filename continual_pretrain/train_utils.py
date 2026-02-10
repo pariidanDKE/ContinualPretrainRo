@@ -1,54 +1,24 @@
 """
 Shared utilities for training scripts.
 """
-
+import unsloth
+from unsloth import UnslothTrainingArguments, UnslothTrainer
+from trl import SFTConfig, SFTTrainer
 import os
 import re
 import math
 import logging
 from typing import Any, Dict
 from pathlib import Path
-from unsloth.trainer import UnslothTrainer
+from transformers import AutoTokenizer
 
-from typing import Optional
+import torch
 from omegaconf import DictConfig, OmegaConf
 from datasets import load_dataset, load_from_disk, DatasetDict, concatenate_datasets
-from data_module import DataPreprocessor, SimplePaddingCollator, PackedSequenceDataCollator
+from data_module import DataPreprocessor
 
 logger = logging.getLogger(__name__)
 
-# ####################################################################################
-# Debug Trainer
-# ####################################################################################
-
-class DebugUnslothTrainer(UnslothTrainer):
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args,**kwargs)
-        self.micro_batch_losses = []
-        self._call_counter = 0
-    
-    def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
-        result = super().compute_loss(model, inputs, return_outputs, num_items_in_batch)
-
-        if model.training:
-            self._call_counter += 1
-            logging.info(f">>> compute_loss call #{self._call_counter} | global_step={self.state.global_step}")
-
-        loss = result[0] if return_outputs else result
-        logging.info(f"[COMPUTE_LOSS] Loss per micro-batch = {loss.item():.4f}")
-        logging.info(f"[DEBUG] model_accepts_loss_kwargs = {self.model_accepts_loss_kwargs}")
-        logging.info(f"[DEBUG] num_items_in_batch = {num_items_in_batch}")
-        logging.info(f"[DEBUG] compute_loss_func = {self.compute_loss_func}")
-
-        return result
-    
-    def training_step(self, model, inputs, num_items_in_batch=None):
-        """This is called once per micro-batch"""
-        print(f"\n=== training_step START: global_step={self.state.global_step}, num_items={num_items_in_batch} ===")
-        result = super().training_step(model, inputs, num_items_in_batch)
-        print(f"=== training_step END: loss={result.item():.4f} ===\n")
-        return result
 
 # =============================================================================
 # Configuration Utilities
@@ -65,6 +35,30 @@ def to_dict(cfg_section: Any, *, resolve: bool = True) -> Dict[str, Any]:
     raise TypeError(f"Unsupported config section type: {type(cfg_section)!r}")
 
 
+def overwrite_pt_tokenizer(model_name, tokenizer):
+    pt_to_it_tokenizer_map = {
+    "google/gemma-3-1b-pt": "google/gemma-3-1b-it",
+    "meta-llama/Llama-3.2-1B": "meta-llama/Llama-3.2-1B-Instruct",
+    "Qwen/Qwen2.5-1.5B": "Qwen/Qwen2.5-1.5B-Instruct",
+    }
+
+    if model_name in pt_to_it_tokenizer_map.values():
+        logging.info('IT model : No need to overwrite')
+        return tokenizer
+    elif model_name  in pt_to_it_tokenizer_map:
+        logging.info('PT model : overwrote chat_tempalte')
+
+        it_tokenizer_name = pt_to_it_tokenizer_map[model_name]
+        it_tokenizer = AutoTokenizer(it_tokenizer_name, trust_remote_code = True)
+        tokenizer.chat_template = it_tokenizer.chat_template
+        return tokenizer
+    else:
+        logging.info('Model not in mapper, chat_template set to None')
+        tokenizer.chat_template = None
+        return tokenizer
+
+
+
 # =============================================================================
 # Dataset Loading
 # =============================================================================
@@ -79,11 +73,8 @@ def load_single_dataset(
     split = entry_cfg.get("split", default_cfg["split"])
     sample_size = entry_cfg.get("sample_size", default_cfg.get("sample_size"))
     text_field = entry_cfg.get("text_field") or default_cfg["text_field"]
-    add_bos_eos = (
-        default_cfg["add_bos_eos"]
-        if entry_cfg.get("add_bos_eos") is None
-        else entry_cfg.get("add_bos_eos")
-    )
+    add_bos_eos = default_cfg["add_bos_eos"]
+      
 
     # Load dataset
     if os.path.isdir(name):
@@ -111,13 +102,14 @@ def load_single_dataset(
     # Preprocess
     tokenize = default_cfg.get("tokenize", False)
     use_sft = default_cfg.get("use_sft", True)
+    text_field = 'formatted_text' if use_sft else 'text'
 
     preprocessor = DataPreprocessor(
         tokenizer=tokenizer,
-        text_field=text_field,
         add_bos_eos=add_bos_eos,
         tokenize=tokenize,
         use_sft=use_sft,
+        text_field = text_field
     )
 
     # Remove all columns except ds_source
@@ -148,6 +140,22 @@ def prepare_dataset(cfg, tokenizer, return_validation=False, validation_split=0.
     data_builder = cfg.get("data_builder")
     seed = int(cfg.get("seed") or 0)
 
+    # Calculate validation size based on target training tokens (not full dataset)
+    val_size = None
+    if return_validation:
+        milestone_cfg = to_dict(cfg.get("milestone", {}))
+        num_milestones = milestone_cfg.get('num_milestones', 1)
+        tokens_per_milestone = milestone_cfg.get('tokens_per_milestone', 1_000_000)
+        max_length = to_dict(cfg.training_args).get('max_length', 2048)
+
+        # Calculate total target tokens for training
+        total_target_tokens = num_milestones * tokens_per_milestone
+
+        # Estimate validation samples: (target_tokens * validation_split) / max_length
+        val_size = int((total_target_tokens * validation_split) / max_length)
+        logger.info(f"Validation size: {val_size} samples "
+                   f"(based on {total_target_tokens:,} target tokens * {validation_split} split / {max_length} max_length)")
+
 
     if data_builder and data_builder.get("enabled"):
         builder_cfg = to_dict(data_builder, resolve=False)
@@ -159,18 +167,15 @@ def prepare_dataset(cfg, tokenizer, return_validation=False, validation_split=0.
         for entry in datasets_cfg:
             entry_dict = to_dict(entry)
             proportion = entry_dict.get("proportion", 1)
-            if proportion <= 0:
-                continue
             entries_with_proportions.append((entry_dict, proportion))
             total_proportion += proportion
 
         # Load datasets with adjusted sample sizes
         processed_train = []
-        processed_val = []
         proportions = []
-        total_sample_size = dataset_defaults.get("sample_size")
+        total_sample_size = data_builder.get("total_sample_size")
 
-        for entry_dict, proportion in entries_with_proportions: # set same sample for all datasets (smoke tests)
+        for entry_dict, proportion in entries_with_proportions: # set ceiling for total number of samples
             if total_sample_size and "sample_size" not in entry_dict:
                 adjusted_sample_size = int(total_sample_size * proportion / total_proportion)
                 entry_dict["sample_size"] = adjusted_sample_size
@@ -179,242 +184,50 @@ def prepare_dataset(cfg, tokenizer, return_validation=False, validation_split=0.
             ds = load_single_dataset(entry_dict, dataset_defaults, tokenizer)
 
             if return_validation:
-                # Split this dataset 90/10 (or custom ratio)
-                split_ds = ds.train_test_split(test_size=validation_split, seed=seed)
-                processed_train.append(split_ds['train'])
-                processed_val.append(split_ds['test'])
+                processed_train.append(ds)  # Collect full datasets, split later
             else:
                 processed_train.append(ds)
 
             proportions.append(proportion)
 
         # Concatenate all datasets and shuffle for random distribution
-        logger.info(f"Concatenating {len(processed_train)} datasets with {len(processed_train[0]) if processed_train else 0} total examples")
-        train_dataset = concatenate_datasets(processed_train).shuffle(seed=seed)
+        full_dataset = concatenate_datasets(processed_train).shuffle(seed=seed)
+        logger.info(f"Concatenated {len(processed_train)} datasets with {len(full_dataset)} total examples")
 
         if return_validation:
-            val_dataset = concatenate_datasets(processed_val).shuffle(seed=seed)
-            return train_dataset, val_dataset
+            # Split using absolute validation size (based on target tokens)
+            split_ds = full_dataset.train_test_split(test_size=val_size, seed=seed)
+            logger.info(f"Split dataset: {len(split_ds['train'])} train, {len(split_ds['test'])} validation")
+            return split_ds['train'], split_ds['test']
         else:
-            return train_dataset
+            return full_dataset
 
     # Single dataset mode
     ds = load_single_dataset(dataset_defaults, dataset_defaults, tokenizer)
 
     if return_validation:
-        split_ds = ds.train_test_split(test_size=validation_split, seed=seed)
+        # Split using absolute validation size (based on target tokens)
+        split_ds = ds.train_test_split(test_size=val_size, seed=seed)
+        logger.info(f"Split dataset: {len(split_ds['train'])} train, {len(split_ds['test'])} validation")
         return split_ds['train'], split_ds['test']
     else:
         return ds
 
-
 # =============================================================================
-# Data Collator
-# =============================================================================
-
-def build_collator(cfg, tokenizer):
-    """Build appropriate data collator based on config."""
-    collator_cfg = cfg.data_collator
-    if not collator_cfg.use_custom_packed:
-        return SimplePaddingCollator(tokenizer)
-
-    eos_id = tokenizer.eos_token_id
-    if eos_id is None:
-        raise ValueError("Tokenizer must have an `eos_token_id` for packing.")
-    return PackedSequenceDataCollator(
-        tokenizer=tokenizer,
-        pack_length=collator_cfg.pack_length,
-        eos_token_id=eos_id,
-    )
-
-
-# =============================================================================
-# TRL Packing Patch for Stability
+# Training Type utils
 # =============================================================================
 
-def patch_trl_packing_for_stability(min_fill_ratio: float = 0.7):
-    """
-    Patch TRL's _pack_bfd function to filter out low-density packed sequences.
 
-    This addresses the sawtooth loss issue caused by randomly-sampled low-density
-    packed sequences during training. BFD (Best-Fit Decreasing) packing optimizes
-    for global padding efficiency but doesn't enforce minimum bin fill ratios,
-    leading to pathological training samples with <10-20% real tokens.
+def set_training_type(use_unsloth : bool = False, training_kwargs: dict = None):
+    TrainingArgsClass = UnslothTrainingArguments if use_unsloth else SFTConfig
+    TrainerClass = UnslothTrainer if use_unsloth else SFTTrainer
 
-    See: continual_pretrain/Notes/SawToothLossFix_OverridePacking.md
+    # unsloth specific arg
+    if not use_unsloth:
+        training_kwargs.pop('embedding_learning_rate', None)
 
-    Args:
-        min_fill_ratio: Minimum fraction of seq_length that bins must contain (default 0.7)
-    """
-    try:
-        import pyarrow as pa
-        import pyarrow.compute as pc
-        import numpy as np
-        from collections import defaultdict, deque
-        import trl.data_utils as data_utils
-        from trl.data_utils import _SegmentTree
-    except (ImportError, AttributeError) as e:
-        logger.warning(f"Could not import TRL dependencies for patching: {e}. Skipping patch.")
-        return
+    return TrainerClass, TrainingArgsClass, training_kwargs
 
-    def filtered_pack_bfd(examples: pa.Table, seq_length: int) -> pa.Table:
-        """Pack sequences using BFD with low-density bin filtering."""
-
-        # =====================================================================
-        # PART 1: Original TRL fragmentation and binning logic
-        # =====================================================================
-
-        # Identify the list column and prepare all columns
-        columns = []
-        list_column_idx = None
-        for idx, column in enumerate(examples.columns):
-            if isinstance(column, pa.ChunkedArray):
-                column = column.combine_chunks()
-            if not (pa.types.is_list(column.type) or pa.types.is_large_list(column.type)):
-                raise TypeError("pack_dataset(bfd) requires all columns to be list-like.")
-            if list_column_idx is None:
-                list_column_idx = idx
-            columns.append(column)
-
-        assert list_column_idx is not None
-        list_column = columns[list_column_idx]
-        offsets = np.asarray(list_column.offsets)
-        values = list_column.values
-
-        # Split every list row into fragments of length <= seq_length
-        frag_lengths: list[int] = []
-        frag_info: list[tuple[int, int, int]] = []  # (row_idx, split_start, frag_len)
-        expanded_indices: list[int] = []
-
-        for row_idx, (row_start, row_end) in enumerate(zip(offsets[:-1], offsets[1:], strict=False)):
-            length = row_end - row_start
-            for split_start in range(0, length, seq_length):
-                frag_len = min(seq_length, length - split_start)
-                frag_lengths.append(frag_len)
-                frag_info.append((row_idx, split_start, frag_len))
-                expanded_indices.append(row_idx)
-
-        # Rebuild list columns with fragments
-        offsets_type = list_column.offsets.type
-        new_offsets = np.empty(len(frag_lengths) + 1, dtype=offsets_type.to_pandas_dtype())
-        new_offsets[0] = 0
-        new_offsets[1:] = np.cumsum(frag_lengths, dtype=offsets_type.to_pandas_dtype())
-        new_offsets_array = pa.array(new_offsets, type=offsets_type)
-
-        for idx, column in enumerate(columns):
-            if idx == list_column_idx:
-                slices = [
-                    values.slice(offsets[row_idx] + split_start, frag_len)
-                    for row_idx, split_start, frag_len in frag_info
-                ]
-                new_values = pa.concat_arrays(slices)
-                columns[idx] = type(column).from_arrays(new_offsets_array, new_values)
-                continue
-
-            column_offsets = np.asarray(column.offsets)
-            column_values = column.values
-            slices = []
-            for row_idx, split_start, frag_len in frag_info:
-                row_len = column_offsets[row_idx + 1] - column_offsets[row_idx]
-                if row_len < split_start + frag_len:
-                    raise ValueError("List columns must have matching lengths when packing datasets.")
-                start = column_offsets[row_idx] + split_start
-                slices.append(column_values.slice(start, frag_len))
-            column_offsets_array = pa.array(new_offsets, type=column.offsets.type)
-            columns[idx] = type(column).from_arrays(column_offsets_array, pa.concat_arrays(slices))
-
-        examples = pa.Table.from_arrays(columns, names=examples.column_names)
-        ids = np.arange(len(examples))
-        lengths = pc.list_value_length(examples[list_column_idx]).combine_chunks()
-        examples = examples.append_column("seq_lengths", lengths)
-        lengths = pc.make_struct(lengths, ids)
-        lengths = lengths.sort("descending", by=0)
-
-        # Greedy BFD binning
-        segment_tree = _SegmentTree(seq_length)
-        segment_tree.add(seq_length)
-        space_to_bin = defaultdict(deque)
-        bins: list[dict] = []
-
-        for length, idx in zip(lengths.field(0).to_numpy(), lengths.field(1).to_numpy(), strict=True):
-            space = segment_tree.search(length)
-            if space < seq_length:
-                bin = space_to_bin[space].popleft()
-            else:
-                bin = {"ids": [], "length": 0}
-                bins.append(bin)
-            bin["ids"].append(idx)
-            bin["length"] += length
-            if space < seq_length and not space_to_bin[space]:
-                segment_tree.remove(space)
-            space = space - length
-            space_to_bin[space].append(bin)
-            if space > 0:
-                segment_tree.add(space)
-
-        # =====================================================================
-        # PART 2: Filter low-density bins (NEW FIX)
-        # =====================================================================
-
-        total_bins_before = len(bins)
-        min_tokens = int(min_fill_ratio * seq_length)
-
-        bins_filtered = [bin for bin in bins if bin["length"] >= min_tokens]
-        bins_dropped = total_bins_before - len(bins_filtered)
-
-        if bins_dropped > 0:
-            dropped_ratio = bins_dropped / total_bins_before
-            logger.info(
-                f"Dropped {bins_dropped}/{total_bins_before} low-density packed bins "
-                f"({dropped_ratio:.1%}) with fill ratio < {min_fill_ratio:.0%} "
-                f"(min_tokens={min_tokens}, seq_length={seq_length})"
-            )
-            # Log details about dropped bins for debugging
-            dropped_bins = [bin for bin in bins if bin["length"] < min_tokens]
-            if dropped_bins:
-                dropped_lengths = [bin["length"] for bin in dropped_bins]
-                logger.debug(
-                    f"   Dropped bin lengths: min={min(dropped_lengths)}, "
-                    f"max={max(dropped_lengths)}, mean={np.mean(dropped_lengths):.0f}"
-                )
-        else:
-            logger.info(
-                f"✓ All {total_bins_before} packed bins passed min_fill_ratio={min_fill_ratio:.0%} filter"
-            )
-
-        bins = bins_filtered
-
-        # =====================================================================
-        # PART 3: Reconstruct PyArrow table from filtered bins (original logic)
-        # =====================================================================
-
-        examples = pc.take(examples, [id_ for bin in bins for id_ in bin["ids"]])
-        offsets = np.cumsum([0] + [bin["length"] for bin in bins])
-
-        assert all(column.num_chunks == 1 for column in examples.columns)
-        lengths = examples["seq_lengths"].chunks[0]
-        examples = examples.drop_columns("seq_lengths")
-        lengths = pa.ListArray.from_arrays(
-            np.cumsum([0] + [len(bin["ids"]) for bin in bins], dtype=np.int32),
-            lengths
-        )
-
-        columns = []
-        for column in examples.columns:
-            column = column.chunks[0]
-            if pa.types.is_list(column.type) or pa.types.is_large_list(column.type):
-                dtype = column.offsets.type.to_pandas_dtype()
-                column = type(column).from_arrays(offsets.astype(dtype), column.values)
-            columns.append(column)
-
-        return pa.Table.from_arrays(columns + [lengths], names=examples.column_names + ["seq_lengths"])
-
-    # Patch the function in the data_utils module
-    data_utils._pack_bfd = filtered_pack_bfd
-    logger.info(
-        f"✅ Patched TRL _pack_bfd with min_fill_ratio={min_fill_ratio:.0%} "
-        f"to prevent low-density packed sequences"
-    )
 
 
 # =============================================================================
@@ -529,9 +342,9 @@ def compose_run_name(cfg: DictConfig, training_kwargs: Dict[str, Any], wandb_cfg
 
 
 def apply_wandb_config(
-    cfg: DictConfig,
     training_kwargs: Dict[str, Any],
     wandb_cfg: Dict[str, Any] | None,
+    wandb_run_name: str= None
 ) -> Dict[str, Any]:
     """Set up W&B environment variables and Trainer args."""
     wandb_cfg = wandb_cfg or {}
@@ -548,7 +361,7 @@ def apply_wandb_config(
 
     # Get run_name from environment (set by run_milestone_loop.sh)
     # WANDB_RUN_NAME must be set by the shell script for consistent naming
-    run_name = os.environ.get("WANDB_RUN_NAME")
+    run_name = wandb_run_name
     if not run_name:
         logger.warning("⚠️  WANDB_RUN_NAME not set! Run name should be provided by run_milestone_loop.sh")
         logger.warning("    Continuing without run name - WandB logging may be inconsistent")
@@ -559,157 +372,61 @@ def apply_wandb_config(
     return training_kwargs
 
 
-# =============================================================================
-# Milestone Training Utilities
-# =============================================================================
 
-def align_tokens_to_step(tokens_per_milestone: int, tokens_per_step: int) -> int:
+def generate_run_name(
+    model_name: str,
+    use_sft: bool = False,
+    custom_name: str = "",
+    num_milestones: int = 1,
+    milestone_tokens: int = 1_000_000
+) -> str:
     """
-    Snap tokens_per_milestone down to the nearest multiple of tokens_per_step.
-
-    This ensures max_steps = aligned // tokens_per_step has zero remainder,
-    so the trainer consumes the shard exactly without a partial trailing step.
-
+    Generate a run name from model configuration.
+    
     Args:
-        tokens_per_milestone: Raw target tokens for one milestone
-        tokens_per_step: batch_size * grad_accum * world_size * seq_length
-
+        model_name: Full model name/path (e.g., "meta-llama/Llama-3.2-1B")
+        use_sft: Whether this is an SFT run (vs CPT)
+        custom_name: Optional custom identifier to include
+        num_milestones: Number of training milestones
+        milestone_tokens: Tokens per milestone
+        
     Returns:
-        aligned token count (multiple of tokens_per_step)
+        Generated run name (e.g., "cpt-llama-ms10-1B")
     """
-    aligned = (tokens_per_milestone // tokens_per_step) * tokens_per_step
-    remainder = tokens_per_milestone - aligned
-
-    if remainder > 0:
-        logger.info(f"Step-alignment: {tokens_per_milestone:,} → {aligned:,} (trimmed {remainder:,} tokens)")
-
-    return aligned
-
-
-def calculate_max_steps(
-    target_tokens: int,
-    batch_size: int,
-    grad_accum: int,
-    seq_length: int,
-    world_size: int = 1,
-    align_to_steps: bool = True
-) -> int:
-    """
-    Calculate max_steps needed to process target_tokens.
-
-    tokens_per_step = batch_size × grad_accum × seq_length × world_size
-    max_steps = target_tokens / tokens_per_step
-
-    Args:
-        target_tokens: Target token count
-        batch_size: Per-device batch size
-        grad_accum: Gradient accumulation steps
-        seq_length: Sequence length
-        world_size: Number of GPUs/devices
-        align_to_steps: If True, snap target_tokens to a multiple of tokens_per_step first
-
-    Returns:
-        Number of optimizer steps
-    """
-    tokens_per_step = batch_size * grad_accum * seq_length * world_size
-
-    # Align target_tokens to avoid partial trailing steps
-    if align_to_steps:
-        target_tokens = align_tokens_to_step(target_tokens, tokens_per_step)
-
-    max_steps = target_tokens // tokens_per_step
-    return max_steps
-
-
-def merge_lora_checkpoint(trainer, output_path: Path, tokenizer):
-    """
-    Merge LoRA adapter weights into base model.
-
-    Args:
-        trainer: Trainer instance with PEFT model
-        output_path: Where to save merged model
-        tokenizer: Tokenizer to save alongside model
-    """
-    from peft import PeftModel
-
-    if not isinstance(trainer.model, PeftModel):
-        logger.warning("Not a PEFT model, skipping merge")
-        return
-
-    logger.info(f"Merging LoRA weights to: {output_path}")
-    merged_model = trainer.model.merge_and_unload()
-
-    output_path.mkdir(parents=True, exist_ok=True)
-    merged_model.save_pretrained(str(output_path))
-    tokenizer.save_pretrained(str(output_path))
-
-    logger.info("✅ Merged model saved")
-
-
-
-# =============================================================================
-# Milestone Dataset Loading
-# =============================================================================
-
-def load_milestone_shard(prebuilt_path: str, milestone_num: int):
-    """
-    Load a specific milestone shard from a prebuilt mixed dataset.
-
-    Args:
-        prebuilt_path: Path to prebuilt dataset
-        milestone_num: Which milestone to load (0-indexed)
-
-    Returns:
-        tuple: (train_dataset, validation_dataset)
-            - train_dataset: Examples for the requested milestone
-            - validation_dataset: Validation examples (milestone_num==99, shared across all milestones)
-    """
-    from datasets import load_from_disk
-
-    logger.info(f"Loading milestone {milestone_num} from: {prebuilt_path}")
-
-    # Load full dataset
-    dataset = load_from_disk(prebuilt_path)
-
-    # Filter to requested milestone for training
-    train_data = dataset.filter(
-        lambda x: x['milestone_num'] == milestone_num,
-        num_proc=4
-    )
-
-    # Filter to validation data (milestone_num == 99)
-    val_data = dataset.filter(
-        lambda x: x['milestone_num'] == 99,
-        num_proc=4
-    )
-
-    # Log stats for training data
-    if 'num_tokens' in train_data.column_names:
-        train_tokens = sum(train_data['num_tokens'])
-        logger.info(f"✓ Loaded training milestone {milestone_num}: "
-                   f"{len(train_data):,} examples, {train_tokens:,} tokens")
-        train_data = train_data.remove_columns(['num_tokens', 'milestone_num'])
+    # Extract base model name (part after last /)
+    model_base = model_name.split('/')[-1].lower()
+    
+    # Determine model family
+    model_family = ""
+    for family in ["llama", "qwen", "gemma", "mistral", "phi"]:
+        if family in model_base:
+            model_family = family
+            break
+    
+    # If no family match, use first part of model name
+    if not model_family:
+        # Split by '-' or '.' and take first part
+        model_family = model_base.split('-')[0].split('.')[0]
+    
+    # Build run name parts
+    run_type = "sft" if use_sft else "cpt"
+    parts = f"{run_type}-{model_family}"
+    
+    # Add custom name if set
+    if custom_name:
+        parts = f"{parts}-{custom_name}"
+    
+    # Add milestone count
+    parts = f"{parts}-ms{num_milestones}"
+    
+    # Add token amount
+    total_tokens = milestone_tokens * num_milestones
+    if total_tokens >= 1_000_000_000:
+        parts = f"{parts}-{total_tokens // 1_000_000_000}B"
+    elif total_tokens >= 1_000_000:
+        parts = f"{parts}-{total_tokens // 1_000_000}M"
     else:
-        train_data = train_data.remove_columns(['milestone_num'])
-
-    # Log stats for validation data
-    if 'num_tokens' in val_data.column_names:
-        val_tokens = sum(val_data['num_tokens'])
-        logger.info(f"✓ Loaded validation data: "
-                   f"{len(val_data):,} examples, {val_tokens:,} tokens")
-        val_data = val_data.remove_columns(['num_tokens', 'milestone_num'])
-    else:
-        val_data = val_data.remove_columns(['milestone_num'])
-
-    return train_data, val_data
-
-
-# =============================================================================
-# Model/Tokenizer Mappings
-# =============================================================================
-
-PT_TO_IT_TOKENIZER_MAP = {
-    "google/gemma-3-1b-pt": "google/gemma-3-1b-it",
-    "meta-llama/Llama-3.2-1B": "meta-llama/Llama-3.2-1B-Instruct",
-    "Qwen/Qwen2.5-1.5B": "Qwen/Qwen2.5-1.5B-Instruct",
-}
+        parts = f"{parts}-{total_tokens // 1_000}K"
+    
+    os.environ['WANDB_RUN_NAME'] = parts
+    return parts

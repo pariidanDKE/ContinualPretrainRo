@@ -110,9 +110,7 @@ class ModelBuilder:
     def _build_standard_model(self) -> Tuple[PreTrainedModel, PreTrainedTokenizerBase]:
         cfg = self.config
 
-        tokenizer = AutoTokenizer.from_pretrained(
-            cfg.tokenizer_name or cfg.model_name,
-        )
+        tokenizer = AutoTokenizer.from_pretrained(cfg.model_name)
 
         quant_config = None
         model_kwargs: dict[str, Any] = {"device_map": cfg.device_map}
@@ -126,7 +124,6 @@ class ModelBuilder:
             )
             model_kwargs["quantization_config"] = quant_config
         else:
-
             dtype = self._resolve_dtype(cfg.bnb_4bit_compute_dtype)
             if dtype is not None:
                 model_kwargs["dtype"] = dtype
@@ -141,7 +138,7 @@ class ModelBuilder:
             model = prepare_model_for_kbit_training(model)
 
         if cfg.require_grads and hasattr(model, "enable_input_require_grads"):
-            model.enable_input_require_grads()
+            model.enable_input_require_grads() # since CPT traiuns embedding layers
 
         peft_config = self.lora_config.to_peft_config()
         model = get_peft_model(model, peft_config)
@@ -164,7 +161,7 @@ class ModelBuilder:
         model, tokenizer = FastLanguageModel.from_pretrained(
             model_name=model_name,
             max_seq_length=cfg.max_seq_length,
-            dtype=self._resolve_dtype(cfg.bnb_4bit_compute_dtype, allow_none=True),
+            dtype=self._resolve_dtype(cfg.bnb_4bit_compute_dtype),
             load_in_4bit=load_in_4bit,
         )
 
@@ -199,7 +196,6 @@ class ModelBuilder:
     @staticmethod
     def _resolve_dtype(
         dtype: Union[str, torch.dtype, None],
-        allow_none: bool = False,
     ) -> Optional[torch.dtype]:
         """Map user-provided dtype strings to `torch.dtype`."""
      

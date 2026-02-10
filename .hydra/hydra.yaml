@@ -129,7 +129,7 @@ hydra:
   runtime:
     version: 1.3.2
     version_base: '1.3'
-    cwd: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain
+    cwd: /home/dan-parii/Documents/ContinualPretrainRo
     config_sources:
     - path: hydra.conf
       schema: pkg
@@ -140,7 +140,7 @@ hydra:
     - path: ''
       schema: structured
       provider: schema
-    output_dir: /home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain
+    output_dir: /home/dan-parii/Documents/ContinualPretrainRo
     choices:
       hydra/env: default
       hydra/callbacks: null

@@ -1,58 +1,22 @@
-defaults:
-  - _self_
 
-seed: 23 # the default seed is 42(!)
+seed: 23 
 
-dataset:
-  tokenize: false  # Let trainer handle tokenization (almost always false)
-  use_sft: true    # SFT mode (Romanian tags → model tokens). Set to false for CPT (raw text, no formatting)
-  sample_size: 1000  # set to an int for quick smoke tests
-  text_field: "text"  # Input column name (DataPreprocessor reads from this)
-  name: "danp27/norobots_sft"
-  split: "train"
-  add_bos_eos: true  # Add BOS/EOS tokens to training data
-  num_proc: 4
-
-data_builder:
-  enabled: true
-  
-  datasets:
-    - name: "danp27/norobots_sft"
-      split: "train"
-      proportion: 0.5
-      #sample_size: 1000
-      text_field: null
-      add_bos_eos: null
-      num_proc: null
-      
-    - name: "./data/formatted_data/dolly"
-      split: "train"
-      proportion: 0.5
-      #sample_size: 1000
-      text_field: null
-      add_bos_eos: null
-      num_proc: null
-
-
-data_collator:
-  use_custom_packed : false
-  packing : true
-  packing_strategy: "bfd"  # "bfd" (best-fit decreasing) or "wrapped" (greedy streaming)
+# ########################################################
+# Model Configuration
+# ########################################################
 
 model:
   builder:
     model_name: "unsloth/Llama-3.2-1B"
-    tokenizer_name: null 
-    load_in_4bit: false
-    bnb_4bit_quant_type: "nf4"
+    load_in_4bit: true
     bnb_4bit_compute_dtype: "bfloat16"
     device_map: "auto"
     gradient_checkpointing: true
     use_cache: false
     prepare_kbit_training: true
     require_grads: true
-    max_seq_length: 2048
-    use_unsloth: false
+    max_seq_length: 4096
+    use_unsloth: true
     seed: 42
 
   lora:
@@ -76,9 +40,10 @@ training_args:
   output_dir: "./outputs/train_llama"
   per_device_train_batch_size: 32
   gradient_accumulation_steps: 4
-  max_length: 2048
-  logging_steps: 5
+  max_length: 4096
+  logging_steps: 1
   learning_rate: 1e-4
+  packing: true  # make training 2-5 times faster  
   embedding_learning_rate: 2e-5  # Lower LR for embeddings/LM head (only used with use_unsloth=true)
   num_train_epochs: 1
   save_steps: 100
@@ -87,29 +52,156 @@ training_args:
   bf16: true
   fp16: false
   optim: "paged_adamw_8bit"
-  lr_scheduler_type: "cosine"
+  lr_scheduler_type: "warmup_stable_decay"
   warmup_ratio: 0.06
+  lr_scheduler_kwargs: null  # Auto-computed in milestone_trainer.py: num_decay_steps=10% of total steps
   gradient_checkpointing: true
   max_grad_norm: 1
+  per_device_eval_batch_size: 4
+  dataset_text_field: 'text'
   dataloader_drop_last: true  # Drop incomplete batches to prevent low-density training steps
+  eval_on_start: true # evaluate model at global_step 0
+ 
+validation_cfg:
+  return_validation: true
+  validation_split: 0.05
+
+# ########################################################
+# Milestone Configuration
+# ########################################################
+
+milestone:
+  tokens_per_milestone: 25000000
+  num_milestones: 8
+  save_at_milestone_n : 2
+
+  do_evaluate: true
+  run_benchmarks: true
+  resume_from_checkpoint: null
+
+# ########################################################
+# Dataset Configuration
+# ########################################################
+
+# configuration when data_builder is not enabled and use single dataset (usually for cpt)
+dataset: 
+  tokenize: false  
+  use_sft: false    
+  sample_size: null  
+  text_field: "text"  
+  name: "OpenLLM-Ro/fineweb2-ro-llm"
+  split: "train"
+  add_bos_eos: true  
+  num_proc: 4
+
+data_builder:
+  enabled: false # default is cpt
+  total_sample_size: null
+
+  datasets:
+    - name: "danp27/norobots_sft"
+      split: "train"
+      proportion: 0.024
+      sample_size: null  # Use all 9,999 examples (~4.8M tokens)
+
+    - name: "./data/formatted_data/dolly"
+      split: "train"
+      proportion: 0.022
+      sample_size: null  # Use all 15,011 examples (~4.4M tokens)
+
+    - name: "./data/formatted_data/oasst"
+      split: "train"
+      proportion: 0.024
+      sample_size: null  # Use all 8,658 examples (~4.7M tokens)
+
+    - name: "./data/formatted_data/camel"
+      split: "train"
+      proportion: 0.465
+      sample_size: 110000  # Use all 110,000 examples (~84M tokens)
+
+    - name: "./data/formatted_data/orca"
+      split: "train"
+      proportion: 0.5 #0.465
+      sample_size: 110000  # 48M tokens / 611 tok/ex × 1.3 buffer
+
+    - name: "./data/formatted_data/maggie"
+      split: "train"
+      proportion: 0.5 #0.465
+      sample_size: 110000  # 160M tokens / 1839 tok/ex × 1.3 buffer
+
+# ########################################################
+# Benchmark Evaluation
+# ########################################################
+
+benchmark_evaluation_cfg:
+
+  verbosity: INFO
+  use_sft: false  # Set to false to disable chat template application (for PT models)
+  apply_chat_template: true
+  eval_batch_size: 8
+  num_fewshot: 5
+  device : auto
+
+  tasks_to_run: ["_ro_mmlu", "_ro_winogrande", "_ro_belebele",  "_ro_arc_challenge", "arc_challenge", "winogrande", "ro_wiki", "wikitext", "_ro_hellaswag"] #
+  perplexity_tasks: ["ro_wiki", "wikitext"] # for these do not apply chat template
+
+  output_dir: eval_results
+  max_length: 2048  # Model's maximum context length
+  eval_max_length: 8192
+
+  # List of all available tasks and their configs
+  evaluation_tasks:
+    - name: ro_wiki
+      fewshot: 0
+      task_batch_size: 8
+      limit: 1000
+    - name: _ro_mmlu
+      fewshot: 5
+      task_batch_size: 8
+      limit: 1000
+    - name: _ro_winogrande
+      fewshot: 5
+      task_batch_size: 8
+      limit: 1000
+    - name: _ro_belebele
+      fewshot: 5
+      task_batch_size: 8
+      limit: 1000
+    - name: _ro_arc_challenge
+      fewshot: 5
+      task_batch_size: 8
+      limit: 1000
+    - name: arc_challenge
+      fewshot: 5
+      task_batch_size: 8
+      limit: 1000
+    # - name: winogrande
+    #   fewshot: 5
+    #   task_batch_size: 8
+    #   limit: 1000
+    - name: wikitext
+      fewshot: 0
+      task_batch_size: 8
+      limit: 1000
+    - name: _ro_hellaswag
+      fewshot: 5
+      task_batch_size: 8
+      limit: 1000
+
+# ########################################################
+# Wandb Configuration
+# ########################################################
 
 wandb:
   enabled: true
   project: "RoLLM"
   run_name: null  # Set to null to use auto-composed name: {cpt/sft}-{model}-{custom_name}-ms{milestones}-{tokens}M
-  group: null
+  group: "Default"
+  custom_run_name: "TestContinuousLoop"
 
-milestone:
-  # Configuration for train_milestone_segment.py
-  target_tokens: 1000000  # Target tokens for this segment (e.g., 1M, 100M)
-  resume_from_checkpoint: null  # Path to checkpoint to resume from (or null for scratch)
-  merged_output_dir: null  # Where to save merged LoRA models for evaluation (or null to skip)
-  total_training_tokens: null  # Total tokens across ALL milestones (for consistent LR scheduling). Set to null to use target_tokens.
-  do_evaluate: true  # Whether to run evaluation after training (set to false for testing)
-
-  # Prebuilt dataset configuration (built with build_mixed_dataset.py)
-  prebuilt_dataset_path: null  # Path to prebuilt milestone dataset (or null to build on-the-fly)
-  current_milestone: 0  # Which milestone to load from prebuilt dataset (0-indexed)
+# ########################################################
+# Hydra Configuration
+# ########################################################
 
 hydra:
   run:
@@ -117,3 +209,6 @@ hydra:
   sweep:
     dir: "multiruns"
     subdir: ${hydra.job.num}
+
+defaults:
+  - _self_

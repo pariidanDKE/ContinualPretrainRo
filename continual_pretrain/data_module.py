@@ -291,8 +291,10 @@ class DataPreprocessor:
 
         if not self.tokenize:
             # Return text for SFTTrainer/UnslothTrainer to handle tokenization
+
+            
             return {
-                'formatted_text' : text
+                f'{self.text_field}' : text
             }
         else: 
 
