@@ -46,4 +46,4 @@ outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/special_tokens_map.
 outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/tokenizer_config.json
 outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/tokenizer.json
 outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/trainer_state.json
-.vscode
+.vscode/

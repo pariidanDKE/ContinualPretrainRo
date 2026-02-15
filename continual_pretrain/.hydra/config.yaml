@@ -13,8 +13,8 @@ model:
     use_unsloth: true
     seed: 42
   lora:
-    r: 16
-    lora_alpha: 32
+    r: 256
+    lora_alpha: 256
     lora_dropout: 0.0
     bias: none
     task_type: CAUSAL_LM
@@ -58,7 +58,7 @@ validation_cfg:
   validation_split: 0.05
 milestone:
   tokens_per_milestone: 25000000
-  num_milestones: 8
+  num_milestones: 5
   save_at_milestone_n: 2
   do_evaluate: true
   run_benchmarks: true
@@ -116,6 +116,7 @@ benchmark_evaluation_cfg:
   - winogrande
   - ro_wiki
   - wikitext
+  - _ro_hellaswag
   perplexity_tasks:
   - ro_wiki
   - wikitext
@@ -127,37 +128,50 @@ benchmark_evaluation_cfg:
     fewshot: 0
     task_batch_size: 8
     limit: 1000
+    max_length: 2048
+  - name: _ro_hellaswag
+    fewshot: 5
+    task_batch_size: 4
+    limit: 1000
+    max_length: 2048
   - name: _ro_mmlu
     fewshot: 5
-    task_batch_size: 8
+    task_batch_size: 1
     limit: 1000
+    max_length: 2048
   - name: _ro_winogrande
     fewshot: 5
     task_batch_size: 8
     limit: 1000
+    max_length: 2048
   - name: _ro_belebele
     fewshot: 5
-    task_batch_size: 8
+    task_batch_size: 1
     limit: 1000
+    max_length: 2048
   - name: _ro_arc_challenge
     fewshot: 5
     task_batch_size: 8
     limit: 1000
+    max_length: 2048
   - name: arc_challenge
     fewshot: 5
     task_batch_size: 8
     limit: 1000
+    max_length: 2048
   - name: wikitext
     fewshot: 0
     task_batch_size: 8
     limit: 1000
-  - name: _ro_hellaswag
+    max_length: 2048
+  - name: winogrande
     fewshot: 5
     task_batch_size: 8
     limit: 1000
+    max_length: 2048
 wandb:
   enabled: true
   project: RoLLM
   run_name: null
-  group: Default
-  custom_run_name: TestContinuousLoop
+  group: lora_rank_sweep_20260214_164935
+  custom_run_name: rank256_lr_elr

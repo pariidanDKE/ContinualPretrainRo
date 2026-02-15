@@ -44,8 +44,9 @@ training_args:
   bf16: true
   fp16: false
   optim: paged_adamw_8bit
-  lr_scheduler_type: cosine
+  lr_scheduler_type: warmup_stable_decay
   warmup_ratio: 0.06
+  lr_scheduler_kwargs: null
   gradient_checkpointing: true
   max_grad_norm: 1
   per_device_eval_batch_size: 4
@@ -54,10 +55,10 @@ training_args:
   eval_on_start: true
 validation_cfg:
   return_validation: true
-  validation_split: 0.1
+  validation_split: 0.05
 milestone:
-  tokens_per_milestone: 1000000
-  num_milestones: 5
+  tokens_per_milestone: 25000000
+  num_milestones: 8
   save_at_milestone_n: 2
   do_evaluate: true
   run_benchmarks: true
@@ -115,43 +116,20 @@ benchmark_evaluation_cfg:
   - winogrande
   - ro_wiki
   - wikitext
+  - _ro_hellaswag
   perplexity_tasks:
   - ro_wiki
   - wikitext
   output_dir: eval_results
-  max_length: 2048
+  max_length: 1024
   eval_max_length: 8192
   evaluation_tasks:
-  - name: ro_wiki
-    fewshot: 0
-    task_batch_size: 8
-    limit: 1000
   - name: _ro_mmlu
-    fewshot: 5
-    task_batch_size: 4
-    limit: 1000
-  - name: _ro_winogrande
     fewshot: 5
     task_batch_size: 8
     limit: 1000
   - name: _ro_belebele
     fewshot: 5
-    task_batch_size: 4
-    limit: 1000
-  - name: _ro_arc_challenge
-    fewshot: 5
-    task_batch_size: 8
-    limit: 1000
-  - name: arc_challenge
-    fewshot: 5
-    task_batch_size: 8
-    limit: 1000
-  - name: winogrande
-    fewshot: 5
-    task_batch_size: 8
-    limit: 1000
-  - name: wikitext
-    fewshot: 0
     task_batch_size: 8
     limit: 1000
 wandb:

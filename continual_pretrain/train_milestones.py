@@ -86,6 +86,7 @@ def main(cfg : DictConfig):
     if not milestone_cfg.get('do_evaluate', False):
         training_kwargs.pop('per_device_eval_batch_size', None)
         training_kwargs.pop('prediction_loss_only', None)
+        training_kwargs['eval_on_start'] = False
 
     # set logger to same file as output_dir/logs
     output_dir = training_kwargs.get('output_dir', './outputs')
@@ -121,7 +122,12 @@ def main(cfg : DictConfig):
     
     # setup callbacks
     token_stats_callback = TokenStatsCallback(tokenizer, log_every_n_steps = training_kwargs['logging_steps'])
-    eval_trigger_callback = EvaluationTriggerCallback(target_milestone_tokens = tokens_per_milestone, num_milestones = num_milestones, trainer = trainer)
+    eval_trigger_callback = EvaluationTriggerCallback(
+        target_milestone_tokens=tokens_per_milestone,
+        num_milestones=num_milestones,
+        trainer=trainer,
+        do_evaluate=milestone_cfg.get('do_evaluate', False)
+    )
 
     trainer.add_callback(token_stats_callback)
     trainer.add_callback(eval_trigger_callback)

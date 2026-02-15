@@ -73,7 +73,7 @@ class ModelBuilderConfig:
     # Unsloth-related flags
     use_unsloth: bool = False
     unsloth_path: Optional[str] = None
-    unsloth_dtype: Union[str, torch.dtype, None] = None
+    unsloth_dtype: Union[str, torch.dtype, None] = None 
     unsloth_gradient_checkpointing: Union[bool, str] = "unsloth"
     seed: int = 3407
     unsloth_use_rslora: bool = True

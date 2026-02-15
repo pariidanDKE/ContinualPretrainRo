@@ -111,11 +111,17 @@ hydra:
   overrides:
     hydra:
     - hydra.mode=RUN
-    task: []
+    task:
+    - model.lora.r=256
+    - model.lora.lora_alpha=256
+    - milestone.tokens_per_milestone=25000000
+    - milestone.num_milestones=5
+    - wandb.custom_run_name=rank256_lr_elr
+    - wandb.group=lora_rank_sweep_20260214_164935
   job:
     name: train_milestones
     chdir: null
-    override_dirname: ''
+    override_dirname: milestone.num_milestones=5,milestone.tokens_per_milestone=25000000,model.lora.lora_alpha=256,model.lora.r=256,wandb.custom_run_name=rank256_lr_elr,wandb.group=lora_rank_sweep_20260214_164935
     id: ???
     num: ???
     config_name: train_model.yaml

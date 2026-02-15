@@ -18,23 +18,26 @@ logger = logging.getLogger(__name__)
 # # =============================================================================
 class EvaluationTriggerCallback(TrainerCallback):
     """
-    This callback will decide whether to run evals whenever a milestone is reached and whether to stop training when num_milestones are reached 
+    This callback will decide whether to run evals whenever a milestone is reached and whether to stop training when num_milestones are reached
     """
-    def __init__(self, target_milestone_tokens : int, num_milestones: int,trainer: UnslothTrainer):
+    def __init__(self, target_milestone_tokens : int, num_milestones: int, trainer: UnslothTrainer, do_evaluate: bool = True):
         self.target_milestone_tokens = target_milestone_tokens
         self.num_milestones = num_milestones
+        self.do_evaluate = do_evaluate
 
         self.milestone_counter = 0
         self.total_token_counter = 0
         self.trainer = trainer
-    
+
     def on_step_end(self, args, state, control, **kwargs):
         milestone_token_counter = self.trainer.milestone_tokens
         self.total_token_counter += milestone_token_counter
 
         if self.trainer.milestone_tokens >= self.target_milestone_tokens:
-            control.should_evaluate = True # includes running benchmarks
-            control.should_save = True # save every milestone 
+            # Only trigger evaluation if do_evaluate is True
+            if self.do_evaluate:
+                control.should_evaluate = True # includes running benchmarks
+            control.should_save = True # save every milestone
 
             self.trainer.milestone_tokens = 0
             self.milestone_counter+=1

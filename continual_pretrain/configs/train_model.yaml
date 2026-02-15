@@ -20,8 +20,8 @@ model:
     seed: 42
 
   lora:
-    r: 16
-    lora_alpha: 32
+    r: 128
+    lora_alpha: 128
     lora_dropout: 0.0
     bias: "none"
     task_type: "CAUSAL_LM"
@@ -71,8 +71,8 @@ validation_cfg:
 # ########################################################
 
 milestone:
-  tokens_per_milestone: 25000000
-  num_milestones: 8
+  tokens_per_milestone: 3000000
+  num_milestones: 1
   save_at_milestone_n : 2
 
   do_evaluate: true
@@ -146,7 +146,7 @@ benchmark_evaluation_cfg:
   perplexity_tasks: ["ro_wiki", "wikitext"] # for these do not apply chat template
 
   output_dir: eval_results
-  max_length: 2048  # Model's maximum context length
+  max_length: 2048  # Default max_length for most benchmarks
   eval_max_length: 8192
 
   # List of all available tasks and their configs
@@ -155,39 +155,55 @@ benchmark_evaluation_cfg:
       fewshot: 0
       task_batch_size: 8
       limit: 1000
+      max_length: 2048
+
+    - name: _ro_hellaswag
+      fewshot: 5
+      task_batch_size: 4
+      limit: 1000
+      max_length: 2048
+
     - name: _ro_mmlu
       fewshot: 5
-      task_batch_size: 8
+      task_batch_size: 1
       limit: 1000
+      max_length: 2048  # MMLU uses shorter context
+
     - name: _ro_winogrande
       fewshot: 5
       task_batch_size: 8
       limit: 1000
+      max_length: 2048
+
     - name: _ro_belebele
       fewshot: 5
-      task_batch_size: 8
+      task_batch_size: 1
       limit: 1000
+      max_length: 2048  # Belebele uses shorter context
+
     - name: _ro_arc_challenge
       fewshot: 5
       task_batch_size: 8
       limit: 1000
+      max_length: 2048
+
     - name: arc_challenge
       fewshot: 5
       task_batch_size: 8
       limit: 1000
-    # - name: winogrande
-    #   fewshot: 5
-    #   task_batch_size: 8
-    #   limit: 1000
+      max_length: 2048
+
     - name: wikitext
       fewshot: 0
       task_batch_size: 8
       limit: 1000
-    - name: _ro_hellaswag
+      max_length: 2048
+
+    - name: winogrande
       fewshot: 5
       task_batch_size: 8
       limit: 1000
-
+      max_length: 2048
 # ########################################################
 # Wandb Configuration
 # ########################################################

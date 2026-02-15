@@ -98,7 +98,7 @@ class MilestoneTrainerMixin:
 
             # Set num_decay_steps to 10% of total training steps if not already specified
             if 'num_decay_steps' not in self.args.lr_scheduler_kwargs:
-                decay_steps = int(max_steps * 0.1)
+                decay_steps = int(max_steps * 0.05)
                 self.args.lr_scheduler_kwargs['num_decay_steps'] = decay_steps
                 logger.info(f"📉 WSD Scheduler: Setting num_decay_steps={decay_steps} (10% of {max_steps} total steps)")
 
@@ -136,7 +136,7 @@ class MilestoneTrainerMixin:
             device=str(self.model.device),
             trust_remote_code=True,
         )
-        logger.info(f"✅ Model wrapped: max_length={self.benchmark_evaluation_cfg.get('max_length', 2048)}, "
+        logger.info(f"✅ Model wrapped with default max_length={self.benchmark_evaluation_cfg.get('max_length', 2048)}, "
                    f"eval_max_length={self.benchmark_evaluation_cfg.get('eval_max_length', 16384)}")
 
         # Define which metrics to extract for each task type
@@ -165,7 +165,13 @@ class MilestoneTrainerMixin:
                 limit = task_cfg.get('limit')
                 batch_size = task_cfg['task_batch_size']
 
-                logger.info(f"🚀 Running evaluation for {task_name} | fewshot={fewshot} | limit={limit}")
+                # Get task-specific max_length, or use global default
+                task_max_length = task_cfg.get('max_length', self.benchmark_evaluation_cfg.get('max_length', 2048))
+
+                # Update the model wrapper's max_length for this task
+                lm_eval_model._max_length = task_max_length
+
+                logger.info(f"🚀 Running evaluation for {task_name} | fewshot={fewshot} | limit={limit} | max_length={task_max_length}")
 
                 # Prepare evaluation kwargs
                 eval_kwargs = {
@@ -312,8 +318,7 @@ class MilestoneTrainerMixin:
         )
         if self.run_benchmarks:
             benchmark_results = self.evaluate_benchmarks()
-
-            # add custom benchmark metrics with proper eval prefix (using underscore like speed_metrics)
+            #add custom benchmark metrics with proper eval prefix (using underscore like speed_metrics)
             prefixed_benchmarks = {
                 f"{metric_key_prefix}_{k.replace('/', '_')}": v for k, v in benchmark_results.items()
             }
