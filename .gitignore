@@ -47,3 +47,10 @@ outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/tokenizer_config.js
 outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/tokenizer.json
 outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/trainer_state.json
 .vscode/
+continual_pretrain/diagnostics_debugging/eval_tasks/belebele_comparison_results.json
+continual_pretrain/diagnostics_debugging/eval_tasks/embd_belebele_comparison_results.json
+continual_pretrain/diagnostics_debugging/eval_tasks/evaluate_belebele_comparison.py
+continual_pretrain/diagnostics_debugging/eval_tasks/evaluate_lora_rank_sweep.py
+continual_pretrain/diagnostics_debugging/eval_tasks/lora_rank_sweep_ro_belebele_results.json
+continual_pretrain/diagnostics_debugging/eval_tasks/lora_rank_sweep_ro_mmlu_results.json
+continual_pretrain/diagnostics_debugging/eval_tasks/noembd_belebele_comparison_results.json

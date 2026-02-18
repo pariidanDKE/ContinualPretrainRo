@@ -1,11 +1,12 @@
 #!/bin/bash
 
 # Embedding Layer Comparison Script
-# Compares training WITH vs WITHOUT embed_tokens/lm_head in LoRA target modules
-# Each run trains for 100M tokens with evaluations at 25M, 50M, 75M, and 100M token milestones
+# Compares 3 strategies for handling embed_tokens/lm_head layers
+# Each run trains for 125M tokens with evaluations at 25M intervals
 #
-# Run 1: WITH embeddings (embed_tokens + lm_head) using embedding_learning_rate=2e-5
-# Run 2: WITHOUT embeddings (only transformer layers q/k/v/o/gate/up/down projections)
+# Run 1 (COMPLETED): Full weights - modules_to_save, embedding_learning_rate=2e-5
+# Run 2 (COMPLETED): Frozen - embeddings not in target_modules
+# Run 3 (CURRENT): LoRA - embedding_lora_mode=lora, LoRA on quantized embeddings
 
 set -e  # Exit on error
 
@@ -69,32 +70,46 @@ run_experiment() {
     echo ""
 }
 
-# Run 1: WITH embedding layers (embed_tokens + lm_head) using separate embedding_learning_rate
+# #Run 1: WITH embedding layers (embed_tokens + lm_head) using separate embedding_learning_rate
 echo -e "${BLUE}Run 1: Training WITH embed_tokens/lm_head layers${NC}"
 echo -e "${BLUE}  - embed_tokens and lm_head included in LoRA target_modules${NC}"
 echo -e "${BLUE}  - embedding_learning_rate: ${EMBEDDING_LR}${NC}"
 echo -e "${BLUE}  - Main LR: ${LEARNING_RATE}${NC}"
 echo ""
 run_experiment 1 "with_embeddings_r${LORA_RANK}" \
-    training_args.embedding_learning_rate=${EMBEDDING_LR}
+    training_args.embedding_learning_rate=${EMBEDDING_LR} \
+    model.lora.embedding_lora_mode=full_weights
 
-# Run 2: WITHOUT embedding layers (only transformer projections)
+#Run 2: WITHOUT embedding layers (only transformer projections)
 echo -e "${BLUE}Run 2: Training WITHOUT embed_tokens/lm_head layers${NC}"
 echo -e "${BLUE}  - Only transformer layers in target_modules${NC}"
 echo -e "${BLUE}  - Main LR: ${LEARNING_RATE} (no separate embedding LR)${NC}"
 echo ""
 run_experiment 2 "no_embeddings_r${LORA_RANK}" \
-    'model.lora.target_modules=[q_proj,k_proj,v_proj,o_proj,gate_proj,up_proj,down_proj]'
+    'model.lora.target_modules=[q_proj,k_proj,v_proj,o_proj,gate_proj,up_proj,down_proj]' \
+    model.lora.embedding_lora_mode=frozen
+
+
+#Run 3: WITH embedding layers using LoRA (not full weights)
+echo -e "${BLUE}Run 3: Training WITH embed_tokens/lm_head using LoRA mode${NC}"
+echo -e "${BLUE}  - embed_tokens and lm_head with LoRA adapters on quantized base${NC}"
+echo -e "${BLUE}  - embedding_lora_mode: lora${NC}"
+echo -e "${BLUE}  - Main LR: ${LEARNING_RATE}${NC}"
+echo ""
+run_experiment 3 "lora_embeddings_r${LORA_RANK}" \
+    model.lora.embedding_lora_mode=lora
 
 echo -e "${YELLOW}========================================${NC}"
-echo -e "${YELLOW}Both experiments completed!${NC}"
+echo -e "${YELLOW}Experiment completed!${NC}"
 echo -e "${YELLOW}Comparison ID: ${SWEEP_NAME}${NC}"
 echo -e "${YELLOW}========================================${NC}"
-echo -e "${YELLOW}Results Summary:${NC}"
-echo -e "${YELLOW}  Run 1: WITH embeddings (embed_tokens + lm_head)${NC}"
-echo -e "${YELLOW}    - Embedding LR: ${EMBEDDING_LR}, Main LR: ${LEARNING_RATE}${NC}"
-echo -e "${YELLOW}  Run 2: WITHOUT embeddings (transformer layers only)${NC}"
-echo -e "${YELLOW}    - Main LR: ${LEARNING_RATE}${NC}"
+echo -e "${YELLOW}Results Summary (3 configurations):${NC}"
+echo -e "${YELLOW}  Run 1: Full weights embeddings (COMPLETED)${NC}"
+echo -e "${YELLOW}    - modules_to_save, Embedding LR: ${EMBEDDING_LR}${NC}"
+echo -e "${YELLOW}  Run 2: Frozen embeddings (COMPLETED)${NC}"
+echo -e "${YELLOW}    - No embeddings trained${NC}"
+echo -e "${YELLOW}  Run 3: LoRA embeddings (CURRENT)${NC}"
+echo -e "${YELLOW}    - embedding_lora_mode=lora, Main LR: ${LEARNING_RATE}${NC}"
 echo -e "${YELLOW}========================================${NC}"
 echo -e "${YELLOW}Check WandB group '${SWEEP_NAME}' for comparison${NC}"
 echo -e "${YELLOW}========================================${NC}"

@@ -17,6 +17,7 @@ model:
     require_grads: true
     max_seq_length: 4096
     use_unsloth: true
+    use_flash_attention: false
     seed: 42
 
   lora:
@@ -25,6 +26,7 @@ model:
     lora_dropout: 0.0
     bias: "none"
     task_type: "CAUSAL_LM"
+    embedding_lora_mode: "lora"  # Options: "full_weights", "lora", "frozen"
     target_modules:
       - q_proj
       - k_proj
@@ -71,8 +73,8 @@ validation_cfg:
 # ########################################################
 
 milestone:
-  tokens_per_milestone: 3000000
-  num_milestones: 1
+  tokens_per_milestone: 25000000
+  num_milestones: 5
   save_at_milestone_n : 2
 
   do_evaluate: true
@@ -142,7 +144,8 @@ benchmark_evaluation_cfg:
   num_fewshot: 5
   device : auto
 
-  tasks_to_run: ["_ro_mmlu", "_ro_winogrande", "_ro_belebele",  "_ro_arc_challenge", "arc_challenge", "winogrande", "ro_wiki", "wikitext", "_ro_hellaswag"] #
+  #tasks_to_run: ["_ro_mmlu", "_ro_winogrande", "_ro_belebele",  "_ro_arc_challenge", "arc_challenge", "winogrande", "ro_wiki", "wikitext", "_ro_hellaswag"] #
+  tasks_to_run: []
   perplexity_tasks: ["ro_wiki", "wikitext"] # for these do not apply chat template
 
   output_dir: eval_results

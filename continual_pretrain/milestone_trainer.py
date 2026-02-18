@@ -83,7 +83,7 @@ class MilestoneTrainerMixin:
      
             return (loss, output_parent[1]) if return_outputs else loss
         else:
-            return super().compute_loss(model, inputs, return_outputs=return_outputs, **kwargs)
+            return super().compute_loss(model, inputs, return_outputs=return_outputs, num_items_in_batch = num_items_in_batch, **kwargs)
         
 
     def create_scheduler(self, num_training_steps: int, optimizer: torch.optim.Optimizer = None):
@@ -156,7 +156,7 @@ class MilestoneTrainerMixin:
                 and self.benchmark_evaluation_cfg['use_sft']
             )
 
-            if tasks_to_run and task_name not in tasks_to_run:
+            if tasks_to_run is not None and task_name not in tasks_to_run:
                 logger.info(f"⏭️  Skipping {task_name} (not in tasks_to_run)")
                 continue
 

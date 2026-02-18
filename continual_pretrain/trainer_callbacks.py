@@ -43,7 +43,7 @@ class EvaluationTriggerCallback(TrainerCallback):
             self.milestone_counter+=1
             logging.info(f"Reached milestone {self.milestone_counter}! Total tokens: {self.total_token_counter}")
 
-            if self.milestone_counter > self.num_milestones:
+            if self.milestone_counter >= self.num_milestones:
                 control.should_training_stop = True
                 logging.info(f"Reached final milestone ({self.milestone_counter})! Total tokens: {self.total_token_counter}")
 

@@ -64,6 +64,8 @@ run_experiment() {
     echo -e "${GREEN}Run ${run_id}/3 completed successfully!${NC}"
     echo ""
 }
+# Run 2: lr=3e-4, grad_accum=4
+run_experiment 1 3e-4 4
 
 # Run 2: lr=3e-4, grad_accum=4
 run_experiment 1 3e-4 4
