@@ -1,6 +1,1 @@
-- model.lora.r=256
-- model.lora.lora_alpha=256
-- milestone.tokens_per_milestone=25000000
-- milestone.num_milestones=5
-- wandb.custom_run_name=rank256_lr_elr
-- wandb.group=lora_rank_sweep_20260214_164935
+- model.builder.use_unsloth=false

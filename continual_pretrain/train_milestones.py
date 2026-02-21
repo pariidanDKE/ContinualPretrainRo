@@ -46,6 +46,8 @@ def main(cfg : DictConfig):
     resume_checkpoint = milestone_cfg.get("resume_from_checkpoint")
 
 
+    from omegaconf import OmegaConf
+    logging.info("Full resolved config:\n%s", OmegaConf.to_yaml(cfg, resolve=True))
     logging.info("Starting Continuous Training")
     logging.info(f"Training on {tokens_per_milestone * num_milestones} tokens ({num_milestones} milestones)")
     
@@ -61,16 +63,23 @@ def main(cfg : DictConfig):
     builder = ModelBuilder(model_cfg, lora_cfg)
     model, tokenizer = builder.build()
 
+    import torch
+    torch.cuda.synchronize()
+    static_vram_gb = torch.cuda.memory_allocated() / 1e9
+    logging.info(f"[VRAM] Static model memory (params only, no optimizer states): {static_vram_gb:.3f} GB  |  embedding_lora_mode={lora_cfg.embedding_lora_mode}")
+
     logging.info(f'Built Model and tokenizer : {model_cfg.model_name}')
 
     # if we do SFT then PT models should have chat_templates for fair comparison
+    
     use_sft = cfg.dataset.get("use_sft", False)
     if use_sft:
         tokenizer = overwrite_pt_tokenizer(model_name=model_cfg.model_name, tokenizer = tokenizer)
 
     val_cfg = to_dict(cfg.validation_cfg)
     benchmark_evaluation_cfg = to_dict(cfg.benchmark_evaluation_cfg)
-    train_dataset, val_dataset = prepare_dataset(cfg, tokenizer, return_validation=val_cfg.get('return_validation',False), validation_split= val_cfg.get('validation_split',0.1))
+    result = prepare_dataset(cfg, tokenizer, return_validation=val_cfg.get('return_validation',False), validation_split= val_cfg.get('validation_split',0.1))
+    train_dataset, val_dataset = result if isinstance(result, tuple) else (result, None)
 
     logging.info(f" Datasets loaded : {len(train_dataset)} training examples; {len(val_dataset) if val_dataset is not None else 0} validation examples")
 
@@ -133,6 +142,9 @@ def main(cfg : DictConfig):
     trainer.add_callback(eval_trigger_callback)
 
         
+    if wandb.run is not None:
+        wandb.config.update({"hydra_cfg": OmegaConf.to_container(cfg, resolve=True)}, allow_val_change=True)
+
     if resume_checkpoint:
         logging.info(f' Resume training checkpoint with path {resume_checkpoint}..')
     else:

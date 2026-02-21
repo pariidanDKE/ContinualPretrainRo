@@ -22,8 +22,8 @@ NC='\033[0m' # No Color
 # Configuration
 TOKENS_PER_MILESTONE=25000000  # 25M tokens per milestone
 NUM_MILESTONES=5              # 4 milestones = 100M tokens total
-LORA_RANK=64                   # LoRA rank
-LORA_ALPHA=64                  # LoRA alpha (typically equal to rank)
+LORA_RANK=128                   # LoRA rank
+LORA_ALPHA=128                  # LoRA alpha (typically equal to rank)
 LEARNING_RATE=1e-4             # Main learning rate
 EMBEDDING_LR=2e-5              # Embedding learning rate (only for Run 1)
 BATCH_SIZE=32                  # Per-device batch size

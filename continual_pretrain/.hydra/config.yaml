@@ -10,14 +10,16 @@ model:
     prepare_kbit_training: true
     require_grads: true
     max_seq_length: 4096
-    use_unsloth: true
+    use_unsloth: false
+    use_flash_attention: false
     seed: 42
   lora:
-    r: 256
-    lora_alpha: 256
+    r: 128
+    lora_alpha: 128
     lora_dropout: 0.0
     bias: none
     task_type: CAUSAL_LM
+    embedding_lora_mode: lora
     target_modules:
     - q_proj
     - k_proj
@@ -108,9 +110,7 @@ benchmark_evaluation_cfg:
   num_fewshot: 5
   device: auto
   tasks_to_run:
-  - _ro_mmlu
   - _ro_winogrande
-  - _ro_belebele
   - _ro_arc_challenge
   - arc_challenge
   - winogrande
@@ -134,19 +134,9 @@ benchmark_evaluation_cfg:
     task_batch_size: 4
     limit: 1000
     max_length: 2048
-  - name: _ro_mmlu
-    fewshot: 5
-    task_batch_size: 1
-    limit: 1000
-    max_length: 2048
   - name: _ro_winogrande
     fewshot: 5
     task_batch_size: 8
-    limit: 1000
-    max_length: 2048
-  - name: _ro_belebele
-    fewshot: 5
-    task_batch_size: 1
     limit: 1000
     max_length: 2048
   - name: _ro_arc_challenge
@@ -173,5 +163,5 @@ wandb:
   enabled: true
   project: RoLLM
   run_name: null
-  group: lora_rank_sweep_20260214_164935
-  custom_run_name: rank256_lr_elr
+  group: Default
+  custom_run_name: TestContinuousLoop

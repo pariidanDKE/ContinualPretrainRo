@@ -11,13 +11,15 @@ model:
     require_grads: true
     max_seq_length: 4096
     use_unsloth: true
+    use_flash_attention: true
     seed: 42
   lora:
-    r: 16
-    lora_alpha: 32
+    r: 128
+    lora_alpha: 128
     lora_dropout: 0.0
     bias: none
     task_type: CAUSAL_LM
+    embedding_lora_mode: lora
     target_modules:
     - q_proj
     - k_proj
@@ -58,7 +60,7 @@ validation_cfg:
   validation_split: 0.05
 milestone:
   tokens_per_milestone: 25000000
-  num_milestones: 8
+  num_milestones: 5
   save_at_milestone_n: 2
   do_evaluate: true
   run_benchmarks: true
@@ -107,31 +109,59 @@ benchmark_evaluation_cfg:
   eval_batch_size: 8
   num_fewshot: 5
   device: auto
-  tasks_to_run:
-  - _ro_mmlu
-  - _ro_winogrande
-  - _ro_belebele
-  - _ro_arc_challenge
-  - arc_challenge
-  - winogrande
-  - ro_wiki
-  - wikitext
-  - _ro_hellaswag
+  tasks_to_run: []
   perplexity_tasks:
   - ro_wiki
   - wikitext
   output_dir: eval_results
-  max_length: 1024
+  max_length: 2048
   eval_max_length: 8192
   evaluation_tasks:
+  - name: ro_wiki
+    fewshot: 0
+    task_batch_size: 8
+    limit: 1000
+    max_length: 2048
+  - name: _ro_hellaswag
+    fewshot: 5
+    task_batch_size: 4
+    limit: 1000
+    max_length: 2048
   - name: _ro_mmlu
     fewshot: 5
-    task_batch_size: 8
+    task_batch_size: 1
     limit: 1000
-  - name: _ro_belebele
+    max_length: 2048
+  - name: _ro_winogrande
     fewshot: 5
     task_batch_size: 8
     limit: 1000
+    max_length: 2048
+  - name: _ro_belebele
+    fewshot: 5
+    task_batch_size: 1
+    limit: 1000
+    max_length: 2048
+  - name: _ro_arc_challenge
+    fewshot: 5
+    task_batch_size: 8
+    limit: 1000
+    max_length: 2048
+  - name: arc_challenge
+    fewshot: 5
+    task_batch_size: 8
+    limit: 1000
+    max_length: 2048
+  - name: wikitext
+    fewshot: 0
+    task_batch_size: 8
+    limit: 1000
+    max_length: 2048
+  - name: winogrande
+    fewshot: 5
+    task_batch_size: 8
+    limit: 1000
+    max_length: 2048
 wandb:
   enabled: true
   project: RoLLM

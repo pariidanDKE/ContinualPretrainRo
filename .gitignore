@@ -21,6 +21,12 @@ sawtooh_loss_training_logs/
 Notes/
 
 
+
+# Hydra
+continual_pretrain/
+./hydra
+
+
 # Unsloth / Hugging Face outputs
 *.bin
 *.safetensors
@@ -54,3 +60,5 @@ continual_pretrain/diagnostics_debugging/eval_tasks/evaluate_lora_rank_sweep.py
 continual_pretrain/diagnostics_debugging/eval_tasks/lora_rank_sweep_ro_belebele_results.json
 continual_pretrain/diagnostics_debugging/eval_tasks/lora_rank_sweep_ro_mmlu_results.json
 continual_pretrain/diagnostics_debugging/eval_tasks/noembd_belebele_comparison_results.json
+continual_pretrain/_unsloth_temporary_saved_buffers/unsloth/llama-3.2-1b-unsloth-bnb-4bit/input_embeddings.pt
+continual_pretrain/_unsloth_temporary_saved_buffers/unsloth/llama-3.2-1b-unsloth-bnb-4bit/output_embeddings.pt

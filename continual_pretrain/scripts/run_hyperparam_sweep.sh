@@ -65,7 +65,7 @@ run_experiment() {
     echo ""
 }
 # Run 2: lr=3e-4, grad_accum=4
-run_experiment 1 3e-4 4
+#run_experiment 1 1e-4 4
 
 # Run 2: lr=3e-4, grad_accum=4
 run_experiment 1 3e-4 4
