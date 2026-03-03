@@ -1,6 +1,9 @@
-import unsloth
-import wandb
 import os
+import sys
+import torch
+if os.environ.get('USE_UNSLOTH', '1') != '0':
+    import unsloth
+import wandb
 import logging
 import hydra
 from datetime import datetime
@@ -10,7 +13,7 @@ from dotenv import load_dotenv
 
 from milestone_trainer import create_milestone_trainer
 from model import ModelBuilder, ModelBuilderConfig, LoraAdapterConfig
-from trainer_callbacks import EvaluationTriggerCallback, TokenStatsCallback
+from trainer_callbacks import EvaluationTriggerCallback, TokenStatsCallback, ProfilerCallback
 from train_utils import (
     prepare_dataset,
     to_dict,
@@ -56,6 +59,11 @@ def main(cfg : DictConfig):
     lora_cfg = to_dict(cfg.model.lora)
     if "max_length" in training_kwargs:
         model_cfg['max_seq_length'] = training_kwargs['max_length']
+    if "packing" in training_kwargs:
+        model_cfg["packing"] = training_kwargs["packing"]
+    if "gradient_checkpointing" in training_kwargs:
+        model_cfg["gradient_checkpointing"] = training_kwargs["gradient_checkpointing"]
+        model_cfg["unsloth_gradient_checkpointing"] = training_kwargs["gradient_checkpointing"]
 
     # build model and tokenizer
     model_cfg = ModelBuilderConfig(**model_cfg)
@@ -66,12 +74,12 @@ def main(cfg : DictConfig):
     import torch
     torch.cuda.synchronize()
     static_vram_gb = torch.cuda.memory_allocated() / 1e9
-    logging.info(f"[VRAM] Static model memory (params only, no optimizer states): {static_vram_gb:.3f} GB  |  embedding_lora_mode={lora_cfg.embedding_lora_mode}")
+    logging.info(f"[VRAM] Static model memory (params only, no optimizer states): {static_vram_gb:.3f} GB ")
 
     logging.info(f'Built Model and tokenizer : {model_cfg.model_name}')
 
+
     # if we do SFT then PT models should have chat_templates for fair comparison
-    
     use_sft = cfg.dataset.get("use_sft", False)
     if use_sft:
         tokenizer = overwrite_pt_tokenizer(model_name=model_cfg.model_name, tokenizer = tokenizer)
@@ -80,7 +88,6 @@ def main(cfg : DictConfig):
     benchmark_evaluation_cfg = to_dict(cfg.benchmark_evaluation_cfg)
     result = prepare_dataset(cfg, tokenizer, return_validation=val_cfg.get('return_validation',False), validation_split= val_cfg.get('validation_split',0.1))
     train_dataset, val_dataset = result if isinstance(result, tuple) else (result, None)
-
     logging.info(f" Datasets loaded : {len(train_dataset)} training examples; {len(val_dataset) if val_dataset is not None else 0} validation examples")
 
 
@@ -101,11 +108,9 @@ def main(cfg : DictConfig):
     output_dir = training_kwargs.get('output_dir', './outputs')
     setup_file_logging(output_dir, run_name=wandb_run_name, run_id=wandb_run_id)
     
-
     # setup trainer
     use_unsloth = cfg.model.builder.get("use_unsloth", False)
     TrainerClass, TrainingArgsClass, training_kwargs = set_training_type(use_unsloth,training_kwargs)
-
     milestone_trainer_params = {
     'model':model,
     'train_dataset':train_dataset,
@@ -140,7 +145,6 @@ def main(cfg : DictConfig):
 
     trainer.add_callback(token_stats_callback)
     trainer.add_callback(eval_trigger_callback)
-
         
     if wandb.run is not None:
         wandb.config.update({"hydra_cfg": OmegaConf.to_container(cfg, resolve=True)}, allow_val_change=True)
@@ -150,8 +154,65 @@ def main(cfg : DictConfig):
     else:
         logging.info('Milestone training start..')
 
-    trainer.train(resume_from_checkpoint=resume_checkpoint)
-    logging.info('Milestone training complete!')
+    nvtx_profile = os.environ.get('NVTX_PROFILE', '0') == '1'
+    if nvtx_profile:
+        # Inner range: just the attention score computation (QKt -> softmax -> V)
+        # Patches the module-level function that LlamaAttention.forward dispatches to,
+        # covering both eager and FA2 without copying any forward body.
+        import transformers.models.llama.modeling_llama as _llama_mod
+        from transformers.modeling_utils import ALL_ATTENTION_FUNCTIONS
+
+        # Use range_push/pop (push/pop style NVTX) so NCU's --nvtx-include filter
+        # can correlate GPU kernel launches to these ranges.
+        # record_function + emit_nvtx emits start/end style ranges which NCU finds
+        # but cannot use for kernel capture (causes "match only start/end ranges" warning).
+        _orig_eager = _llama_mod.eager_attention_forward
+        def _nvtx_eager(*args, **kwargs):
+            torch.cuda.nvtx.range_push("attn_scores_eager")
+            try:
+                return _orig_eager(*args, **kwargs)
+            finally:
+                torch.cuda.nvtx.range_pop()
+        _llama_mod.eager_attention_forward = _nvtx_eager
+
+        _orig_fa2 = ALL_ATTENTION_FUNCTIONS["flash_attention_2"]
+        def _nvtx_fa2(*args, **kwargs):
+            torch.cuda.nvtx.range_push("attn_scores")
+            try:
+                return _orig_fa2(*args, **kwargs)
+            finally:
+                torch.cuda.nvtx.range_pop()
+        ALL_ATTENTION_FUNCTIONS["flash_attention_2"] = _nvtx_fa2
+
+        logging.info("[NVTX] Patched eager_attention_forward -> 'attn_scores_eager' (push/pop)")
+        logging.info("[NVTX] Patched flash_attention_2 -> 'attn_scores' (push/pop)")
+
+        # MLP forward range — layer 5 (index 4) only.
+        # Instance-level patch: replaces forward on this specific LlamaMLP instance
+        # so all other layers are unaffected. _orig_mlp_fwd is a bound method so
+        # it still receives the correct self without re-binding.
+        _mlp_l5 = model.model.model.layers[4].mlp
+        _orig_mlp_fwd = _mlp_l5.forward
+        def _nvtx_mlp_l5(*args, **kwargs):
+            torch.cuda.nvtx.range_push("mlp_layer5")
+            try:
+                return _orig_mlp_fwd(*args, **kwargs)
+            finally:
+                torch.cuda.nvtx.range_pop()
+        _mlp_l5.forward = _nvtx_mlp_l5
+
+        logging.info("[NVTX] Patched model.layers[4].mlp.forward -> 'mlp_layer5' (push/pop)")
+
+    try:
+        with torch.autograd.profiler.emit_nvtx(enabled=nvtx_profile):
+            trainer.train(resume_from_checkpoint=resume_checkpoint)
+        logging.info('Milestone training complete!')
+    except Exception as e:
+        logging.error(f"Training failed: {e}")
+        raise
+    finally:
+        if wandb.run is not None:
+            wandb.finish(exit_code=1 if sys.exc_info()[0] is not None else 0)
 
 
 if __name__ == '__main__':

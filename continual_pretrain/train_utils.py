@@ -1,10 +1,12 @@
 """
 Shared utilities for training scripts.
 """
-import unsloth
-from unsloth import UnslothTrainingArguments, UnslothTrainer
-from trl import SFTConfig, SFTTrainer
 import os
+if os.environ.get('USE_UNSLOTH', '1') != '0':
+    from unsloth import UnslothTrainingArguments, UnslothTrainer
+else:
+    from trl import SFTConfig as UnslothTrainingArguments, SFTTrainer as UnslothTrainer
+from trl import SFTConfig, SFTTrainer
 import re
 import math
 import logging
@@ -348,6 +350,12 @@ def apply_wandb_config(
 ) -> Dict[str, Any]:
     """Set up W&B environment variables and Trainer args."""
     wandb_cfg = wandb_cfg or {}
+
+    if not wandb_cfg.get("enabled", True):
+        training_kwargs["report_to"] = "none"
+        logger.info("W&B disabled via config (wandb.enabled=false)")
+        return training_kwargs
+
     project = wandb_cfg.get("project")
     group = wandb_cfg.get("group")
 

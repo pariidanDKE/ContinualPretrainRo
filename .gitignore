@@ -21,9 +21,8 @@ sawtooh_loss_training_logs/
 Notes/
 
 
-
 # Hydra
-continual_pretrain/
+
 ./hydra
 
 

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #f5f2ed;
+    font-family: 'Source Sans 3', sans-serif;
+    padding: 48px 52px 52px;
+    width: 820px;
+  }
+
+  /* ── Header ── */
+  .header {
+    margin-bottom: 24px;
+    border-bottom: 2px solid #2c2c2c;
+    padding-bottom: 16px;
+  }
+
+  .pre-title {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #8a7e6e;
+    margin-bottom: 6px;
+  }
+
+  .title {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1.25;
+    margin-bottom: 6px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: #6b6050;
+    font-style: italic;
+    font-family: 'Lora', serif;
+  }
+
+  /* ── Table ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+  }
+
+  /* Config column header */
+  th.config-head {
+    text-align: left;
+    padding: 9px 14px 9px 0;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #8a7e6e;
+    border-bottom: 1.5px solid #2c2c2c;
+    width: 220px;
+  }
+
+  /* BS column headers */
+  th.bs-head {
+    text-align: center;
+    padding: 9px 6px;
+    border-bottom: 1.5px solid #2c2c2c;
+    width: 120px;
+  }
+
+  .bs-main {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #1a1a1a;
+    letter-spacing: 0.3px;
+  }
+
+  .bs-sub {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 400;
+    color: #8a7e6e;
+    margin-top: 1px;
+  }
+
+  /* Body rows */
+  tbody tr {
+    border-bottom: 1px solid #ddd8cf;
+  }
+
+  tbody tr:last-child {
+    border-bottom: 1.5px solid #2c2c2c;
+  }
+
+  td.config-td {
+    padding: 9px 14px 9px 0;
+    vertical-align: middle;
+  }
+
+  .cfg-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .cfg-num {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #e8e2d8;
+    border: 1px solid #c8bfb0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    color: #6b6050;
+    flex-shrink: 0;
+  }
+
+  .cfg-label {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  .cfg-desc {
+    font-size: 10.5px;
+    color: #8a7e6e;
+    margin-top: 1px;
+    display: block;
+    font-weight: 400;
+  }
+
+  /* Data cells */
+  td.data-td {
+    padding: 5px 5px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .cell {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 46px;
+    border-radius: 5px;
+    font-size: 11px;
+    position: relative;
+  }
+
+  /* Success — green */
+  .cell-ok {
+    background: #d4f0e4;
+    border: 1px solid #a8dfc3;
+  }
+
+  /* Success — near capacity */
+  .cell-warn {
+    background: #fdf3d0;
+    border: 1px solid #f0d882;
+  }
+
+  /* OOM — partial data */
+  .cell-oom {
+    background: #fde8e8;
+    border: 1px solid #f5b8b8;
+  }
+
+  /* Full fail */
+  .cell-fail {
+    background: #fde8e8;
+    border: 1px solid #f5b8b8;
+  }
+
+  .cell-vram {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1;
+    color: #1a1a1a;
+  }
+
+  .cell-vram-unit {
+    font-size: 9px;
+    font-weight: 500;
+    color: #6b6050;
+    margin-top: 1px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .cell-toks {
+    font-size: 9px;
+    color: #4a4a4a;
+    margin-top: 2px;
+  }
+
+  .cell-oom-label {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #c0392b;
+    line-height: 1;
+  }
+
+  .cell-oom-vram {
+    font-size: 13px;
+    font-weight: 600;
+    color: #c0392b;
+    margin-top: 2px;
+    line-height: 1;
+  }
+
+  .cell-fail-x {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #c0392b;
+    line-height: 1;
+  }
+
+  /* Best run star */
+  .best-star {
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    font-size: 9px;
+    color: #d4a017;
+  }
+
+  /* ── Legend ── */
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #6b6050;
+  }
+
+  .legend-swatch {
+    width: 22px;
+    height: 12px;
+    border-radius: 2px;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    border-top: 1px solid #c8bfb0;
+    padding-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .footnote {
+    font-size: 10.5px;
+    color: #8a7e6e;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    line-height: 1.5;
+    max-width: 480px;
+  }
+
+  .byline {
+    font-size: 10px;
+    color: #aaa49a;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="pre-title">Optimization Stack Sweep · RTX 3090 · 1M Tokens</div>
+  <div class="title">Cumulative Effect of Training Optimizations on Llama CPT</div>
+  <div class="subtitle">Each configuration adds one optimization on top of the previous. Cell = peak VRAM usage.</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-swatch" style="background:#d4f0e4; border:1px solid #a8dfc3"></div>
+    Completed
+  </div>
+  <div class="legend-item">
+    <div class="legend-swatch" style="background:#fdf3d0; border:1px solid #f0d882"></div>
+    Completed (≥80% VRAM)
+  </div>
+  <div class="legend-item">
+    <div class="legend-swatch" style="background:#fde8e8; border:1px solid #f5b8b8"></div>
+    OOM crash
+  </div>
+</div>
+
+<table id="matrix"></table>
+
+<div class="footer">
+  <div class="footnote">
+    ★ Best run. All configurations use effective batch size 32 (BS × GA = 32). Throughput (tok/s) shown below VRAM where available.
+  </div>
+  <div class="byline">RoLLM · Continued Pre-training Experiments</div>
+</div>
+
+<script>
+const raw = [
+  {n:1,label:"fp32 (baseline)",desc:"No optimizations",bs:1,ga:32,status:"FAIL",vram:null,toks:null},
+  {n:2,label:"+bf16",desc:"bf16 mixed precision",bs:1,ga:32,status:"FAIL",vram:null,toks:null},
+  {n:3,label:"+Grad. Checkpoint",desc:"bf16 + gradient checkpointing",bs:1,ga:32,status:"SUCCESS",vram:75.17,toks:2906},
+  {n:4,label:"+Flash Attn. 2",desc:"bf16 + GC + FA2",bs:1,ga:32,status:"SUCCESS",vram:74.95,toks:4226},
+  {n:5,label:"+Paged AdamW",desc:"bf16 + GC + FA2 + paged 8-bit",bs:1,ga:32,status:"SUCCESS",vram:64.3,toks:4167},
+  {n:6,label:"+LoRA r=64",desc:"+ LoRA r=64",bs:1,ga:32,status:"SUCCESS",vram:44.43,toks:4157},
+  {n:7,label:"+qLoRA",desc:"+ 4-bit quantization",bs:1,ga:32,status:"SUCCESS",vram:37.48,toks:3304},
+  {n:8,label:"+Unsloth",desc:"+ Unsloth kernels",bs:1,ga:32,status:"SUCCESS",vram:15.61,toks:4797},
+  {n:9,label:"+Packing",desc:"Full stack + token packing",bs:1,ga:32,status:"SUCCESS",vram:15.4,toks:6314},
+
+  {n:1,label:"fp32 (baseline)",desc:"No optimizations",bs:4,ga:8,status:"FAIL",vram:null,toks:null},
+  {n:2,label:"+bf16",desc:"bf16 mixed precision",bs:4,ga:8,status:"FAIL",vram:null,toks:null},
+  {n:3,label:"+Grad. Checkpoint",desc:"bf16 + gradient checkpointing",bs:4,ga:8,status:"FAIL",note:"",vram:null,toks:null},
+  {n:4,label:"+Flash Attn. 2",desc:"bf16 + GC + FA2",bs:4,ga:8,status:"FAIL",vram:null,toks:null},
+  {n:5,label:"+Paged AdamW",desc:"bf16 + GC + FA2 + paged 8-bit",bs:4,ga:8,status:"SUCCESS",vram:98.06,toks:2699},
+  {n:6,label:"+LoRA r=64",desc:"+ LoRA r=64",bs:4,ga:8,status:"SUCCESS",vram:76.73,toks:2841},
+  {n:7,label:"+qLoRA",desc:"+ 4-bit quantization",bs:4,ga:8,status:"SUCCESS",vram:75.96,toks:2412},
+  {n:8,label:"+Unsloth",desc:"+ Unsloth kernels",bs:4,ga:8,status:"SUCCESS",vram:26.8,toks:6602},
+  {n:9,label:"+Packing",desc:"Full stack + token packing",bs:4,ga:8,status:"SUCCESS",vram:29.9,toks:7250},
+
+  {n:1,label:"fp32 (baseline)",desc:"No optimizations",bs:8,ga:4,status:"FAIL",vram:null,toks:null},
+  {n:2,label:"+bf16",desc:"bf16 mixed precision",bs:8,ga:4,status:"FAIL",vram:null,toks:null},
+  {n:3,label:"+Grad. Checkpoint",desc:"bf16 + gradient checkpointing",bs:8,ga:4,status:"FAIL",vram:null,toks:null},
+  {n:4,label:"+Flash Attn. 2",desc:"bf16 + GC + FA2",bs:8,ga:4,status:"FAIL",vram:null,toks:null},
+  {n:5,label:"+Paged AdamW",desc:"bf16 + GC + FA2 + paged 8-bit",bs:8,ga:4,status:"FAIL",vram:null,toks:null},
+  {n:6,label:"+LoRA r=64",desc:"+ LoRA r=64",bs:8,ga:4,status:"FAIL",vram:null,toks:null},
+  {n:7,label:"+qLoRA",desc:"+ 4-bit quantization",bs:8,ga:4,status:"FAIL",vram:null,toks:null},
+  {n:8,label:"+Unsloth",desc:"+ Unsloth kernels",bs:8,ga:4,status:"SUCCESS",vram:35.36,toks:7182},
+  {n:9,label:"+Packing",desc:"Full stack + token packing",bs:8,ga:4,status:"SUCCESS",vram:48.68,toks:7514},
+
+  {n:1,label:"fp32 (baseline)",desc:"No optimizations",bs:32,ga:1,status:"FAIL",vram:null,toks:null},
+  {n:2,label:"+bf16",desc:"bf16 mixed precision",bs:32,ga:1,status:"FAIL",vram:null,toks:null},
+  {n:3,label:"+Grad. Checkpoint",desc:"bf16 + gradient checkpointing",bs:32,ga:1,status:"FAIL",vram:null,toks:null},
+  {n:4,label:"+Flash Attn. 2",desc:"bf16 + GC + FA2",bs:32,ga:1,status:"FAIL",vram:null,toks:null},
+  {n:5,label:"+Paged AdamW",desc:"bf16 + GC + FA2 + paged 8-bit",bs:32,ga:1,status:"FAIL",vram:null,toks:null},
+  {n:6,label:"+LoRA r=64",desc:"+ LoRA r=64",bs:32,ga:1,status:"FAIL",vram:null,toks:null},
+  {n:7,label:"+qLoRA",desc:"+ 4-bit quantization",bs:32,ga:1,status:"FAIL",vram:null,toks:null},
+  {n:8,label:"+Unsloth",desc:"+ Unsloth kernels",bs:32,ga:1,status:"SUCCESS",vram:90.24,toks:7641},
+  {n:9,label:"+Packing",desc:"Full stack + token packing",bs:32,ga:1,status:"SUCCESS",vram:65.43,toks:7743},
+];
+
+const bsConfigs = [
+  {bs:1, ga:32}, {bs:4, ga:8}, {bs:8, ga:4}, {bs:32, ga:1}
+];
+
+const lookup = {};
+raw.forEach(d => {
+  const k = `${d.bs}_${d.ga}`;
+  if (!lookup[k]) lookup[k] = {};
+  lookup[k][d.n] = d;
+});
+
+const configs = [1,2,3,4,5,6,7,8,9].map(n => raw.find(d => d.n === n && d.bs === 1));
+
+const bestTok = Math.max(...raw.filter(d => d.toks).map(d => d.toks));
+
+function cell(d) {
+  if (!d) return `<td class="data-td"><div class="cell cell-fail"><span class="cell-fail-x">—</span></div></td>`;
+
+  const isBest = d.toks === bestTok;
+  const toksStr = d.toks ? `${d.toks.toLocaleString()} t/s` : '';
+
+  if (d.status === 'SUCCESS') {
+    const cls = d.vram >= 80 ? 'cell-warn' : 'cell-ok';
+    return `<td class="data-td"><div class="cell ${cls}">
+      ${isBest ? '<span class="best-star">★</span>' : ''}
+      <span class="cell-vram">${d.vram !== null ? d.vram.toFixed(1)+'%' : '—'}</span>
+      <span class="cell-vram-unit">VRAM</span>
+      ${toksStr ? `<span class="cell-toks">${toksStr}</span>` : ''}
+    </div></td>`;
+  }
+
+  if (d.vram !== null) {
+    return `<td class="data-td"><div class="cell cell-oom">
+      <span class="cell-oom-label">OOM</span>
+      <span class="cell-oom-vram">${d.vram.toFixed(1)}%</span>
+    </div></td>`;
+  }
+
+  return `<td class="data-td"><div class="cell cell-fail"><span class="cell-fail-x">OOM</span></div></td>`;
+}
+
+const table = document.getElementById('matrix');
+
+// Header
+const thead = document.createElement('thead');
+thead.innerHTML = `<tr>
+  <th class="config-head">Configuration</th>
+  ${bsConfigs.map(b => `<th class="bs-head">
+    <span class="bs-main">Batch ${b.bs}</span>
+    <span class="bs-sub">× GA ${b.ga}</span>
+  </th>`).join('')}
+</tr>`;
+table.appendChild(thead);
+
+const tbody = document.createElement('tbody');
+configs.forEach(cfg => {
+  const tr = document.createElement('tr');
+  let html = `<td class="config-td">
+    <div class="cfg-row">
+      <span class="cfg-num">${cfg.n}</span>
+      <div>
+        <span class="cfg-label">${cfg.label}</span>
+        <span class="cfg-desc">${cfg.desc}</span>
+      </div>
+    </div>
+  </td>`;
+  bsConfigs.forEach(b => {
+    html += cell(lookup[`${b.bs}_${b.ga}`]?.[cfg.n]);
+  });
+  tr.innerHTML = html;
+  tbody.appendChild(tr);
+});
+table.appendChild(tbody);
+</script>
+</body>
+</html>

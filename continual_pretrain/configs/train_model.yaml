@@ -10,14 +10,17 @@ model:
     model_name: "unsloth/Llama-3.2-1B"
     load_in_4bit: true
     bnb_4bit_compute_dtype: "bfloat16"
+    #bnb_4bit_compute_dtype: "fp32"
     device_map: "auto"
-    gradient_checkpointing: true
+    gradient_checkpointing: false
     use_cache: false
+    use_lora: true
     prepare_kbit_training: true
     require_grads: true
     max_seq_length: 4096
     use_unsloth: true
-    use_flash_attention: false
+    use_flash_attention: true
+    packing: false
     seed: 42
 
   lora:
@@ -35,25 +38,27 @@ model:
       - gate_proj
       - up_proj
       - down_proj
-      - embed_tokens
-      - lm_head
+      # - embed_tokens
+      # - lm_head
 
 training_args:
   output_dir: "./outputs/train_llama"
-  per_device_train_batch_size: 32
+  per_device_train_batch_size: 1
   gradient_accumulation_steps: 4
-  max_length: 4096
+  max_length: 2048
   logging_steps: 1
   learning_rate: 1e-4
-  packing: true  # make training 2-5 times faster  
+  packing: false  # make training 2-5 times faster  
   embedding_learning_rate: 2e-5  # Lower LR for embeddings/LM head (only used with use_unsloth=true)
   num_train_epochs: 1
+  save_strategy: "no"
   save_steps: 100
   save_total_limit: 1
   report_to: "wandb"
   bf16: true
   fp16: false
-  optim: "paged_adamw_8bit"
+  # optim: "paged_adamw_8bit"
+  optim: "adamw_torch"
   lr_scheduler_type: "warmup_stable_decay"
   warmup_ratio: 0.06
   lr_scheduler_kwargs: null  # Auto-computed in milestone_trainer.py: num_decay_steps=10% of total steps

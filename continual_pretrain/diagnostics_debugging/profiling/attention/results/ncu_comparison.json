@@ -1,0 +1,136 @@
+{
+  "config": {
+    "bs": 1,
+    "seq_len": 2048,
+    "note": "NCU invocations captured at effective seq~168 (warmup step). Relative ratios are valid; absolute bytes are not full-seq."
+  },
+  "invocation_counts": {
+    "QK\u1d40_GEMM": 4,
+    "softmax": 3,
+    "PV_GEMM": 3,
+    "flash_fwd": 10
+  },
+  "per_kernel_avg": {
+    "eager": {
+      "QK\u1d40_GEMM": {
+        "gpu__time_duration.sum": 13.328,
+        "dram__bytes_write.sum": 1.7,
+        "launch__registers_per_thread": 64.0,
+        "dram__bytes_read.sum": 1.385,
+        "lts__t_bytes.sum": 10.065,
+        "sm__warps_active.avg.pct_of_peak_sustained_active": 54.692,
+        "sm__pipe_tensor_op_hmma_cycles_active.avg.pct_of_peak_sustained_active": 12.41,
+        "sm__throughput.avg.pct_of_peak_sustained_elapsed": 55.292
+      },
+      "softmax": {
+        "gpu__time_duration.sum": 11.603,
+        "dram__bytes_write.sum": 3.25,
+        "launch__registers_per_thread": 28.0,
+        "dram__bytes_read.sum": 3.543,
+        "l1tex__data_pipe_lsu_wavefronts_mem_shared_op_st.sum": 0.0,
+        "lts__t_bytes.sum": 8.01,
+        "sm__warps_active.avg.pct_of_peak_sustained_active": 69.517,
+        "sm__pipe_tensor_op_hmma_cycles_active.avg.pct_of_peak_sustained_active": 0.0,
+        "l1tex__data_pipe_lsu_wavefronts_mem_shared_op_ld.sum": 0.0,
+        "sm__throughput.avg.pct_of_peak_sustained_elapsed": 44.003
+      },
+      "PV_GEMM": {
+        "gpu__time_duration.sum": 13.683,
+        "dram__bytes_write.sum": 840.063,
+        "launch__registers_per_thread": 90.0,
+        "dram__bytes_read.sum": 2.47,
+        "lts__t_bytes.sum": 4.98,
+        "sm__warps_active.avg.pct_of_peak_sustained_active": 10.003,
+        "sm__pipe_tensor_op_hmma_cycles_active.avg.pct_of_peak_sustained_active": 15.797,
+        "sm__throughput.avg.pct_of_peak_sustained_elapsed": 14.727
+      }
+    },
+    "fa2": {
+      "flash_fwd": {
+        "gpu__time_duration.sum": 24.992,
+        "dram__bytes_write.sum": 2.287,
+        "launch__registers_per_thread": 255.0,
+        "dram__bytes_read.sum": 1.104,
+        "lts__t_bytes.sum": 7.217,
+        "sm__warps_active.avg.pct_of_peak_sustained_active": 8.193,
+        "sm__pipe_tensor_op_hmma_cycles_active.avg.pct_of_peak_sustained_active": 22.643,
+        "sm__throughput.avg.pct_of_peak_sustained_elapsed": 13.885
+      }
+    }
+  },
+  "per_layer_comparison": [
+    {
+      "metric": "HBM read (MB)",
+      "metric_key": "dram__bytes_read.sum",
+      "eager": 7.398,
+      "fa2": 1.104,
+      "ratio": 0.149,
+      "savings_pct": 85.1,
+      "note": ""
+    },
+    {
+      "metric": "HBM write (MB)",
+      "metric_key": "dram__bytes_write.sum",
+      "eager": 4.95,
+      "fa2": 2.287,
+      "ratio": 0.462,
+      "savings_pct": 53.8,
+      "note": "(eager excludes PV artifact)"
+    },
+    {
+      "metric": "L2 total (MB)",
+      "metric_key": "lts__t_bytes.sum",
+      "eager": 23.055,
+      "fa2": 7.217,
+      "ratio": 0.313,
+      "savings_pct": 68.7,
+      "note": ""
+    },
+    {
+      "metric": "GPU time (\u00b5s)",
+      "metric_key": "gpu__time_duration.sum",
+      "eager": 38.614,
+      "fa2": 24.992,
+      "ratio": 0.647,
+      "savings_pct": 35.3,
+      "note": ""
+    },
+    {
+      "metric": "TensorCore util (%)",
+      "metric_key": "sm__pipe_tensor_op_hmma_cycles_active.avg.pct_of_peak_sustained_active",
+      "eager": 9.402,
+      "fa2": 22.643,
+      "ratio": 2.408,
+      "savings_pct": -140.8,
+      "note": ""
+    },
+    {
+      "metric": "SM throughput (%)",
+      "metric_key": "sm__throughput.avg.pct_of_peak_sustained_elapsed",
+      "eager": 38.008,
+      "fa2": 13.885,
+      "ratio": 0.365,
+      "savings_pct": 63.5,
+      "note": ""
+    },
+    {
+      "metric": "Warp occupancy (%)",
+      "metric_key": "sm__warps_active.avg.pct_of_peak_sustained_active",
+      "eager": 44.737,
+      "fa2": 8.193,
+      "ratio": 0.183,
+      "savings_pct": 81.7,
+      "note": ""
+    },
+    {
+      "metric": "Regs / thread",
+      "metric_key": "launch__registers_per_thread",
+      "eager": 60.667,
+      "fa2": 255.0,
+      "ratio": 4.203,
+      "savings_pct": -320.3,
+      "note": ""
+    }
+  ],
+  "pv_write_note": "dram__bytes_write.sum for PV_GEMM is excluded from eager totals. The value (~840 MB) reflects dirty L2-line evictions from QK\u1d40/softmax, not the PV kernel's actual output writes (grid=(3,1,32) = 96 blocks, actual output is O(few MB))."
+}

@@ -1,4 +1,8 @@
-from unsloth import FastLanguageModel
+import os as _os
+if _os.environ.get('USE_UNSLOTH', '1') != '0':
+    from unsloth import FastLanguageModel
+else:
+    FastLanguageModel = None  # type: ignore[assignment]
 import logging
 from dataclasses import dataclass, field
 from typing import Any, Optional, Sequence, Tuple, Union
@@ -6,7 +10,6 @@ import torch
 from peft import (
     LoraConfig,
     get_peft_model as _get_peft_model,
-    prepare_model_for_kbit_training,
 )
 from transformers import (
     AutoModelForCausalLM,
@@ -72,11 +75,12 @@ class ModelBuilderConfig:
     device_map: Union[str, dict, None] = "auto"
     gradient_checkpointing: bool = True
     use_cache: bool = False
+    use_lora: bool = True
     prepare_kbit_training: bool = True
-    require_grads: bool = True
+    require_grads: bool = False
     max_seq_length: int = 4096
-
     use_flash_attention: bool = True
+    packing: bool = True
 
     # Unsloth-related flags
     use_unsloth: bool = False
@@ -112,6 +116,24 @@ class ModelBuilder:
         self._ensure_padding_token(tokenizer)
         return model, tokenizer
 
+    def _log_weight_dtypes(self, model: PreTrainedModel) -> None:
+        from collections import Counter, defaultdict
+        dtype_counts: Counter = Counter()
+        bf16_by_module: dict = defaultdict(int)
+        for name, param in model.named_parameters():
+            dtype_counts[str(param.dtype)] += param.numel()
+            if param.dtype == torch.bfloat16:
+                # group by top-level module path (e.g. "model.layers.0.self_attn.q_proj")
+                bf16_by_module[name] += param.numel()
+        total = sum(dtype_counts.values())
+        self.logger.info("[Weight dtypes] Parameter counts by dtype:")
+        for dtype, count in sorted(dtype_counts.items(), key=lambda x: -x[1]):
+            self.logger.info(f"  {dtype}: {count:,} params ({100*count/total:.1f}%)")
+        if bf16_by_module:
+            self.logger.info("[Weight dtypes] bfloat16 params by module (descending):")
+            for name, count in sorted(bf16_by_module.items(), key=lambda x: -x[1]):
+                self.logger.info(f"  {name}: {count:,}")
+
     # --------------------------------------------------------------------- #
     # Hugging Face + BitsAndBytes + LoRA flow
     # --------------------------------------------------------------------- #
@@ -123,39 +145,42 @@ class ModelBuilder:
         quant_config = None
         model_kwargs: dict[str, Any] = {"device_map": cfg.device_map}
         if cfg.load_in_4bit:
+            compute_dtype = self._resolve_dtype(cfg.bnb_4bit_compute_dtype)
             quant_config = BitsAndBytesConfig(
                 load_in_4bit=True,
                 bnb_4bit_quant_type=cfg.bnb_4bit_quant_type,
-                bnb_4bit_compute_dtype=self._resolve_dtype(
-                    cfg.bnb_4bit_compute_dtype
-                ),
+                bnb_4bit_compute_dtype=compute_dtype,
+                bnb_4bit_use_double_quant=True,
             )
             model_kwargs["quantization_config"] = quant_config
+            model_kwargs["torch_dtype"] = compute_dtype
         else:
             dtype = self._resolve_dtype(cfg.bnb_4bit_compute_dtype)
             if dtype is not None:
                 model_kwargs["dtype"] = dtype
 
         if not cfg.use_flash_attention:
+            if cfg.packing:
+                raise Exception("Mismatch : Cannot run trl with packing and no FA2")
             model_kwargs["attn_implementation"] = "eager"
+        else:
+            cfg.use_flash_attention = model_kwargs["attn_implementation"] = "flash_attention_2"
+            
         model = AutoModelForCausalLM.from_pretrained(cfg.model_name, **model_kwargs)
         model.config.use_cache = cfg.use_cache
 
         if cfg.gradient_checkpointing:
             model.gradient_checkpointing_enable()
 
-        if cfg.prepare_kbit_training:
-            model = prepare_model_for_kbit_training(model)
+        if cfg.use_lora:
 
-        if cfg.require_grads and hasattr(model, "enable_input_require_grads"):
-            model.enable_input_require_grads() # since CPT traiuns embedding layers
+            if cfg.require_grads and hasattr(model, "enable_input_require_grads"):
+                model.enable_input_require_grads()
 
-        peft_config = self.lora_config.to_peft_config()
-        model = _get_peft_model(model, peft_config)
-        if hasattr(model, "print_trainable_parameters"):
-            model.print_trainable_parameters()  # pragma: no cover - logging helper
-
-        import os; os._exit(0)
+            peft_config = self.lora_config.to_peft_config()
+            model = _get_peft_model(model, peft_config)
+            if hasattr(model, "print_trainable_parameters"):
+                model.print_trainable_parameters()  # pragma: no cover - logging helper
 
         return model, tokenizer
 
