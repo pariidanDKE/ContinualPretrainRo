@@ -161,12 +161,16 @@ def prepare_dataset(cfg, tokenizer, return_validation=False, validation_split=0.
         builder_cfg = to_dict(data_builder, resolve=False)
         datasets_cfg = builder_cfg.get("datasets", [])
 
-        # Collect proportions
+        # Collect proportions — top-level `proportions` list overrides per-dataset fields
+        proportions_override = builder_cfg.get("proportions")
         entries_with_proportions = []
         total_proportion = 0
-        for entry in datasets_cfg:
+        for i, entry in enumerate(datasets_cfg):
             entry_dict = to_dict(entry)
-            proportion = entry_dict.get("proportion", 1)
+            if proportions_override and i < len(proportions_override):
+                proportion = proportions_override[i]
+            else:
+                proportion = entry_dict.get("proportion", 1)
             entries_with_proportions.append((entry_dict, proportion))
             total_proportion += proportion
 

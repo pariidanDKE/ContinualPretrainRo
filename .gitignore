@@ -62,3 +62,6 @@ continual_pretrain/diagnostics_debugging/eval_tasks/lora_rank_sweep_ro_mmlu_resu
 continual_pretrain/diagnostics_debugging/eval_tasks/noembd_belebele_comparison_results.json
 continual_pretrain/_unsloth_temporary_saved_buffers/unsloth/llama-3.2-1b-unsloth-bnb-4bit/input_embeddings.pt
 continual_pretrain/_unsloth_temporary_saved_buffers/unsloth/llama-3.2-1b-unsloth-bnb-4bit/output_embeddings.pt
+continual_pretrain/.hydra/config.yaml
+continual_pretrain/.hydra/hydra.yaml
+continual_pretrain/.hydra/overrides.yaml

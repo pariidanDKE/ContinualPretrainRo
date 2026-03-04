@@ -97,39 +97,50 @@ dataset:
   num_proc: 4
 
 data_builder:
-  enabled: false # default is cpt
+  enabled: true # default is cpt
   total_sample_size: null
+  proportions: null  # Optional list override e.g. [0.8, 0.2] — overrides per-dataset proportion fields
 
   datasets:
-    - name: "danp27/norobots_sft"
+    - name: "OpenLLM-Ro/fineweb2-ro-llm"
       split: "train"
-      proportion: 0.024
+      proportion: 0.9
       sample_size: null  # Use all 9,999 examples (~4.8M tokens)
 
-    - name: "./data/formatted_data/dolly"
+    - name: "danp27/fineweb-edu-500k-sample"
       split: "train"
-      proportion: 0.022
+      proportion: 0.1
       sample_size: null  # Use all 15,011 examples (~4.4M tokens)
 
-    - name: "./data/formatted_data/oasst"
-      split: "train"
-      proportion: 0.024
-      sample_size: null  # Use all 8,658 examples (~4.7M tokens)
+    # - name: "danp27/norobots_sft"
+    #   split: "train"
+    #   proportion: 0.024
+    #   sample_size: null  # Use all 9,999 examples (~4.8M tokens)
 
-    - name: "./data/formatted_data/camel"
-      split: "train"
-      proportion: 0.465
-      sample_size: 110000  # Use all 110,000 examples (~84M tokens)
+    # - name: "./data/formatted_data/dolly"
+    #   split: "train"
+    #   proportion: 0.022
+    #   sample_size: null  # Use all 15,011 examples (~4.4M tokens)
 
-    - name: "./data/formatted_data/orca"
-      split: "train"
-      proportion: 0.5 #0.465
-      sample_size: 110000  # 48M tokens / 611 tok/ex × 1.3 buffer
+    # - name: "./data/formatted_data/oasst"
+    #   split: "train"
+    #   proportion: 0.024
+    #   sample_size: null  # Use all 8,658 examples (~4.7M tokens)
 
-    - name: "./data/formatted_data/maggie"
-      split: "train"
-      proportion: 0.5 #0.465
-      sample_size: 110000  # 160M tokens / 1839 tok/ex × 1.3 buffer
+    # - name: "./data/formatted_data/camel"
+    #   split: "train"
+    #   proportion: 0.465
+    #   sample_size: 110000  # Use all 110,000 examples (~84M tokens)
+
+    # - name: "./data/formatted_data/orca"
+    #   split: "train"
+    #   proportion: 0.5 #0.465
+    #   sample_size: 110000  # 48M tokens / 611 tok/ex × 1.3 buffer
+
+    # - name: "./data/formatted_data/maggie"
+    #   split: "train"
+    #   proportion: 0.5 #0.465
+    #   sample_size: 110000  # 160M tokens / 1839 tok/ex × 1.3 buffer
 
 # ########################################################
 # Benchmark Evaluation

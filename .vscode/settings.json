@@ -1,9 +1,12 @@
 {
   "python-envs.defaultEnvManager": "ms-python.python:system",
-  "python-envs.pythonProjects": []
+  "python-envs.pythonProjects": [],
+  "files.enableTrash": false
+  
 } // {
 //   "python.defaultInterpreterPath": "/home/dan-parii/.pyenv/versions/finetuning-ro-llms/bin/python",
 //   "python.analysis.typeCheckingMode": "standard",
 //   "python.linting.enabled": true,
 //   "python.linting.ruffEnabled": true
 // }
+ 
