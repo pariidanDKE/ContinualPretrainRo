@@ -18,6 +18,7 @@ from transformers.trainer_utils import speed_metrics
 from lm_eval import evaluator
 from lm_eval.models.huggingface import HFLM
 from transformers import trainer
+from torch.optim.lr_scheduler import LambdaLR
 
 
 logger = logging.getLogger(__name__)
@@ -44,6 +45,7 @@ class MilestoneTrainerMixin:
     def __init__(self, benchmark_evaluation_cfg : dict, num_milestones: int, tokens_per_milestone: int, run_benchmarks: bool, *args, **kwargs):
         super().__init__(*args,**kwargs)
         self.milestone_tokens = 0
+        self.total_tokens_seen = 0  # cumulative across all milestones, never reset
         self.benchmark_evaluation_cfg = benchmark_evaluation_cfg
         self.num_milestones = num_milestones
         self.tokens_per_milestone = tokens_per_milestone
@@ -87,33 +89,57 @@ class MilestoneTrainerMixin:
         
 
     def create_scheduler(self, num_training_steps: int, optimizer: torch.optim.Optimizer = None):
-        tokens_per_step = self.args.gradient_accumulation_steps * self.args.world_size * self.args.max_length * self.args.train_batch_size
-        max_steps = math.ceil((self.num_milestones * self.tokens_per_milestone) / tokens_per_step)
+        total_tokens = self.num_milestones * self.tokens_per_milestone
 
-        # Dynamically set num_decay_steps if using WSD scheduler
-        if self.args.lr_scheduler_type == "warmup_stable_decay":
-            # Initialize lr_scheduler_kwargs if not set
-            if self.args.lr_scheduler_kwargs is None:
-                self.args.lr_scheduler_kwargs = {}
+        # For non-WSD schedulers fall back to padded step estimate (original behaviour)
+        if self.args.lr_scheduler_type != "warmup_stable_decay":
+            tokens_per_step = (self.args.gradient_accumulation_steps * self.args.world_size *
+                               self.args.max_length * self.args.train_batch_size)
+            max_steps = math.ceil(total_tokens / tokens_per_step)
+            return super().create_scheduler(num_training_steps=max_steps, optimizer=optimizer)
 
-            # Set num_decay_steps to 10% of total training steps if not already specified
-            if 'num_decay_steps' not in self.args.lr_scheduler_kwargs:
-                decay_steps = int(max_steps * 0.05)
-                self.args.lr_scheduler_kwargs['num_decay_steps'] = decay_steps
-                logger.info(f"📉 WSD Scheduler: Setting num_decay_steps={decay_steps} (10% of {max_steps} total steps)")
+        # --- Token-aware WSD scheduler ---
+        # warmup: prefer ratio over steps (steps would need the same padded conversion we're avoiding)
+        if self.args.warmup_ratio > 0:
+            warmup_tokens = int(self.args.warmup_ratio * total_tokens)
+        else:
+            tokens_per_step_padded = (self.args.gradient_accumulation_steps * self.args.world_size *
+                                      self.args.max_length * self.args.train_batch_size)
+            warmup_tokens = self.args.warmup_steps * tokens_per_step_padded
 
-            # Set default decay_type and min_lr_ratio if not specified
-            if 'decay_type' not in self.args.lr_scheduler_kwargs:
-                self.args.lr_scheduler_kwargs['decay_type'] = 'cosine'
-            if 'min_lr_ratio' not in self.args.lr_scheduler_kwargs:
-                self.args.lr_scheduler_kwargs['min_lr_ratio'] = 0.1
+        lr_scheduler_kwargs = self.args.lr_scheduler_kwargs or {}
+        min_lr_ratio = lr_scheduler_kwargs.get('min_lr_ratio', 0.1)
+        decay_type = lr_scheduler_kwargs.get('decay_type', 'cosine')
+        decay_tokens = lr_scheduler_kwargs.get('num_decay_tokens', int(0.05 * total_tokens))
 
-        return super().create_scheduler(num_training_steps = max_steps, optimizer = optimizer)
+        stable_tokens = total_tokens - warmup_tokens - decay_tokens
+        logger.info(
+            f"Token-aware WSD | warmup={warmup_tokens:,} | stable={stable_tokens:,} | "
+            f"decay={decay_tokens:,} | total={total_tokens:,} tokens"
+        )
+
+        def wsd_token_lambda(_):  # step arg intentionally ignored; progress is token-based
+            t = self.total_tokens_seen
+            if t < warmup_tokens:
+                return t / max(warmup_tokens, 1)
+            elif t < total_tokens - decay_tokens:
+                return 1.0
+            else:
+                decay_progress = (t - (total_tokens - decay_tokens)) / max(decay_tokens, 1)
+                decay_progress = min(decay_progress, 1.0)
+                if decay_type == 'cosine':
+                    return min_lr_ratio + (1.0 - min_lr_ratio) * 0.5 * (1.0 + math.cos(math.pi * decay_progress))
+                else:  # linear
+                    return min_lr_ratio + (1.0 - min_lr_ratio) * (1.0 - decay_progress)
+
+        if self.lr_scheduler is None:
+            opt = self.optimizer if optimizer is None else optimizer
+            self.lr_scheduler = LambdaLR(opt, wsd_token_lambda)
+            self._created_lr_scheduler = True
+        return self.lr_scheduler
     
     def evaluate_benchmarks(self):
         """Evaluate model on benchmarks and extract metrics for logging."""
-        from lm_eval.models.huggingface import HFLM
-
         perplexity_tasks = self.benchmark_evaluation_cfg['perplexity_tasks']
         tasks_to_run = self.benchmark_evaluation_cfg['tasks_to_run']
 
@@ -337,7 +363,9 @@ class MilestoneTrainerMixin:
             batch_samples, num_items_in_batch = super().get_batch_samples(epoch_iterator, num_batches, device)
 
             if isinstance(num_items_in_batch, torch.Tensor):
-                self.milestone_tokens+=num_items_in_batch.item()
+                tokens = num_items_in_batch.item()
+                self.milestone_tokens += tokens
+                self.total_tokens_seen += tokens
             
             print(f"[get_batch_samples] : Total tokens this milestone {self.milestone_tokens}")
             return batch_samples, num_items_in_batch
