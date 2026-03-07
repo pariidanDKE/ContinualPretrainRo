@@ -32,7 +32,7 @@ NSYS_DELAY=90
 NSYS_DURATION=90
 RUN_TS=$(date +%Y%m%d_%H%M)
 
-BS_GA_PAIRS=("1 32" "8 4")
+BS_GA_PAIRS=("32 4")
 
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'   
@@ -44,7 +44,7 @@ NC='\033[0m'
 profile_config() {
     local name=$1
     shift
-    local out_dir="outputs/nsys_profiles/batch_size_comparison/bs${BS}_ga${GA}_${RUN_TS}"
+    local out_dir="outputs/nsys_profiles/packing_comparison/bs${BS}_ga${GA}_${RUN_TS}"
     local out="${out_dir}/${name}"
     mkdir -p "$out_dir"
 
@@ -59,7 +59,6 @@ profile_config() {
         --delay=${NSYS_DELAY} \
         --duration=${NSYS_DURATION} \
         python train_milestones.py \
-            model.builder.packing=false \
             milestone.tokens_per_milestone=1000000 \
             milestone.num_milestones=1 \
             milestone.do_evaluate=false \
@@ -174,9 +173,9 @@ run_all_configs() {
     #     model.builder.prepare_kbit_training=true \
     #     model.builder.use_unsloth=false
 
-    # Config 8: +Unsloth kernels
+    # Config 8a: no packing
     export USE_UNSLOTH=1
-    try_profile "8_bf16_gc_fa2_paged_qlora64_unsloth" \
+    try_profile "8a_bf16_gc_fa2_paged_qlora64_unsloth_nopacking" \
         model.builder.model_name=${UNSLOTH_MODEL} \
         training_args.bf16=true \
         training_args.gradient_checkpointing=true \
@@ -188,26 +187,27 @@ run_all_configs() {
         model.lora.r=${LORA_RANK} \
         model.lora.lora_alpha=${LORA_ALPHA} \
         model.builder.load_in_4bit=true \
-        model.builder.use_unsloth=true
+        model.builder.use_unsloth=true \
+        model.builder.packing=false \
+        training_args.packing=false
 
-    # # Config 9: +packing
-    # export USE_UNSLOTH=1
-    # try_profile "9_full_stack_packing" \
-    #     model.builder.model_name=${UNSLOTH_MODEL} \
-    #     training_args.bf16=true \
-    #     training_args.gradient_checkpointing=true \
-    #     training_args.optim=paged_adamw_8bit \
-    #     training_args.embedding_learning_rate=2e-5 \
-    #     model.builder.bnb_4bit_compute_dtype=bfloat16 \
-    #     model.builder.use_flash_attention=true \
-    #     model.builder.use_lora=true \
-    #     model.lora.r=${LORA_RANK} \
-    #     model.lora.lora_alpha=${LORA_ALPHA} \
-    #     model.builder.load_in_4bit=true \
-    #     model.builder.prepare_kbit_training=true \
-    #     model.builder.use_unsloth=true \
-    #     model.builder.packing=true \
-    #     training_args.packing=true
+    # Config 8b: packing
+    export USE_UNSLOTH=1
+    try_profile "8b_bf16_gc_fa2_paged_qlora64_unsloth_packing" \
+        model.builder.model_name=${UNSLOTH_MODEL} \
+        training_args.bf16=true \
+        training_args.gradient_checkpointing=true \
+        training_args.optim=paged_adamw_8bit \
+        training_args.embedding_learning_rate=2e-5 \
+        model.builder.bnb_4bit_compute_dtype=bfloat16 \
+        model.builder.use_flash_attention=true \
+        model.builder.use_lora=true \
+        model.lora.r=${LORA_RANK} \
+        model.lora.lora_alpha=${LORA_ALPHA} \
+        model.builder.load_in_4bit=true \
+        model.builder.use_unsloth=true \
+        model.builder.packing=true \
+        training_args.packing=true
 }
 
 # ── Outer loop over BS/GA pairs ───────────────────────────────────────────────

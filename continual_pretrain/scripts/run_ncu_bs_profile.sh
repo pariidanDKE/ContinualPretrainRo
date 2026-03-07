@@ -56,7 +56,11 @@ BS_GA_PAIRS=("8 4" "1 32")
 # CUTLASS kernels are C++ templates: the tile name lives in the template arg,
 # not the function name. --kernel-name-base demangled exposes it as a substring.
 # The exact tile name is known from the NCU "Available Kernels" list.
-KERNEL_REGEX="${NCU_KERNEL_REGEX:-cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_256x128_32x3_tn_align8>}"
+# Broad regex: matches all bf16 CUTLASS GEMM tiles regardless of tile size.
+# BS=1  → 256x128 tile; BS=8 → 128x128 / 128x256 / 256x64 tiles (CUTLASS
+# picks the tile heuristically based on problem shape, so a fixed tile name
+# only works for one batch size).
+KERNEL_REGEX="${NCU_KERNEL_REGEX:-cutlass_80_tensorop_bf16_s16816gemm}"
 
 #cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_256x128_32x3_tn_align8>
 
@@ -230,7 +234,7 @@ for pair in "${BS_GA_PAIRS[@]}"; do
 
     echo -e "${YELLOW}════════════════════════════════════════${NC}"
     echo -e "${YELLOW}Batch Config: bs=${BS}  ga=${GA}  (eff_bs=$((BS * GA)))${NC}"
-    echo -e "${YELLOW}Output: outputs/ncu_profiles/bs${BS}_ga${GA}_${RUN_TS}/${NC}"
+    echo -e "${YELLOW}Output: outputs/ncu_profiles/no_packing/bs${BS}_ga${GA}_${RUN_TS}/${NC}"
     echo -e "${YELLOW}════════════════════════════════════════${NC}"
     echo ""
 
