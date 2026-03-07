@@ -15,7 +15,7 @@ model:
     use_cache: false
     prepare_kbit_training: true
     require_grads: true
-    max_seq_length: 4096
+    max_seq_length: 2048
     use_unsloth: true
     use_flash_attention: false
     seed: 42
@@ -42,7 +42,7 @@ training_args:
   output_dir: "./outputs/train_llama"
   per_device_train_batch_size: 32
   gradient_accumulation_steps: 4
-  max_length: 4096
+  max_length: 2048
   logging_steps: 1
   learning_rate: 1e-4
   packing: true  # make training 2-5 times faster  
@@ -97,7 +97,7 @@ dataset:
   num_proc: 4
 
 data_builder:
-  enabled: true # default is cpt
+  enabled: false # default is cpt
   total_sample_size: null
   proportions: null  # Optional list override e.g. [0.8, 0.2] — overrides per-dataset proportion fields
 
