@@ -47,6 +47,7 @@ class LoraAdapterConfig:
     target_modules: Sequence[str] = field(
         default_factory=lambda: list(_default_target_modules())
     )
+    modules_to_save: Optional[Sequence[str]] = None
 
     def to_peft_config(self) -> LoraConfig:
         """Create a `peft.LoraConfig` instance."""
@@ -111,6 +112,7 @@ class ModelBuilder:
 
         self._ensure_padding_token(tokenizer)
         return model, tokenizer
+
 
     # --------------------------------------------------------------------- #
     # Hugging Face + BitsAndBytes + LoRA flow
@@ -179,7 +181,7 @@ class ModelBuilder:
             **fa_kwargs,
         )
 
-        model = FastLanguageModel.get_peft_model(
+        peft_kwargs = dict(
             model=model,
             r=self.lora_config.r,
             target_modules=list(self.lora_config.target_modules),
@@ -191,6 +193,9 @@ class ModelBuilder:
             use_rslora=cfg.unsloth_use_rslora,
             loftq_config=cfg.unsloth_loftq_config,
         )
+        if self.lora_config.modules_to_save:
+            peft_kwargs["modules_to_save"] = list(self.lora_config.modules_to_save)
+        model = FastLanguageModel.get_peft_model(**peft_kwargs)
 
         if hasattr(model, "print_trainable_parameters"):
             model.print_trainable_parameters()  # pragma: no cover - logging helper
