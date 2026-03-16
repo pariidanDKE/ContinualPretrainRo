@@ -113,7 +113,6 @@ class ModelBuilder:
         self._ensure_padding_token(tokenizer)
         return model, tokenizer
 
-
     # --------------------------------------------------------------------- #
     # Hugging Face + BitsAndBytes + LoRA flow
     # --------------------------------------------------------------------- #

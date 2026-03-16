@@ -49,7 +49,7 @@ def main(cfg : DictConfig):
     from omegaconf import OmegaConf
     logging.info("Full resolved config:\n%s", OmegaConf.to_yaml(cfg, resolve=True))
     logging.info("Starting Continuous Training")
-    logging.info(f"Training on {tokens_per_milestone * num_milestones} tokens ({num_milestones} milestones)")
+    logging.info(f"Training on {tokens_per_milestone:,} tokens/milestone x {num_milestones} milestones = {tokens_per_milestone * num_milestones:,} total tokens")
     
     # override max_seq_length param for unlsoth to have one source of truth
     model_cfg = to_dict(cfg.model.builder)
@@ -81,7 +81,11 @@ def main(cfg : DictConfig):
     result = prepare_dataset(cfg, tokenizer, return_validation=val_cfg.get('return_validation',False), validation_split= val_cfg.get('validation_split',0.1))
     train_dataset, val_dataset = result if isinstance(result, tuple) else (result, None)
 
-    logging.info(f" Datasets loaded : {len(train_dataset)} training examples; {len(val_dataset) if val_dataset is not None else 0} validation examples")
+    if isinstance(val_dataset, dict):
+        val_info = f"{sum(len(v) for v in val_dataset.values())} validation examples across sources: {list(val_dataset.keys())}"
+    else:
+        val_info = f"{len(val_dataset) if val_dataset is not None else 0} validation examples"
+    logging.info(f" Datasets loaded : {len(train_dataset)} training examples; {val_info}")
 
 
     # alter training_kwargs
@@ -99,7 +103,7 @@ def main(cfg : DictConfig):
 
     # set logger to same file as output_dir/logs
     output_dir = training_kwargs.get('output_dir', './outputs')
-    setup_file_logging(output_dir, run_name=wandb_run_name, run_id=wandb_run_id)
+    file_handler = setup_file_logging(output_dir, run_name=wandb_run_name, run_id=wandb_run_id)
     
 
     # setup trainer
@@ -128,7 +132,10 @@ def main(cfg : DictConfig):
     trainer = create_milestone_trainer(
         TrainerClass,
         **milestone_trainer_params)
-    
+
+    # Re-attach file handler — Trainer init resets root logger handlers
+    logging.getLogger().addHandler(file_handler)
+
     # setup callbacks
     token_stats_callback = TokenStatsCallback(tokenizer, log_every_n_steps = training_kwargs['logging_steps'])
     eval_trigger_callback = EvaluationTriggerCallback(

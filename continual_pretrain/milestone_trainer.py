@@ -260,6 +260,7 @@ class MilestoneTrainerMixin:
         eval_dataset: Dataset | dict[str, Dataset] | None = None,
         ignore_keys: list[str] | None = None,
         metric_key_prefix: str = "eval",
+        _recursive: bool = False,
     ) -> dict[str, float]:
         """
         Run evaluation and returns metrics.
@@ -309,8 +310,14 @@ class MilestoneTrainerMixin:
                     eval_dataset=_eval_dataset if override else eval_dataset_name,
                     ignore_keys=ignore_keys,
                     metric_key_prefix=f"{metric_key_prefix}_{eval_dataset_name}",
+                    _recursive=True,
                 )
                 metrics.update(dataset_metrics)
+            if not _recursive and self.run_benchmarks:
+                benchmark_results = self.evaluate_benchmarks()
+                metrics.update({
+                    f"{metric_key_prefix}_{k.replace('/', '_')}": v for k, v in benchmark_results.items()
+                })
             return metrics
 
         # get benchmark results
@@ -342,7 +349,7 @@ class MilestoneTrainerMixin:
                 num_steps=math.ceil(output.num_samples / total_batch_size),
             )
         )
-        if self.run_benchmarks:
+        if self.run_benchmarks and not _recursive:
             benchmark_results = self.evaluate_benchmarks()
             #add custom benchmark metrics with proper eval prefix (using underscore like speed_metrics)
             prefixed_benchmarks = {

@@ -45,7 +45,7 @@ training_args:
   max_length: 2048
   logging_steps: 1
   learning_rate: 1e-4
-  packing: true  # make training 2-5 times faster  
+  packing: false  # make training 2-5 times faster  
   embedding_learning_rate: 2e-5  # Lower LR for embeddings/LM head (only used with use_unsloth=true)
   num_train_epochs: 1
   save_steps: 100
@@ -86,14 +86,15 @@ milestone:
 # ########################################################
 
 # configuration when data_builder is not enabled and use single dataset (usually for cpt)
-dataset: 
-  tokenize: false  
-  use_sft: false    
-  sample_size: null  
-  text_field: "text"  
+dataset:
+  tokenize: false
+  use_sft: false
+  sample_size: null
+  sample_offset: null
+  text_field: "text"
   name: "OpenLLM-Ro/fineweb2-ro-llm"
   split: "train"
-  add_bos_eos: true  
+  add_bos_eos: true
   num_proc: 4
 
 data_builder:
@@ -104,13 +105,15 @@ data_builder:
   datasets:
     - name: "OpenLLM-Ro/fineweb2-ro-llm"
       split: "train"
-      proportion: 0.9
-      sample_size: null  # Use all 9,999 examples (~4.8M tokens)
+      proportion: 0.8
+      sample_size: null
+      sample_offset: null
 
     - name: "danp27/fineweb-edu-500k-sample"
       split: "train"
-      proportion: 0.1
-      sample_size: null  # Use all 15,011 examples (~4.4M tokens)
+      proportion: 0.2
+      sample_size: null
+      sample_offset: null
 
     # - name: "danp27/norobots_sft"
     #   split: "train"
@@ -156,7 +159,6 @@ benchmark_evaluation_cfg:
   device : auto
 
   tasks_to_run: [ "_ro_winogrande",  "_ro_arc_challenge", "arc_challenge", "winogrande", "ro_wiki", "wikitext", "_ro_hellaswag"] # remove belebele and mmlu
-  #tasks_to_run: []
   perplexity_tasks: ["ro_wiki", "wikitext"] # for these do not apply chat template
 
   output_dir: eval_results
@@ -180,7 +182,7 @@ benchmark_evaluation_cfg:
     # - name: _ro_mmlu
     #   fewshot: 5
     #   task_batch_size: 1
-    #   limit: 1000
+    #   limit: 10
     #   max_length: 2048  # MMLU uses shorter context
 
     - name: _ro_winogrande
@@ -192,7 +194,7 @@ benchmark_evaluation_cfg:
     # - name: _ro_belebele
     #   fewshot: 5
     #   task_batch_size: 1
-    #   limit: 1000
+    #   limit: 10
     #   max_length: 2048  # Belebele uses shorter context
 
     - name: _ro_arc_challenge
@@ -214,6 +216,30 @@ benchmark_evaluation_cfg:
       max_length: 2048
 
     - name: winogrande
+      fewshot: 5
+      task_batch_size: 8
+      limit: 1000
+      max_length: 2048
+
+    - name: _ro_mmlu
+      fewshot: 5
+      task_batch_size: 8
+      limit: 1000
+      max_length: 2048
+
+    - name: _ro_grammar
+      fewshot: 5
+      task_batch_size: 8
+      limit: 1000
+      max_length: 2048
+
+    - name: _ro_belebele
+      fewshot: 5
+      task_batch_size: 8
+      limit: 1000
+      max_length: 2048
+
+    - name: _ro_gsm8k
       fewshot: 5
       task_batch_size: 8
       limit: 1000

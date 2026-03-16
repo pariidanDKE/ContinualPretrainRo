@@ -90,11 +90,12 @@ def load_single_dataset(
 
     if sample_size:
         dataset_len = len(ds)
+        sample_offset = int(entry_cfg.get("sample_offset") or default_cfg.get("sample_offset") or 0)
 
-        if int(sample_size) > dataset_len:
-            logger.info(f"Requested sample size larger than entry size, will load full dataset instead - {dataset_len} entries instead of {sample_size}")
-            sample_size = dataset_len
-        ds = ds.select(range(int(sample_size)))
+        if sample_offset + int(sample_size) > dataset_len:
+            logger.info(f"Requested sample size + offset larger than dataset size, clamping - {dataset_len} entries available")
+            sample_size = dataset_len - sample_offset
+        ds = ds.select(range(sample_offset, sample_offset + int(sample_size)))
 
     # Add source tracking column before preprocessing
     ds = ds.add_column("ds_source", [name] * len(ds))
@@ -151,10 +152,12 @@ def prepare_dataset(cfg, tokenizer, return_validation=False, validation_split=0.
         # Calculate total target tokens for training
         total_target_tokens = num_milestones * tokens_per_milestone
 
-        # Estimate validation samples: (target_tokens * validation_split) / max_length
-        val_size = int((total_target_tokens * validation_split) / max_length)
+        # Estimate validation samples: (target_tokens * validation_split) / avg_tokens_per_sample
+        # Using 1000 as mean sample length (packing disabled, samples well below max_length)
+        avg_tokens_per_sample = 1000
+        val_size = int((total_target_tokens * validation_split) / avg_tokens_per_sample)
         logger.info(f"Validation size: {val_size} samples "
-                   f"(based on {total_target_tokens:,} target tokens * {validation_split} split / {max_length} max_length)")
+                   f"(based on {total_target_tokens:,} target tokens * {validation_split} split / {avg_tokens_per_sample} avg tokens)")
 
 
     if data_builder and data_builder.get("enabled"):
@@ -174,37 +177,35 @@ def prepare_dataset(cfg, tokenizer, return_validation=False, validation_split=0.
             entries_with_proportions.append((entry_dict, proportion))
             total_proportion += proportion
 
-        # Load datasets with adjusted sample sizes
-        processed_train = []
-        proportions = []
         total_sample_size = data_builder.get("total_sample_size")
 
-        for entry_dict, proportion in entries_with_proportions: # set ceiling for total number of samples
-            if total_sample_size and "sample_size" not in entry_dict:
+        # Load all datasets (each already has ds_source column from load_single_dataset)
+        processed = []
+        for entry_dict, proportion in entries_with_proportions:
+            if total_sample_size and ("sample_size" not in entry_dict or entry_dict['sample_size'] is None):
                 adjusted_sample_size = int(total_sample_size * proportion / total_proportion)
+                logger.info(f"Select {adjusted_sample_size} from dataset {entry_dict['name']}")
                 entry_dict["sample_size"] = adjusted_sample_size
-
-
             ds = load_single_dataset(entry_dict, dataset_defaults, tokenizer)
+            processed.append(ds)
 
-            if return_validation:
-                processed_train.append(ds)  # Collect full datasets, split later
-            else:
-                processed_train.append(ds)
-
-            proportions.append(proportion)
-
-        # Concatenate all datasets and shuffle for random distribution
-        full_dataset = concatenate_datasets(processed_train).shuffle(seed=seed)
-        logger.info(f"Concatenated {len(processed_train)} datasets with {len(full_dataset)} total examples")
+        full_dataset = concatenate_datasets(processed).shuffle(seed=seed)
+        logger.info(f"Concatenated {len(processed)} datasets with {len(full_dataset)} total examples")
 
         if return_validation:
-            # Split using absolute validation size (based on target tokens)
             split_ds = full_dataset.train_test_split(test_size=val_size, seed=seed)
-            logger.info(f"Split dataset: {len(split_ds['train'])} train, {len(split_ds['test'])} validation")
-            return split_ds['train'], split_ds['test']
-        else:
-            return full_dataset
+            train_dataset = split_ds['train']
+            val_dataset = split_ds['test']
+            # Group val set by ds_source — LLN ensures proportions are preserved naturally
+            val_dict = {}
+            for source_name in val_dataset.unique('ds_source'):
+                source_key = source_name.rstrip('/').split('/')[-1]
+                val_dict[source_key] = val_dataset.filter(lambda x, s=source_name: x['ds_source'] == s)
+                logger.info(f"  val/{source_key}: {len(val_dict[source_key])} samples")
+            logger.info(f"Split: {len(train_dataset)} train, {len(val_dataset)} val ({len(val_dict)} sources)")
+            return train_dataset, val_dict
+
+        return full_dataset
 
     # Single dataset mode
     ds = load_single_dataset(dataset_defaults, dataset_defaults, tokenizer)
@@ -283,6 +284,7 @@ def setup_file_logging(output_dir: str, run_name: str = None, run_id: str = None
     root_logger.addHandler(file_handler)
 
     logger.info(f"File logging enabled: {log_file_path}")
+    return file_handler
 
 
 # =============================================================================

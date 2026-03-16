@@ -33,6 +33,8 @@ class EvaluationTriggerCallback(TrainerCallback):
         milestone_token_counter = self.trainer.milestone_tokens
         self.total_token_counter += milestone_token_counter
 
+        print(f"[step {state.global_step}] milestone_tokens: {self.trainer.milestone_tokens:,} | total_tokens_seen: {self.trainer.total_tokens_seen:,}")
+
         if self.trainer.milestone_tokens >= self.target_milestone_tokens:
             # Only trigger evaluation if do_evaluate is True
             if self.do_evaluate:

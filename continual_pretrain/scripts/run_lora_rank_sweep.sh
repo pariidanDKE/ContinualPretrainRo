@@ -24,8 +24,16 @@ NC='\033[0m' # No Color
 # Configuration
 TOKENS_PER_MILESTONE=25000000  # 25M tokens per milestone
 NUM_MILESTONES=5               # 4 milestones = 100M tokens total
-# LORA_RANKS=(16 32 64 128)      # LoRA ranks to test
-LORA_RANKS=(256)      # LoRA ranks to test
+
+LORA_RANKS=(128 256 8)      # LoRA ranks to test
+
+LEARNING_RATE=1e-4
+EMBEDDING_LR=2e-5
+BATCH_SIZE=16
+GRAD_ACCUM=8
+
+# 80/20 data mix configuration (80% Romanian / 20% English edu)
+TOTAL_SAMPLES=170000
 
 # Generate timestamp for this sweep
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
@@ -57,8 +65,16 @@ run_experiment() {
     python train_milestones.py \
         model.lora.r=${lora_rank} \
         model.lora.lora_alpha=${lora_rank} \
+        training_args.learning_rate=${LEARNING_RATE} \
+        training_args.embedding_learning_rate=${EMBEDDING_LR} \
+        training_args.per_device_train_batch_size=${BATCH_SIZE} \
+        training_args.gradient_accumulation_steps=${GRAD_ACCUM} \
         milestone.tokens_per_milestone=${TOKENS_PER_MILESTONE} \
         milestone.num_milestones=${NUM_MILESTONES} \
+        data_builder.enabled=true \
+        data_builder.total_sample_size=${TOTAL_SAMPLES} \
+        "data_builder.proportions=[0.8,0.2]" \
+        milestone.run_benchmarks=true \
         wandb.custom_run_name="${CUSTOM_NAME}" \
         wandb.group="${SWEEP_NAME}"
 
