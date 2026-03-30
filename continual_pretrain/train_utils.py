@@ -2,7 +2,13 @@
 Shared utilities for training scripts.
 """
 import unsloth
-from unsloth import UnslothTrainingArguments, UnslothTrainer
+from unsloth import UnslothTrainingArguments as _UnslothTrainingArguments, UnslothTrainer
+
+# Fix unsloth bug: embedding_learning_rate is accepted but never stored as self attribute
+class UnslothTrainingArguments(_UnslothTrainingArguments):
+    def __init__(self, embedding_learning_rate=None, *args, **kwargs):
+        self.embedding_learning_rate = embedding_learning_rate
+        super().__init__(embedding_learning_rate, *args, **kwargs)
 from trl import SFTConfig, SFTTrainer
 import os
 import re
