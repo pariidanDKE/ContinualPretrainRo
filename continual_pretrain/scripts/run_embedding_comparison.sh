@@ -19,7 +19,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Configuration
-TOKENS_PER_MILESTONE=25000000  # 25M tokens per milestone
+TOKENS_PER_MILESTONE=50000000  # 25M tokens per milestone
 NUM_MILESTONES=5              # 4 milestones = 100M tokens total
 LORA_RANK=64                   # LoRA rank
 LORA_ALPHA=64                  # LoRA alpha (typically equal to rank)

@@ -74,7 +74,7 @@ run_experiment() {
         data_builder.enabled=true \
         data_builder.total_sample_size=${TOTAL_SAMPLES} \
         "data_builder.proportions=[0.8,0.2]" \
-        milestone.run_benchmarks=true \
+        milexstone.run_benchmarks=true \
         wandb.custom_run_name="${CUSTOM_NAME}" \
         wandb.group="${SWEEP_NAME}"
 

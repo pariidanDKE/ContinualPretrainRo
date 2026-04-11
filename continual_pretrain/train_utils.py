@@ -187,7 +187,7 @@ def prepare_dataset(cfg, tokenizer, return_validation=False, validation_split=0.
 
         # Load all datasets (each already has ds_source column from load_single_dataset)
         processed = []
-        for entry_dict, proportion in entries_with_proportions:
+        for i, (entry_dict, proportion) in enumerate(entries_with_proportions):
             if total_sample_size and ("sample_size" not in entry_dict or entry_dict['sample_size'] is None):
                 adjusted_sample_size = int(total_sample_size * proportion / total_proportion)
                 logger.info(f"Select {adjusted_sample_size} from dataset {entry_dict['name']}")

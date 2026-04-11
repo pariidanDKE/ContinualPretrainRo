@@ -52,6 +52,50 @@ class EvaluationTriggerCallback(TrainerCallback):
         return control
 
 
+class EpochEndCheckpointCallback(TrainerCallback):
+    """Saves a checkpoint at the end of each epoch."""
+
+    def on_epoch_end(self, args, state, control, **kwargs):
+        control.should_save = True
+        return control
+
+
+class WSDDecayCheckpointCallback(TrainerCallback):
+    """
+    Saves a checkpoint exactly once when the WSD scheduler transitions into the
+    decay phase (i.e. total_tokens_seen crosses total_tokens - decay_tokens).
+
+    This gives a clean stable-phase snapshot you can resume from if you later
+    want to extend training without re-running the warmup/stable phases.
+
+    Args:
+        total_tokens:  Total training tokens across all milestones
+                       (num_milestones * tokens_per_milestone).
+        decay_tokens:  Number of tokens in the decay phase
+                       (same value passed to lr_scheduler_kwargs.num_decay_tokens).
+        trainer:       The MilestoneTrainer instance (needs .total_tokens_seen).
+    """
+
+    def __init__(self, total_tokens: int, decay_tokens: int, trainer):
+        self.decay_start_tokens = total_tokens - decay_tokens
+        self.trainer = trainer
+        self._saved = False
+
+    def on_step_end(self, args, state, control, **kwargs):
+        if self._saved:
+            return control
+
+        if self.trainer.total_tokens_seen >= self.decay_start_tokens:
+            logger.info(
+                f"WSD decay phase started at {self.trainer.total_tokens_seen:,} tokens "
+                f"(threshold={self.decay_start_tokens:,}). Saving pre-decay checkpoint."
+            )
+            control.should_save = True
+            self._saved = True
+
+        return control
+
+
 class TokenStatsCallback(WandbCallback):
     """
     Callback to log token statistics (real vs padding vs EOS tokens) during training.

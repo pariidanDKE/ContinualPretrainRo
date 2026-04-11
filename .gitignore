@@ -64,3 +64,6 @@ continual_pretrain/_unsloth_temporary_saved_buffers/unsloth/llama-3.2-1b-unsloth
 continual_pretrain/.hydra/config.yaml
 continual_pretrain/.hydra/hydra.yaml
 continual_pretrain/.hydra/overrides.yaml
+continual_pretrain/.hydra/config.yaml
+continual_pretrain/.hydra/hydra.yaml
+continual_pretrain/.hydra/overrides.yaml

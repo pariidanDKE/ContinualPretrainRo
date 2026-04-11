@@ -42,10 +42,10 @@ class MilestoneTrainerMixin:
         trainer.add_callback(callback)
     """
 
-    def __init__(self, benchmark_evaluation_cfg : dict, num_milestones: int, tokens_per_milestone: int, run_benchmarks: bool, *args, **kwargs):
+    def __init__(self, benchmark_evaluation_cfg : dict, num_milestones: int, tokens_per_milestone: int, run_benchmarks: bool, resume_tokens_seen: int = 0, *args, **kwargs):
         super().__init__(*args,**kwargs)
         self.milestone_tokens = 0
-        self.total_tokens_seen = 0  # cumulative across all milestones, never reset
+        self.total_tokens_seen = resume_tokens_seen  # cumulative across all milestones, never reset
         self.benchmark_evaluation_cfg = benchmark_evaluation_cfg
         self.num_milestones = num_milestones
         self.tokens_per_milestone = tokens_per_milestone
@@ -303,6 +303,18 @@ class MilestoneTrainerMixin:
         # handle multiple eval datasets
         override = eval_dataset is not None
         eval_dataset = eval_dataset if override else self.eval_dataset
+        if eval_dataset is None:
+            # No eval dataset — skip loss loop, run benchmarks only
+            metrics = {}
+            if not _recursive and self.run_benchmarks:
+                benchmark_results = self.evaluate_benchmarks()
+                metrics.update({
+                    f"{metric_key_prefix}_{k.replace('/', '_')}": v for k, v in benchmark_results.items()
+                })
+            if not _recursive:
+                self.log(metrics)
+                self.control = self.callback_handler.on_evaluate(self.args, self.state, self.control, metrics)
+            return metrics
         if isinstance(eval_dataset, dict):
             metrics = {}
             for eval_dataset_name, _eval_dataset in eval_dataset.items():
@@ -318,6 +330,9 @@ class MilestoneTrainerMixin:
                 metrics.update({
                     f"{metric_key_prefix}_{k.replace('/', '_')}": v for k, v in benchmark_results.items()
                 })
+            if not _recursive:
+                self.log(metrics)
+                self.control = self.callback_handler.on_evaluate(self.args, self.state, self.control, metrics)
             return metrics
 
         # get benchmark results

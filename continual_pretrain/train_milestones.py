@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 from milestone_trainer import create_milestone_trainer
 from model import ModelBuilder, ModelBuilderConfig, LoraAdapterConfig
-from trainer_callbacks import EvaluationTriggerCallback, TokenStatsCallback
+from trainer_callbacks import EvaluationTriggerCallback, TokenStatsCallback, WSDDecayCheckpointCallback, EpochEndCheckpointCallback
 from train_utils import (
     prepare_dataset,
     to_dict,
@@ -66,7 +66,7 @@ def main(cfg : DictConfig):
     import torch
     torch.cuda.synchronize()
     static_vram_gb = torch.cuda.memory_allocated() / 1e9
-    logging.info(f"[VRAM] Static model memory (params only, no optimizer states): {static_vram_gb:.3f} GB  |  embedding_lora_mode={lora_cfg.embedding_lora_mode}")
+    logging.info(f"[VRAM] Static model memory (params only, no optimizer states): {static_vram_gb:.3f} GB")
 
     logging.info(f'Built Model and tokenizer : {model_cfg.model_name}')
 
@@ -78,8 +78,22 @@ def main(cfg : DictConfig):
 
     val_cfg = to_dict(cfg.validation_cfg)
     benchmark_evaluation_cfg = to_dict(cfg.benchmark_evaluation_cfg)
-    result = prepare_dataset(cfg, tokenizer, return_validation=val_cfg.get('return_validation',False), validation_split= val_cfg.get('validation_split',0.1))
-    train_dataset, val_dataset = result if isinstance(result, tuple) else (result, None)
+    val_dataset_path = val_cfg.get('val_dataset_path')
+    if val_dataset_path:
+        from datasets import load_from_disk
+        train_dataset = prepare_dataset(cfg, tokenizer, return_validation=False)
+        val_dataset = load_from_disk(val_dataset_path)
+        logging.info(f"Loaded val dataset from disk: {val_dataset_path}")
+    else:
+        result = prepare_dataset(cfg, tokenizer, return_validation=val_cfg.get('return_validation',False), validation_split=val_cfg.get('validation_split',0.1))
+        train_dataset, val_dataset = result if isinstance(result, tuple) else (result, None)
+        save_val_path = val_cfg.get('save_val_dataset_path')
+        if save_val_path and val_dataset is not None:
+            from datasets import DatasetDict
+            val_to_save = DatasetDict(val_dataset) if isinstance(val_dataset, dict) else val_dataset
+            val_to_save.save_to_disk(save_val_path)
+            logging.info(f"Saved val dataset to disk: {save_val_path}")
+
 
     if isinstance(val_dataset, dict):
         val_info = f"{sum(len(v) for v in val_dataset.values())} validation examples across sources: {list(val_dataset.keys())}"
@@ -117,7 +131,8 @@ def main(cfg : DictConfig):
     'benchmark_evaluation_cfg': benchmark_evaluation_cfg,
     'num_milestones': num_milestones,
     'tokens_per_milestone' : tokens_per_milestone,
-    'run_benchmarks' : milestone_cfg.get('run_benchmarks',True)
+    'run_benchmarks' : milestone_cfg.get('run_benchmarks',True),
+    'resume_tokens_seen': milestone_cfg.get('resume_tokens_seen', 0),
     }
 
     if milestone_cfg.get('do_evaluate',False):
@@ -147,6 +162,19 @@ def main(cfg : DictConfig):
 
     trainer.add_callback(token_stats_callback)
     trainer.add_callback(eval_trigger_callback)
+    trainer.add_callback(EpochEndCheckpointCallback())
+
+    if training_kwargs.get('lr_scheduler_type') == 'warmup_stable_decay':
+        lr_scheduler_kwargs = to_dict(cfg.training_args.get('lr_scheduler_kwargs', {}))
+        total_tokens = num_milestones * tokens_per_milestone
+        decay_tokens = lr_scheduler_kwargs.get('num_decay_tokens', int(0.05 * total_tokens))
+        wsd_decay_checkpoint_callback = WSDDecayCheckpointCallback(
+            total_tokens=total_tokens,
+            decay_tokens=decay_tokens,
+            trainer=trainer,
+        )
+        trainer.add_callback(wsd_decay_checkpoint_callback)
+        logging.info(f"WSDDecayCheckpointCallback registered: will save at {total_tokens - decay_tokens:,} tokens")
 
         
     if wandb.run is not None:

@@ -43,7 +43,6 @@ class LoraAdapterConfig:
     lora_dropout: float = 0.0
     bias: str = "none"
     task_type: str = "CAUSAL_LM"
-    embedding_lora_mode: str = "full_weights"
     target_modules: Sequence[str] = field(
         default_factory=lambda: list(_default_target_modules())
     )
@@ -155,8 +154,6 @@ class ModelBuilder:
         model = _get_peft_model(model, peft_config)
         if hasattr(model, "print_trainable_parameters"):
             model.print_trainable_parameters()  # pragma: no cover - logging helper
-
-        import os; os._exit(0)
 
         return model, tokenizer
 

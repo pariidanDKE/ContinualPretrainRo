@@ -104,6 +104,48 @@ def main(cfg: DictConfig):
         logger.info(f"Loading eval dataset: {cfg.dataset.name} (n={cfg.dataset.sample_size})")
         eval_dataset = prepare_dataset(cfg, tokenizer)
 
+    # ---- Hardcoded extra perplexity validation datasets ----
+    from datasets import load_dataset as _hf_load_dataset
+    from data_module import DataPreprocessor
+
+    _EXTRA_VAL_DATASETS = [
+        {
+            "hf_name": "EleutherAI/wikitext_document_level",
+            "hf_kwargs": {"name": "wikitext-2-raw-v1", "split": "train", "trust_remote_code": True},
+            "text_field": "page",
+            "ds_source": "EleutherAI/wikitext_document_level",
+            "key": "wikitext",
+        },
+        {
+            "hf_name": "OpenLLM-Ro/ro_wiki",
+            "hf_kwargs": {"split": "test"},
+            "text_field": "page",
+            "ds_source": "OpenLLM-Ro/ro_wiki",
+            "key": "ro_wiki",
+        },
+    ]
+
+    if not isinstance(eval_dataset, dict):
+        eval_dataset = {"train_val": eval_dataset} if eval_dataset is not None else {}
+
+    for _extra in _EXTRA_VAL_DATASETS:
+        _ds = _hf_load_dataset(_extra["hf_name"], **_extra["hf_kwargs"])
+        _ds = _ds.select(range(min(1000, len(_ds))))
+        _ds = _ds.rename_column(_extra["text_field"], "text")
+        _ds = _ds.add_column("ds_source", [_extra["ds_source"]] * len(_ds))
+        _preprocessor = DataPreprocessor(
+            tokenizer=tokenizer,
+            add_bos_eos=True,
+            tokenize=False,
+            use_sft=False,
+            text_field="text",
+        )
+        _remove_cols = [col for col in _ds.column_names if col != "ds_source"]
+        _ds = _ds.map(_preprocessor, remove_columns=_remove_cols, num_proc=4)
+        eval_dataset[_extra["key"]] = _ds
+        logger.info(f"Loaded extra val dataset '{_extra['key']}': {len(_ds)} samples")
+    # -------------------------------------------------------
+
     # Unsloth's SFTTrainer requires a non-empty train_dataset at init time.
     # Pass a single-example dummy dataset to satisfy the check without loading real data.
     dummy_dataset = Dataset.from_dict({"text": ["dummy"]})
@@ -124,8 +166,11 @@ def main(cfg: DictConfig):
     if checkpoint_path:
         logger.info(f"Loading checkpoint: {checkpoint_path}")
         trainer._load_from_checkpoint(checkpoint_path)
-        # modules_to_save (embed_tokens, lm_head) load onto CPU; move them to match the model
-        cuda_device = next(p.device for p in model.parameters() if p.device.type == "cuda")
+
+    # modules_to_save (embed_tokens, lm_head) may land on CPU regardless of whether
+    # a checkpoint was loaded — move all CPU params to match the main CUDA device
+    cuda_device = next((p.device for p in model.parameters() if p.device.type == "cuda"), None)
+    if cuda_device:
         for param in model.parameters():
             if param.device.type == "cpu":
                 param.data = param.data.to(cuda_device)
@@ -139,7 +184,7 @@ def main(cfg: DictConfig):
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     if checkpoint_path:
         parts = checkpoint_path.rstrip("/").split("/")
-        run_name = "_".join(parts[-2:])  # e.g. "cpt-llama-mix_100_0-mbou88kb_checkpoint-2351"
+        run_name = f"{parts[-3]}_{parts[-1]}"  # e.g. "cpt-llama-ms3-300M_checkpoint-9765"
     else:
         run_name = "eval"
     output_path = os.path.join(output_dir, f"{timestamp}_{run_name}.json")

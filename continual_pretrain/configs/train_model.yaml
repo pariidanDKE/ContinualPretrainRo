@@ -26,7 +26,6 @@ model:
     lora_dropout: 0.0
     bias: "none"
     task_type: "CAUSAL_LM"
-    embedding_lora_mode: "lora"  # Options: "full_weights", "lora", "frozen"
     target_modules:
       - q_proj
       - k_proj
@@ -48,8 +47,10 @@ training_args:
   packing: false  # make training 2-5 times faster  
   embedding_learning_rate: 2e-5  # Lower LR for embeddings/LM head (only used with use_unsloth=true)
   num_train_epochs: 1
-  save_steps: 100
+  save_strategy: "no"
   save_total_limit: 1
+  max_steps: -1
+  ignore_data_skip: false
   report_to: "wandb"
   bf16: true
   fp16: false
@@ -67,6 +68,8 @@ training_args:
 validation_cfg:
   return_validation: true
   validation_split: 0.05
+  save_val_dataset_path: null   # If set, saves the processed val dataset to disk after splitting
+  val_dataset_path: null        # If set, loads val dataset from disk instead of splitting
 
 # ########################################################
 # Milestone Configuration
@@ -80,6 +83,7 @@ milestone:
   do_evaluate: true
   run_benchmarks: true
   resume_from_checkpoint: null
+  resume_tokens_seen: 0
 
 # ########################################################
 # Dataset Configuration
@@ -160,6 +164,7 @@ benchmark_evaluation_cfg:
 
   tasks_to_run: [ "_ro_winogrande",  "_ro_arc_challenge", "arc_challenge", "winogrande", "ro_wiki", "wikitext", "_ro_hellaswag"] # remove belebele and mmlu
   perplexity_tasks: ["ro_wiki", "wikitext"] # for these do not apply chat template
+
 
   output_dir: eval_results
   max_length: 2048  # Default max_length for most benchmarks
