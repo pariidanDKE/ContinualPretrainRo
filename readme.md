@@ -4,6 +4,8 @@ Adapts Llama-3.2-1B to Romanian through continual pretraining (CPT) with QLoRA, 
 
 This repo accompanies the Substack post: **[Optimizing Romanian CPT on a Single GPU](#)** *(link coming soon)*
 
+![Recipe Overview](images/recipe_overview.png)
+
 ---
 
 ## Key Findings
@@ -15,6 +17,8 @@ This repo accompanies the Substack post: **[Optimizing Romanian CPT on a Single 
 | LoRA rank | r=64 is Pareto-optimal over r=128: same loss, 4% faster, less VRAM. r=256 shows instability. |
 | Embeddings | Training embed_tokens and lm_head (full, not LoRA) improves Romanian perplexity with no English regression. |
 | Full 2.4B run | RoHellaSwag and RoWinoGrande improve by up to 10%. ARC and MMLU unchanged — reflects content gap in Romanian web data, not training failure. |
+
+![Benchmark Progression](images/benchmark_progression.png)
 
 ---
 
