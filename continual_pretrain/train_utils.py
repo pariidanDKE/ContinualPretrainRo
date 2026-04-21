@@ -11,7 +11,6 @@ class UnslothTrainingArguments(_UnslothTrainingArguments):
         super().__init__(embedding_learning_rate, *args, **kwargs)
 from trl import SFTConfig, SFTTrainer
 import os
-import re
 import math
 import logging
 from typing import Any, Dict
@@ -296,62 +295,6 @@ def setup_file_logging(output_dir: str, run_name: str = None, run_id: str = None
 # =============================================================================
 # W&B Configuration
 # =============================================================================
-
-def slugify(text: Any) -> str:
-    """Convert arbitrary text into a filesystem/W&B friendly token."""
-    text = str(text).strip()
-    text = re.sub(r"[^\w.-]+", "-", text)
-    text = text.strip("-_")
-    return text or "na"
-
-
-def compose_run_name(cfg: DictConfig, training_kwargs: Dict[str, Any], wandb_cfg: Dict[str, Any]) -> str:
-    """
-    Compose W&B run name with format:
-    {run_type}-{model}-{custom_name}-ms{num_milestones}-{tokens}M
-
-    Example: cpt-llama-myexp-ms10-900M or sft-qwen-ms5-100M
-    """
-    parts = []
-
-    use_sft = cfg.dataset.get("use_sft", True)
-    run_type = "sft" if use_sft else "cpt"
-    parts.append(run_type)
-
-    model_name = cfg.model.builder.get("model_name", "")
-    if model_name:
-
-        model_base = model_name.split("/")[-1].lower()
-        for family in ["llama", "qwen", "gemma", "mistral", "phi"]:
-            if family in model_base:
-                parts.append(family)
-                break
-        else:
-            parts.append(slugify(model_base.split("-")[0].split(".")[0]))
-
-    custom_name = os.environ.get("CUSTOM_NAME", "").strip()
-    if custom_name:
-        parts.append(slugify(custom_name))
-
-
-    num_milestones = os.environ.get("NUM_MILESTONES")
-    if num_milestones:
-        parts.append(f"ms{num_milestones}")
-
-
-    milestone_tokens = os.environ.get("MILESTONE_TOKENS")
-    if milestone_tokens:
-        tokens = int(milestone_tokens)
-        if tokens >= 1_000_000_000:
-            formatted = f"{tokens // 1_000_000_000}B"
-        elif tokens >= 1_000_000:
-            formatted = f"{tokens // 1_000_000}M"
-        else:
-            formatted = f"{tokens // 1_000}K"
-        parts.append(formatted)
-
-    return "-".join(parts)
-
 
 def apply_wandb_config(
     training_kwargs: Dict[str, Any],
