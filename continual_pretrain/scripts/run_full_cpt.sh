@@ -1,16 +1,14 @@
 #!/bin/bash
 
-# Full CPT Run — Llama-3.2-1B Romanian Continual Pretraining — Epoch 2
+# Full CPT Run — Llama-3.2-1B Romanian Continual Pretraining
 # Final config from hyperparameter sweeps:
 #   - LoRA rank: 64, alpha: 64, rslora: true
 #   - LR: 1e-4, ELR: 2e-5 (LR/5)
-#   - GA: 4, batch size: 32
+#   - GA: 8, batch size: 16 (effective BS=128)
 #   - Data mix: 80% Romanian / 20% English
 #   - Packing: off
 #   - Scheduler: warmup_stable_decay
-# Resuming from step 9017 (950,004,117 tokens seen) — end of stable phase, before decay
-# 20 milestones x 100M = 2B total token budget; ~1B new tokens for epoch 2
-# resume_tokens_seen places WSD scheduler in stable phase immediately (skips warmup)
+# 20 milestones x 100M = 2B total token budget
 
 set -e
 
@@ -32,8 +30,10 @@ EMBEDDING_LR=2e-5
 BATCH_SIZE=16
 GRAD_ACCUM=8
 
-TOTAL_SAMPLES=1000000            # 800k RO + 200k EN — epoch 2, offset 0 (full dataset restart)
-RESUME_CHECKPOINT="/home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/outputs/cpt/full_cpt_llama_1b_20260401_003748/cpt-llama-full_cpt_llama_1b_20260401_003748-ms10-1B/20260401_0038-iruygely/checkpoint-9017"
+TOTAL_SAMPLES=1000000            # 800k RO + 200k EN
+# Set RESUME_CHECKPOINT to continue from an existing checkpoint, e.g.:
+# RESUME_CHECKPOINT="outputs/cpt/my_run/checkpoint-1000"
+RESUME_CHECKPOINT=""
 
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 RUN_NAME="full_cpt_llama_1b_${TIMESTAMP}"
@@ -64,12 +64,9 @@ python train_milestones.py \
     data_builder.total_sample_size=${TOTAL_SAMPLES} \
     "data_builder.proportions=[0.8,0.2]" \
     seed=42 \
-    milestone.resume_from_checkpoint="${RESUME_CHECKPOINT}" \
-    milestone.resume_tokens_seen=950004117 \
+    ${RESUME_CHECKPOINT:+milestone.resume_from_checkpoint="${RESUME_CHECKPOINT}"} \
     milestone.run_benchmarks=true \
     milestone.do_evaluate=true \
-    training_args.ignore_data_skip=true \
-    validation_cfg.val_dataset_path="/home/dan-parii/Documents/ContinualPretrainRo/continual_pretrain/data/val_dataset" \
     wandb.custom_run_name="${RUN_NAME}" \
     wandb.group="${RUN_NAME}"
 

@@ -1,69 +1,49 @@
-continual_pretrain/data/
-*.env
-continual_pretrain/outputs/
-# Python cache files
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
-
-continual_pretrain/wandb/
-continual_pretrain/notebooks/wandb
-continual_pretrain/.hydra
-continual_pretrain/.pyt
+.env
+*.env
 .python-version
-continual_pretrain/unsloth_compiled_cache/
-continual_pretrain/eval_results/
-.python-version
-continual_pretrain/checkpoints
-unsloth_compiled_cache/
-sawtooh_loss_training_logs/
-Notes/
 
-
-
-# Hydra
-./hydra
-
-
-# Unsloth / Hugging Face outputs
+# Model weights
 *.bin
 *.safetensors
+*.pt
 
-# Logs and telemetry
-runs/
+# Training outputs
+continual_pretrain/outputs/
+continual_pretrain/data/
+continual_pretrain/eval_results/
+continual_pretrain/checkpoints/
+continual_pretrain/wandb/
 wandb/
+runs/
+
+# Logs
 *.log
+sawtooh_loss_training_logs/
 
-# Python environment
-__pycache__/
-.env
+# Hydra run configs
+.hydra/
+continual_pretrain/.hydra/
 
+# Unsloth caches
+unsloth_compiled_cache/
+continual_pretrain/unsloth_compiled_cache/
+continual_pretrain/_unsloth_temporary_saved_buffers/
 
-./vscode
-outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/README.md
-outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/adapter_config.json
-outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/optimizer.pt
-outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/README.md
-outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/rng_state.pth
-outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/scheduler.pt
-outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/special_tokens_map.json
-outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/tokenizer_config.json
-outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/tokenizer.json
-outputs/cpt/Default/cpt-llama-ms5-500K/ynfn2pz2/checkpoint-2/trainer_state.json
+# Notes, drafts, and removed dirs
+Notes/
+continual_pretrain/Notes/
+substack_post_raw.md
+CLAUDE.md
+continual_pretrain/Papers/
+continual_pretrain/diagnostics_debugging/
+continual_pretrain/scripts/run_full_cpt_eval.sh
+
+# IDE / OS
 .vscode/
-continual_pretrain/diagnostics_debugging/eval_tasks/belebele_comparison_results.json
-continual_pretrain/diagnostics_debugging/eval_tasks/embd_belebele_comparison_results.json
-continual_pretrain/diagnostics_debugging/eval_tasks/evaluate_belebele_comparison.py
-continual_pretrain/diagnostics_debugging/eval_tasks/evaluate_lora_rank_sweep.py
-continual_pretrain/diagnostics_debugging/eval_tasks/lora_rank_sweep_ro_belebele_results.json
-continual_pretrain/diagnostics_debugging/eval_tasks/lora_rank_sweep_ro_mmlu_results.json
-continual_pretrain/diagnostics_debugging/eval_tasks/noembd_belebele_comparison_results.json
-continual_pretrain/_unsloth_temporary_saved_buffers/unsloth/llama-3.2-1b-unsloth-bnb-4bit/input_embeddings.pt
-continual_pretrain/_unsloth_temporary_saved_buffers/unsloth/llama-3.2-1b-unsloth-bnb-4bit/output_embeddings.pt
-continual_pretrain/.hydra/config.yaml
-continual_pretrain/.hydra/hydra.yaml
-continual_pretrain/.hydra/overrides.yaml
-continual_pretrain/.hydra/config.yaml
-continual_pretrain/.hydra/hydra.yaml
-continual_pretrain/.hydra/overrides.yaml
+.DS_Store
+.claude/
