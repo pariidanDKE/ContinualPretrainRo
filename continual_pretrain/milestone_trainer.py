@@ -187,59 +187,60 @@ class MilestoneTrainerMixin:
                 continue
 
             try:
-                fewshot = task_cfg['fewshot']
+                fewshot_cfg = task_cfg['fewshot']
+                fewshots = fewshot_cfg if isinstance(fewshot_cfg, list) else [fewshot_cfg]
                 limit = task_cfg.get('limit')
                 batch_size = task_cfg['task_batch_size']
 
                 # Get task-specific max_length, or use global default
                 task_max_length = task_cfg.get('max_length', self.benchmark_evaluation_cfg.get('max_length', 2048))
-
-                # Update the model wrapper's max_length for this task
                 lm_eval_model._max_length = task_max_length
 
-                logger.info(f"🚀 Running evaluation for {task_name} | fewshot={fewshot} | limit={limit} | max_length={task_max_length}")
+                logger.info(f"🚀 Running evaluation for {task_name} | fewshots={fewshots} | limit={limit} | max_length={task_max_length}")
 
-                # Prepare evaluation kwargs
-                eval_kwargs = {
-                    "model": lm_eval_model,
-                    "batch_size": batch_size,
-                    "apply_chat_template": apply_chat_template,
-                    "tasks": [task_name],
-                    "limit": limit,
-                    "verbosity": self.benchmark_evaluation_cfg['verbosity'],
-                    "num_fewshot": fewshot,
-                    "log_samples": True,
-                    "write_out": False,
-                    "device": str(self.model.device),
-                    "fewshot_random_seed": 23,
-                    "random_seed": 23,
-                    "numpy_random_seed": 23,
-                    "torch_random_seed": 23,
-                }
-
-                # Add multiturn for chat templates with fewshot examples
-                if apply_chat_template and fewshot > 0:
-                    eval_kwargs["fewshot_as_multiturn"] = True
-                    logger.info("📝 Using fewshot_as_multiturn=True")
-
-                # Run evaluation
-                res = evaluator.simple_evaluate(**eval_kwargs)
-                full_results[task_name] = res
-
-                # Extract metrics based on task type
                 if task_name in perplexity_tasks:
                     metrics_to_extract = METRICS_TO_EXTRACT['perplexity']
                 else:
                     metrics_to_extract = METRICS_TO_EXTRACT['reasoning']
 
-                # Extract metrics from results
-                task_results = res.get('results', {}).get(task_name, {})
-                for metric_name in metrics_to_extract:
-                    if metric_name in task_results:
-                        # Use format: task_name/metric_name
-                        key = f"{task_name}/{metric_name}"
-                        metrics_dict[key] = task_results[metric_name]
-                        logger.info(f"  📊 {metric_name}: {task_results[metric_name]:.4f}")
+                # Run once per fewshot value, collect per-run metrics
+                per_fewshot_metrics = []
+                for fs in fewshots:
+                    eval_kwargs = {
+                        "model": lm_eval_model,
+                        "batch_size": batch_size,
+                        "apply_chat_template": apply_chat_template,
+                        "tasks": [task_name],
+                        "limit": limit,
+                        "verbosity": self.benchmark_evaluation_cfg['verbosity'],
+                        "log_samples": True,
+                        "write_out": False,
+                        "device": str(self.model.device),
+                        "fewshot_random_seed": 23,
+                        "random_seed": 23,
+                        "numpy_random_seed": 23,
+                        "torch_random_seed": 23,
+                    }
+                    if fs is not None:
+                        eval_kwargs["num_fewshot"] = fs
+
+                    res = evaluator.simple_evaluate(**eval_kwargs)
+                    full_results.setdefault(task_name, {})[str(fs)] = res
+
+                    task_results = res.get('results', {}).get(task_name, {})
+                    fs_metrics = {m: task_results[m] for m in metrics_to_extract if m in task_results}
+                    if fs_metrics:
+                        per_fewshot_metrics.append(fs_metrics)
+                        logger.info(f"  fs={fs}: " + ", ".join(f"{m}: {v:.4f}" for m, v in fs_metrics.items()))
+
+                # Average across all fewshot runs
+                if per_fewshot_metrics:
+                    all_metric_keys = set().union(*per_fewshot_metrics)
+                    for metric_name in all_metric_keys:
+                        values = [m[metric_name] for m in per_fewshot_metrics if metric_name in m]
+                        avg = sum(values) / len(values)
+                        metrics_dict[f"{task_name}/{metric_name}"] = avg
+                        logger.info(f"  📊 avg {metric_name}: {avg:.4f} (over {len(values)} fewshot runs)")
 
                 logger.info(f"✅ Finished {task_name}")
 

@@ -2,29 +2,41 @@
 # Evaluate full-CPT checkpoints on all benchmarks.
 # ALL_TASKS (11): _ro_winogrande, _ro_arc_challenge, arc_challenge, winogrande,
 #   ro_wiki, wikitext, _ro_hellaswag, _ro_mmlu, _ro_grammar, _ro_belebele, _ro_gsm8k
-# NEW_TASKS (3): _ro_mmlu, _ro_grammar, _ro_belebele
+#
+# Equally-spaced selection (~4757 steps apart) across all 3 training runs.
+# checkpoint-0 uses the base model directly (LoRA B=0 at init, so it's equivalent).
 
 ALL_TASKS="[_ro_winogrande,_ro_arc_challenge,arc_challenge,winogrande,ro_wiki,wikitext,_ro_hellaswag,_ro_mmlu,_ro_grammar,_ro_belebele,_ro_gsm8k]"
 
 set -e
 cd "$(dirname "$0")/.."   # run from continual_pretrain/
 
-RUN="outputs/cpt/full_cpt_llama_1b_20260407_212443/cpt-llama-full_cpt_llama_1b_20260407_212443-ms20-2B/20260407_2125-nfzxnkkj"
+BASE_MODEL="unsloth/llama-3.2-1b-unsloth-bnb-4bit"
+
+RUN_A="outputs/cpt/full_cpt_llama_1b_20260328_174407/cpt-llama-full_cpt_llama_1b_20260328_174407-ms10-1B/20260328_1744-7owjds6f"
+RUN_B="outputs/cpt/full_cpt_llama_1b_20260401_003748/cpt-llama-full_cpt_llama_1b_20260401_003748-ms10-1B/20260401_0038-iruygely"
+RUN_C="outputs/cpt/full_cpt_llama_1b_20260407_212443/cpt-llama-full_cpt_llama_1b_20260407_212443-ms20-2B/20260407_2125-nfzxnkkj"
 
 CHECKPOINTS=(
-    "$RUN/checkpoint-13774"
-    "$RUN/checkpoint-14727"
-    "$RUN/checkpoint-15677"
-    "$RUN/checkpoint-16633"
-    "$RUN/checkpoint-16830"
-    "$RUN/checkpoint-17589"
-    "$RUN/checkpoint-18058"
-    "$RUN/checkpoint-18539"
-    "$RUN/checkpoint-19491"
-    "$RUN/checkpoint-20441"
-    "$RUN/checkpoint-21391"
-    "$RUN/checkpoint-22344"
+    "$RUN_A/checkpoint-4756"
+    "$RUN_B/checkpoint-9017"
+    "$RUN_C/checkpoint-13774"
+    "$RUN_C/checkpoint-18539"
+    "$RUN_C/checkpoint-22344"
 )
+
+run_eval_base() {
+    echo ""
+    echo "========================================"
+    echo "=== base model (checkpoint-0) ==="
+    echo "========================================"
+
+    python run_evaluation.py \
+        model.builder.model_name="$BASE_MODEL" \
+        dataset.sample_size=null \
+        benchmark_evaluation_cfg.eval_batch_size=4 \
+        "benchmark_evaluation_cfg.tasks_to_run=$ALL_TASKS"
+}
 
 run_eval() {
     local label=$1
@@ -42,9 +54,10 @@ run_eval() {
         "benchmark_evaluation_cfg.tasks_to_run=$ALL_TASKS"
 }
 
+run_eval_base
 for ckpt in "${CHECKPOINTS[@]}"; do
     step=$(basename "$ckpt")
-    run_eval "20260407 | $step" "$ckpt"
+    run_eval "$step" "$ckpt"
 done
 
 echo ""

@@ -162,7 +162,7 @@ benchmark_evaluation_cfg:
   num_fewshot: 5
   device : auto
 
-  tasks_to_run: [ "_ro_winogrande",  "_ro_arc_challenge", "arc_challenge", "winogrande", "ro_wiki", "wikitext", "_ro_hellaswag"] # remove belebele and mmlu
+  tasks_to_run: ["_ro_winogrande", "_ro_arc_challenge", "arc_challenge", "winogrande", "ro_wiki", "wikitext", "_ro_hellaswag", "_ro_mmlu", "_ro_grammar", "_ro_belebele", "_ro_gsm8k"]
   perplexity_tasks: ["ro_wiki", "wikitext"] # for these do not apply chat template
 
 
@@ -171,83 +171,74 @@ benchmark_evaluation_cfg:
   eval_max_length: 8192
 
   # List of all available tasks and their configs
+  # Romanian tasks use group names (no underscore prefix) — fewshot is null because
+  # the group YAML defines per-subtask fewshot counts; lm_eval averages across them.
+  # English baselines use single canonical fewshot (Open LLM Leaderboard v1 standard).
   evaluation_tasks:
     - name: ro_wiki
       fewshot: 0
       task_batch_size: 8
-      limit: 1000
+      limit: null
       max_length: 2048
 
     - name: _ro_hellaswag
-      fewshot: 5
+      fewshot: [0, 1, 3, 5, 10]
       task_batch_size: 4
-      limit: 1000
+      limit: null
       max_length: 2048
-
-    # - name: _ro_mmlu
-    #   fewshot: 5
-    #   task_batch_size: 1
-    #   limit: 10
-    #   max_length: 2048  # MMLU uses shorter context
 
     - name: _ro_winogrande
-      fewshot: 5
+      fewshot: [0, 1, 3, 5]
       task_batch_size: 8
-      limit: 1000
+      limit: null
       max_length: 2048
 
-    # - name: _ro_belebele
-    #   fewshot: 5
-    #   task_batch_size: 1
-    #   limit: 10
-    #   max_length: 2048  # Belebele uses shorter context
-
     - name: _ro_arc_challenge
-      fewshot: 5
+      fewshot: [0, 1, 3, 5, 10, 25]
       task_batch_size: 8
-      limit: 1000
+      limit: null
       max_length: 2048
 
     - name: arc_challenge
-      fewshot: 5
+      fewshot: 25
       task_batch_size: 8
-      limit: 1000
+      limit: null
       max_length: 2048
 
     - name: wikitext
       fewshot: 0
       task_batch_size: 8
-      limit: 1000
+      limit: null
       max_length: 2048
 
     - name: winogrande
       fewshot: 5
       task_batch_size: 8
-      limit: 1000
+      limit: null
       max_length: 2048
 
     - name: _ro_mmlu
-      fewshot: 5
+      fewshot: [0, 1, 3, 5]
       task_batch_size: 8
-      limit: 1000
+      limit: null
       max_length: 2048
 
     - name: _ro_grammar
-      fewshot: 5
+      fewshot: [0, 1, 3, 5]
       task_batch_size: 8
-      limit: 1000
+      limit: null
       max_length: 2048
 
     - name: _ro_belebele
-      fewshot: 5
-      task_batch_size: 8
-      limit: 1000
+      fewshot: [0, 1, 3, 5]
+      task_batch_size: 4
+      limit: null
       max_length: 2048
 
     - name: _ro_gsm8k
-      fewshot: 5
-      task_batch_size: 8
-      limit: 1000
+      fewshot: [1, 3, 5]
+      task_batch_size: 4
+      limit: null
       max_length: 2048
 # ########################################################
 # Wandb Configuration
