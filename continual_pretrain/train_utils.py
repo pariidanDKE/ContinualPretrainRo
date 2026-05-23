@@ -88,6 +88,8 @@ def load_single_dataset(
             ds = raw[split] if split in raw else raw[list(raw.keys())[0]]
         else:
             ds = raw
+    elif name.endswith(".parquet"):
+        ds = load_dataset("parquet", data_files=name, split="train")
     else:
         ds = load_dataset(name, split=split)
 

@@ -8,7 +8,7 @@
 #   - Data mix: 80% Romanian / 20% English
 #   - Packing: off
 #   - Scheduler: warmup_stable_decay
-# 20 milestones x 100M = 2B total token budget
+# 8 milestones x 300M = 2.4B total token budget
 
 set -e
 
@@ -20,24 +20,28 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 # ── Config ────────────────────────────────────────────────
-TOKENS_PER_MILESTONE=100000000   # 100M tokens per milestone
-NUM_MILESTONES=20                # 20 milestones = 2B total budget (epoch 2 adds ~1B)
+TOKENS_PER_MILESTONE=300000000   # 300M tokens per milestone
+NUM_MILESTONES=8                 # 8 milestones = 2.4B total budget
 
 LORA_RANK=64
 LORA_ALPHA=64
 LEARNING_RATE=1e-4
 EMBEDDING_LR=2e-5
-BATCH_SIZE=16
-GRAD_ACCUM=8
+# Desktop-safe profile: lower micro-batch to free VRAM while keeping
+# the same effective batch size (4 * 32 = 128, previously 8 * 16 = 128).
+BATCH_SIZE=4
+GRAD_ACCUM=32
 
-TOTAL_SAMPLES=1000000            # 800k RO + 200k EN
-# Set RESUME_CHECKPOINT to continue from an existing checkpoint, e.g.:
-# RESUME_CHECKPOINT="outputs/cpt/my_run/checkpoint-1000"
-RESUME_CHECKPOINT=""
+TOTAL_SAMPLES=2500000            # 2M RO + 500k EN (strict 80/20)
+
+# Helps reduce allocator fragmentation during long runs near memory limits.
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True,max_split_size_mb:128
 
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 RUN_NAME="full_cpt_llama_1b_${TIMESTAMP}"
 # ─────────────────────────────────────────────────────────
+
+EVAL_ON_START=true
 
 echo -e "${BLUE}========================================${NC}"
 echo -e "${BLUE}Full CPT Run — Llama-3.2-1B${NC}"
@@ -56,6 +60,7 @@ python train_milestones.py \
     training_args.per_device_train_batch_size=${BATCH_SIZE} \
     training_args.gradient_accumulation_steps=${GRAD_ACCUM} \
     training_args.packing=false \
+    training_args.eval_on_start=${EVAL_ON_START} \
     training_args.max_steps=30000 \
     training_args.save_total_limit=11 \
     milestone.tokens_per_milestone=${TOKENS_PER_MILESTONE} \
@@ -63,9 +68,9 @@ python train_milestones.py \
     data_builder.enabled=true \
     data_builder.total_sample_size=${TOTAL_SAMPLES} \
     "data_builder.proportions=[0.8,0.2]" \
+    "data_builder.datasets.0.name=./data/fineweb2_ro_score4.parquet" \
     seed=42 \
-    ${RESUME_CHECKPOINT:+milestone.resume_from_checkpoint="${RESUME_CHECKPOINT}"} \
-    milestone.run_benchmarks=true \
+    milestone.run_benchmarks=false \
     milestone.do_evaluate=true \
     wandb.custom_run_name="${RUN_NAME}" \
     wandb.group="${RUN_NAME}"

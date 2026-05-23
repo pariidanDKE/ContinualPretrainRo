@@ -147,11 +147,6 @@ class MilestoneTrainerMixin:
         full_results = {}
         metrics_dict = {}
 
-        # Clear GPU cache before evaluation to free fragmented memory
-        logger.info("🧹 Clearing GPU cache before evaluation...")
-        torch.cuda.empty_cache()
-        torch.cuda.synchronize()
-
         logger.info("🔧 Wrapping model for lm-eval...")
         lm_eval_model = HFLM(
             pretrained=self.model,

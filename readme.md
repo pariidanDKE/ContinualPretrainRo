@@ -1,6 +1,6 @@
 # RoLLM-CPT: Continual Pretraining of Llama-3.2-1B for Romanian
 
-Adapts Llama-3.2-1B to Romanian through continual pretraining (CPT) with QLoRA, using a milestone-based training loop that evaluates on Romanian benchmarks at each token checkpoint.
+Adapts Llama-3.2-1B to Romanian through continual pretraining (CPT) with QLoRA, using a milestone-based training loop that evaluates Romanian and English signals at token checkpoints. The repo covers both recipe-selection experiments and two full 2.4B-token runs comparing unfiltered Romanian web data against its educational-value-filtered counterpart.
 
 This repo accompanies the Substack post: **[Optimizing Romanian CPT on a Single GPU](#)** *(link coming soon)*
 
@@ -16,7 +16,7 @@ This repo accompanies the Substack post: **[Optimizing Romanian CPT on a Single 
 | Data mix | 80% Romanian / 20% English is optimal. 100% Romanian causes measurable English forgetting with no downstream gain. |
 | LoRA rank | r=64 is Pareto-optimal over r=128: same loss, 4% faster, less VRAM. r=256 shows instability. |
 | Embeddings | Training embed_tokens and lm_head (full, not LoRA) improves Romanian perplexity with no English regression. |
-| Full 2.4B run | RoHellaSwag and RoWinoGrande improve by up to 10%. ARC and MMLU unchanged — reflects content gap in Romanian web data, not training failure. |
+| Full 2.4B runs | Both runs improve Romanian language understanding, with RoHellaSwag and RoWinoGrande gaining up to 10%. The filtered corpus performs better overall, especially on RoARC, while reducing but not eliminating the RoMMLU regression. |
 
 ![Benchmark Progression](images/benchmark_progression.png)
 
@@ -63,7 +63,7 @@ Full config in `continual_pretrain/configs/train_model.yaml`.
 
 ## Experiments
 
-Each script reproduces one ablation from the post. Run from `continual_pretrain/`:
+Each script reproduces one controlled comparison or full-run utility from the post. Run from `continual_pretrain/`:
 
 ```bash
 cd continual_pretrain
@@ -78,9 +78,8 @@ bash scripts/run_packing_comparison.sh
 | `run_embedding_comparison.sh` | Training embedding layers vs freezing them |
 | `run_embedding_lr_sweep.sh` | Embedding LR multiplier sweep (1x, 2x, 5x, 10x base LR) |
 | `run_hyperparam_sweep.sh` | Gradient accumulation sweep at fixed effective batch size |
-| `run_full_cpt.sh` | Full 2.4B token training run with final recipe |
+| `run_full_cpt.sh` | Full 2.4B token training run with the locked recipe (swap Romanian corpus to compare unfiltered vs filtered) |
 
----
 
 ## Evaluation
 
