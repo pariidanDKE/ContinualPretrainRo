@@ -2,7 +2,7 @@
 
 Adapts Llama-3.2-1B to Romanian through continual pretraining (CPT) with QLoRA, using a milestone-based training loop that evaluates Romanian and English signals at token checkpoints. The repo covers both recipe-selection experiments and two full 2.4B-token runs comparing unfiltered Romanian web data against its educational-value-filtered counterpart.
 
-This repo accompanies the Substack post: **[Optimizing Romanian CPT on a Single GPU](#)** *(link coming soon)*
+This repo accompanies the Substack post: **[Optimizing Romanian CPT on a Single GPU](https://dan1180627.substack.com/p/rollama32-1b-cpt-of-a-small-language)** 
 
 ![Recipe Overview](images/recipe_overview.png)
 
